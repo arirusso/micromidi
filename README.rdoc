@@ -1,0 +1,103 @@
+= diamond
+
+{MIDI arpeggiator}[http://en.wikipedia.org/wiki/Arpeggiator#Arpeggiator] in Ruby
+
+{pic}[http://images.treetrouble.net/images/diamond.jpg]
+
+== Features
+
+* Classic arpeggiator functions
+* Uses {unimidi}[http://github.com/arirusso/unimidi] for cross-platform compatibility
+* Run as a background thread for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
+* Generate or sync to MIDI clock
+* Sync between multiple Diamond instances
+* {Preset}[http://github.com/arirusso/diamond/blob/master/lib/pattern_presets.rb] and {user-definable}[http://github.com/arirusso/diamond/blob/master/examples/define_pattern.rb] pattern algorithms 
+
+== Installation
+
+  gem install diamond
+  
+== Requirements
+
+Ruby 1.9.2 or JRuby in 1.9 mode
+
+Gem Dependencies:
+
+{midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://github.com/arirusso/midi-message], {topaz}[http://github.com/arirusso/topaz], and {unimidi}[http://github.com/arirusso/unimidi]
+
+these will install automatically with the gem
+
+== Usage
+
+  require "diamond"
+
+First, select a MIDI output using unimidi.  ({more...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
+
+  @output = UniMIDI::Output.first.open
+
+The Arpeggiator has a number of {optional parameters}[http://rubydoc.info/github/arirusso/diamond/master/Diamond/Arpeggiator:initialize].  For this example, here's a straightforward setup
+
+  opts = { 
+    :gate => 90, 
+    :interval => 7,
+    :midi => @output,
+    :pattern => Diamond::Pattern["UpDown"],
+    :range => 4,     
+    :rate => 8
+  }
+
+Create an Arpeggiator object, passing in a tempo value and the options above. In this case the tempo will be 138 BPM
+
+  arp = Diamond::Arpeggiator.new(138, opts) 
+
+Of course, an arpeggiator needs notes to work with. As you might expect, it's easy to use a MIDI input for that. ({see example}[http://github.com/arirusso/diamond/blob/master/examples/midi_input.rb]). However, again for the sake of simplicity here's a chord in Ruby
+
+  chord = ["C3", "G3", "Bb3", "A4"]
+
+Use Arpeggiator#add and Arpeggiator#remove to change the notes that the arpeggiator sees. (Arpeggiator#<< is the same as add)  
+
+  arp.add(chord)   
+  arp << "C5"
+
+Now start the arpeggiator.  By default, the arpeggiator will run in a background thread so if you are working in {IRB}[http://en.wikipedia.org/wiki/Interactive_Ruby_Shell] this will allow you to live code, sync it other arpeggiators, or just run another foreground process. (To start in the foreground, just pass :focus => true to Arpeggiator#start) 
+
+  arp.start
+
+All of the {arpeggiator options}[http://rubydoc.info/github/arirusso/diamond/master/Diamond/Arpeggiator:initialize] can be controlled on the on the fly
+
+  arp.rate = 16
+  arp.gate = 20  
+  arp.remove(["C5", "A4"])
+  
+{This screencast video}[http://vimeo.com/25983971] shows Diamond being live coded in this way... {and this blog post explains}[http://tx81z.blogspot.com/2011/07/live-coding-with-diamond.html]
+
+Check out these posts and examples for more
+ 
+==== Posts:
+
+* {Live coding Diamond and syncing multiple arpeggiators to each other}[http://tx81z.blogspot.com/2011/07/live-coding-with-diamond.html]
+
+==== Examples:
+
+* {Define a Pattern}[http://github.com/arirusso/diamond/blob/master/examples/define_pattern.rb]
+* {Feed notes to Diamond using a MIDI controller or other input}[http://github.com/arirusso/diamond/blob/master/examples/midi_input.rb]
+* {Feed notes to Diamond using MIDI message objects}[http://github.com/arirusso/diamond/blob/master/examples/midi_message_objects.rb]
+* {Sync multiple Arpeggiator instances to each other}[http://github.com/arirusso/diamond/blob/master/examples/sync_multiple_arps.rb]
+* {Sync Diamond to external MIDI clock}[http://github.com/arirusso/diamond/blob/master/examples/sync_to_midi_clock.rb]
+* {Use Diamond as a master MIDI clock}[http://github.com/arirusso/diamond/blob/master/examples/output_midi_clock.rb]
+
+({more...}[http://github.com/arirusso/diamond/blob/master/examples])
+ 
+== Other Documentation
+
+* {rdoc}[http://rubydoc.info/github/arirusso/diamond] 
+
+== Author
+
+* {Ari Russo}[http://github.com/arirusso] <ari.russo at gmail.com>
+
+== License
+
+Apache 2.0, See the file LICENSE
+
+Copyright (c) 2011 Ari Russo
