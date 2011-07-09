@@ -6,5 +6,5 @@ require "midi-messenger"
 MIDI.message do
   channel 4
   velocity 120
-  p note "C4"
+  p play note("C4"), 1
 end 

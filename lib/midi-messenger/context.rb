@@ -3,15 +3,41 @@
 
 module MIDIMessenger
   
+  Default = {
+    :channel => 0,
+    :velocity => 100
+  }
+  
   class Context
+    
+    attr_accessor :channel,
+                  :velocity
         
-    def initialize(&block)
+    def initialize(ins, outs, &block)
+      @channel = Default[:channel]
+      @velocity = Default[:velocity]
       self.instance_eval(&block)
     end
     
     def note(name, opts = {})
-      props = message_properties(opts, :channel, :velocity)      
-      MIDIMessage::NoteOn[name].new(props[:channel], props[:velocity])
+      props = message_properties(opts, :channel, :velocity)
+      note = MIDIMessage::NoteOn[name].new(props[:channel], props[:velocity])      
+      @last_note = note 
+      note
+    end
+    
+    # 
+    def play(note, duration)
+      sleep duration
+      off
+      note
+    end
+    
+    # turn the last note off
+    def off
+      off = @last_note.to_note_off
+      @last_note = nil
+      off
     end
     
     def control_change(name, value, opts = {})

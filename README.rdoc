@@ -1,6 +1,6 @@
-= midi-dsl
+= midi-messenger
 
-shorthand MIDI messages and IO
+A DSL for MIDI messages and realtime IO
 
 == Installation
 
