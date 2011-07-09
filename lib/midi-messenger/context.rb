@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #
 
-module MIDIDSL
+module MIDIMessenger
   
   class Context
         
@@ -13,6 +13,10 @@ module MIDIDSL
       props = message_properties(opts, :channel, :velocity)      
       MIDIMessage::NoteOn[name].new(props[:channel], props[:velocity])
     end
+    
+    def control_change(name, value, opts = {})
+    end
+    alias_method :cc, :control_change
     
     def channel(val = nil)
       val.nil? ? @channel : @channel = val

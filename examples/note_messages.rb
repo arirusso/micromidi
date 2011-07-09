@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
-require "midi-dsl"
+require "midi-messenger"
 
 MIDI.message do
-  channel 0
-  velocity 100
+  channel 4
+  velocity 120
   p note "C4"
 end 

@@ -1,22 +1,23 @@
 = midi-dsl
 
-shorthand MIDI messages
+shorthand MIDI messages and IO
 
 == Installation
 
-  gem install midi-dsl
+  gem install midi-messenger
   
 == Requirements
 
 Gem Dependencies:
 
 * {midi-message}[http://github.com/arirusso/midi-message]
+* {unimidi}[http://github.com/arirusso/unimidi]
 
 == Usage
  
 == Documentation
 
-* {rdoc}[http://rubydoc.info/github/arirusso/midi-dsl] 
+* {rdoc}[http://rubydoc.info/github/arirusso/midi-messenger] 
 
 == Author
 
