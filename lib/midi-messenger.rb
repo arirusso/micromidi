@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'unimidi'
+require 'midi-eye'
 require 'midi-message'
+require 'unimidi'
 
 module MIDIMessenger
   
@@ -18,8 +19,6 @@ module MIDI
   end  
   
 end
-
-#require 'forwardable'
 
 require 'midi-messenger/context'
 

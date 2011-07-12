@@ -10,6 +10,7 @@ A DSL for MIDI messages and realtime IO
 
 Gem Dependencies:
 
+* {midi-eye}[http://github.com/arirusso/midi-eye]
 * {midi-message}[http://github.com/arirusso/midi-message]
 * {unimidi}[http://github.com/arirusso/unimidi]
 
