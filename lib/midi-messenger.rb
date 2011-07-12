@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'unimidi'
 require 'midi-message'
 
 module MIDIMessenger
