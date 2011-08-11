@@ -24,7 +24,7 @@ module MIDIMessenger
     end
     alias_method :cc, :control_change
     alias_method :c, :control_change
-        
+            
     # create a note message
     def note(id, opts = {})
       props = message_properties(opts, :channel, :velocity)
@@ -63,11 +63,12 @@ module MIDIMessenger
     end
     alias_method :pc, :program_change
      
-    def play(note, duration)
-      output(note)
+    def play(n, duration)
+      msg = note(n)
+      output_or_return(msg)
       sleep(duration)
       off
-      note
+      msg
     end
     
     # create a note-off message from the last note-on message
@@ -90,11 +91,9 @@ module MIDIMessenger
       @outputs.each { |o| o.puts(msg) }
       msg
     end
-    
-    
+        
     protected
-    
-    
+        
     def output_or_return(msg)
       output(msg) unless @outputs.empty?
       msg

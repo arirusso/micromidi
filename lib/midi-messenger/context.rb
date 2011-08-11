@@ -25,9 +25,15 @@ module MIDIMessenger
     end
     
     def method_missing(m, *a, &b)
-      @input.send(m, *a, &b) and return if @input.respond_to?(m)
-      @output.send(m, *a, &b) and return if @output.respond_to?(m)
-      super
+      delegated = false
+      outp = nil
+      [@input, @output].each do |dsl| 
+        if dsl.respond_to?(m)
+          outp = dsl.send(m, *a, &b)
+          delegated = true
+        end
+      end 
+      delegated ? outp : super
     end
     
   end

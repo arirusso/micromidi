@@ -3,8 +3,10 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "midi-messenger"
 
-MIDI.message do
+output = UniMIDI::Output.first.open
+
+MIDI.message(output) do
   channel 4
   velocity 120
-  p play note("C4"), 1
+  p play "C4", 1
 end 
