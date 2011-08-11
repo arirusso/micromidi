@@ -8,11 +8,13 @@ output = UniMIDI::Output.first.open
 
 MIDI.message(input, output) do
   
-  receive :note do |message, timestamp|
+  receive :note do |message|
     message.note += 12
     output message
   end
   
   thru_unless :note
+  
+  wait_for_input
   
 end 

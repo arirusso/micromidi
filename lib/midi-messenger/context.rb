@@ -129,6 +129,12 @@ module MIDIMessenger
       msg
     end
     
+    def wait_for_input(options = {})
+      listener = options[:from] || @listeners.last
+      @listeners.each { |l| l.start }
+      listener.join
+    end
+    
     protected
     
     def listener(match = {}, &block)

@@ -1,6 +1,6 @@
 = midi-messenger
 
-A DSL for MIDI messages and realtime IO
+A DSL for MIDI messages and realtime IO in Ruby
 
 == Installation
 
