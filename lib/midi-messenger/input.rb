@@ -2,8 +2,15 @@
 #
 module MIDIMessenger
   
-  module Input
+  class InputDSL
     
+    include MIDIMessage
+
+    def initialize(ins)
+      @inputs = ins
+      @listeners = []
+    end
+
     def receive(*a, &block)
       inputs = nil
       if a.last.kind_of?(Hash)
@@ -53,11 +60,22 @@ module MIDIMessenger
     
     private
     
-    def initialize_input(ins)
-      @inputs = ins
-      @listeners = []
+    def msg_classes(list)
+      list.map do |type|
+        case type
+          when :aftertouch, :pressure then [ChannelAftertouch, PolyphonicAftertouch]
+          when :channel_aftertouch, :channel_pressure, :ca, :cp then ChannelAftertouch
+          when :control_change, :cc then ControlChange
+          when :note then [NoteOn, NoteOff]
+          when :note_on, :n then NoteOn
+          when :note_off, :no then NoteOff
+          when :pitch_bend, :pb then PitchBend
+          when :polyphonic_aftertouch, :poly_aftertouch, :poly_pressure, :polyphonic_pressure, :pa, :pp then PolyphonicAftertouch
+          when :program_change, :pc then ProgramChange          
+        end
+      end.flatten.compact
     end
-
+    
   end
   
 end

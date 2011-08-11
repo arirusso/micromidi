@@ -9,20 +9,26 @@ module MIDIMessenger
   }
   
   class Context
-   
-    include Input
-    include Output
     
-    attr_accessor :channel,
-                  :velocity
+    extend Forwardable
+    
+    def_delegators :@output, 
+                   :channel,
+                   :velocity
         
     def initialize(ins, outs, &block)
       
-      initialize_input(ins)
-      initialize_output(outs)
+      @input = InputDSL.new(ins)
+      @output = OutputDSL.new(outs)
       
       self.instance_eval(&block)
-    end       
+    end
+    
+    def method_missing(m, *a, &b)
+      @input.send(m, *a, &b) and return if @input.respond_to?(m)
+      @output.send(m, *a, &b) and return if @output.respond_to?(m)
+      super
+    end
     
   end
 end

@@ -2,10 +2,16 @@
 #
 module MIDIMessenger
   
-  module Output
+  class OutputDSL
     
     include MIDIMessage
     
+    def initialize(outs)
+      @outputs = outs
+      @channel = Default[:channel]
+      @velocity = Default[:velocity]
+    end
+
     # create a control change message
     def control_change(id, value, opts = {})
       props = message_properties(opts, :channel)
@@ -95,29 +101,7 @@ module MIDIMessenger
     end
             
     private
-    
-    def initialize_output(outs)
-      @outputs = outs
-      @channel = Default[:channel]
-      @velocity = Default[:velocity]
-    end
-    
-    def msg_classes(list)
-      list.map do |type|
-        case type
-          when :aftertouch, :pressure then [ChannelAftertouch, PolyphonicAftertouch]
-          when :channel_aftertouch, :channel_pressure, :ca, :cp then ChannelAftertouch
-          when :control_change, :cc then ControlChange
-          when :note then [NoteOn, NoteOff]
-          when :note_on, :n then NoteOn
-          when :note_off, :no then NoteOff
-          when :pitch_bend, :pb then PitchBend
-          when :polyphonic_aftertouch, :poly_aftertouch, :poly_pressure, :polyphonic_pressure, :pa, :pp then PolyphonicAftertouch
-          when :program_change, :pc then ProgramChange          
-        end
-      end.flatten.compact
-    end
-    
+            
     def message_properties(opts, *props)
       output = {}
       props.each do |prop|
