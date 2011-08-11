@@ -8,11 +8,7 @@ A DSL for MIDI messages and realtime IO in Ruby
   
 == Requirements
 
-Gem Dependencies:
-
-* {midi-eye}[http://github.com/arirusso/midi-eye]
-* {midi-message}[http://github.com/arirusso/midi-message]
-* {unimidi}[http://github.com/arirusso/unimidi]
+requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://github.com/arirusso/midi-message] and {unimidi}[http://github.com/arirusso/unimidi].  These should install automatically with the gem
 
 == Usage
 
