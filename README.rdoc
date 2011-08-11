@@ -31,7 +31,7 @@ Input works similarly
 
   MIDI.message(input, output) do
   
-    handle :note do |message|
+    receive :note do |message|
       message.note += 12
       output message
     end
