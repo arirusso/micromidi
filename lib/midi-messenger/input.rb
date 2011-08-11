@@ -20,6 +20,7 @@ module MIDIMessenger
       match = a.empty? ? nil : { :class => msg_classes(a) }
       listener(match, :from => inputs) { |event| yield(event[:message], event[:timestamp]) }      
     end
+    alias_method :handle, :receive
     
     def receive_unless(*a, &block)
       match = { :class => msg_classes(a) }

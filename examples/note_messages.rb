@@ -8,5 +8,5 @@ output = UniMIDI::Output.first.open
 MIDI.message(output) do
   channel 4
   velocity 120
-  p play "C4", 1
+  play "C4", 1
 end 

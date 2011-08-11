@@ -17,12 +17,33 @@ Gem Dependencies:
 == Usage
 
   require "midi-messenger"
+  
+Do shorthand MIDI output.  First select a unimidi output (more...)
 
   output = UniMIDI::Output.first.open
+  
+Then open the messenger and put together some messages
 
   MIDI.message(output) do
     note "C4"
     cc 5, 120
+  end 
+  
+Input works similarly
+
+  input = UniMIDI::Input.first.open
+
+  MIDI.message(input, output) do
+  
+    handle :note do |message|
+      message.note += 12
+      output message
+    end
+  
+    thru_unless :note
+  
+    wait_for_input
+  
   end 
  
 == Documentation
