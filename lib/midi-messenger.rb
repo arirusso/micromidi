@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 require 'midi-eye'
 require 'midi-message'
 require 'unimidi'
@@ -19,6 +18,9 @@ module MIDI
   end  
   
 end
+
+require 'midi-messenger/input'
+require 'midi-messenger/output'
 
 require 'midi-messenger/context'
 
