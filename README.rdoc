@@ -22,7 +22,11 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
 
   require "midi-messenger"
   
-Here is an example of outputting some MIDI messages.  First select a unimidi output ({more...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
+==== Output
+  
+This first example will output MIDI only.  
+
+First select a unimidi output ({more...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
 
   output = UniMIDI::Output.first.open
   
@@ -44,6 +48,8 @@ You can also "play" notes, sending both an on and off message to follow.  For ex
     play "C3", 0.5
   
   end 
+
+==== Input
   
 To enable input, pass in an input.  You can pass in as many inputs and outputs as you like
 
@@ -57,7 +63,7 @@ Filter by message type with using <em>thru_if</em> and <em>thru_unless</em>.  Cl
   
     thru_unless :note
     
-Bind an input event using the receive method
+Bind an input event using the <em>receive</em> method
     
     receive :note do |message|
       message.note += 12
@@ -67,11 +73,7 @@ Bind an input event using the receive method
 Wait for a message
   
     wait_for_input
-    
-Or bind an event that will stop the listener from waiting
-
-    wait_for_input_until { |message| message.note > 64 }
-  
+      
   end
   
 == To-do
