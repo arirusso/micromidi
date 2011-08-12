@@ -24,7 +24,7 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
   
 ==== Output
   
-This first example will output MIDI only.  
+Here is an example that outputs MIDI.
 
 First select a unimidi output ({more...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
 
@@ -78,7 +78,8 @@ Wait for a message
   
 == To-do
 
-* Sysex Messages 
+* sysex Messages 
+* more rdoc
  
 == Documentation
 
