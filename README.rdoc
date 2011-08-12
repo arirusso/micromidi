@@ -36,11 +36,11 @@ Specify some MIDI messages
     cc 5, 120
 
 The off command will send a note-off message for the last note-on that was sent (in this case, C4)
-
+  
     off 
 
 You can also "play" notes, sending both an on and off message to follow.  For example, this will play C3 for a half a second. 
-
+  
     play "C3", 0.5
   
   end 
@@ -53,7 +53,7 @@ To enable input, pass in an input.  You can pass in as many inputs and outputs a
   
 Use the <em>thru</em> command to send all inputted messages to the output(s).  
 
-Filter by message type with using thru_if and thru_unless.  See {this}[blah] example for a list of message types. 
+Filter by message type with using <em>thru_if</em> and <em>thru_unless</em>.  Click {here}[blah] for a list of possible message types. 
   
     thru_unless :note
     
@@ -72,7 +72,11 @@ Or bind an event that will stop the listener from waiting
 
     wait_for_input_until { |message| message.note > 64 }
   
-  end 
+  end
+  
+== To-do
+
+* Sysex Messages 
  
 == Documentation
 
