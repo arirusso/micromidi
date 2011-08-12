@@ -4,7 +4,8 @@ A DSL for MIDI in Ruby
 
 == Features
 
-* Construct MIDI message objects and do realtime IO.  
+* Construct MIDI message objects 
+* Perform realtime MIDI IO  
 * Cross-platform compatible using MRI or JRuby.
 
 == Installation
@@ -38,19 +39,19 @@ The off command will send a note-off message for the last note-on that was sent 
 
     off 
 
-You can also "play" notes, sending both an on and off message to follow.  This, for example, will play C3 for a half a second. 
+You can also "play" notes, sending both an on and off message to follow.  For example, this will play C3 for a half a second. 
 
     play "C3", 0.5
   
   end 
   
-To enable input, simply pass in an input.  You can pass in as many inputs and outputs as you like
+To enable input, pass in an input.  You can pass in as many inputs and outputs as you like
 
   input = UniMIDI::Input.first.open
 
   MIDI.message(input, output) do
   
-Use the thru command to instantaneously send all inputted messages to the output(s).  
+Use the <em>thru</em> command to send all inputted messages to the output(s).  
 
 Filter by message type with using thru_if and thru_unless.  See {this}[blah] example for a list of message types. 
   
