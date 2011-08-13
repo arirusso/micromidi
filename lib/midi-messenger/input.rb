@@ -9,6 +9,11 @@ module MIDIMessenger
     def initialize(ins)
       @inputs = ins
       @listeners = []
+      start_input
+    end
+    
+    def start_input
+      @listeners.each { |l| l.start }    
     end
 
     def receive(*a, &block)
@@ -44,7 +49,6 @@ module MIDIMessenger
   
     def wait_for_input(options = {})
       listener = options[:from] || @listeners.last
-      @listeners.each { |l| l.start }
       listener.join
     end
 

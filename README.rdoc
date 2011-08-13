@@ -3,9 +3,9 @@
 A DSL for MIDI in Ruby
 
 == Features
-
-* Construct MIDI message objects 
+ 
 * Perform realtime MIDI IO  
+* Construct MIDI message objects
 * Cross-platform compatible using MRI or JRuby.
 
 == Installation
