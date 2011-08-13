@@ -6,7 +6,7 @@ require 'midi-eye'
 require 'midi-message'
 require 'unimidi'
 
-module MIDIMessenger
+module Looplang
   
   VERSION = "0.0.1"
   
@@ -22,8 +22,10 @@ module MIDI
   
 end
 
-require 'midi-messenger/input'
-require 'midi-messenger/output'
+# modules
+require 'looplang/input'
+require 'looplang/output'
 
-require 'midi-messenger/context'
+# classes
+require 'looplang/context'
 
