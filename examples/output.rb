@@ -5,10 +5,8 @@ require "micromidi"
 
 output = UniMIDI::Output.first.open
 
-sesh = MIDI.message(output) do
+MIDI.message(output) do
   note "C4"
   cc 5, 120
   play "C2", 3
 end
-
-p sesh.output_cache

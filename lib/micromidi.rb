@@ -30,6 +30,9 @@ module MIDI
   
 end
 
+# modules
+require 'procedures'
+
 # classes
 require 'micromidi/input'
 require 'micromidi/context'

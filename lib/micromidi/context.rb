@@ -10,6 +10,7 @@ module MicroMIDI
   
   class Context
     
+    include Procedures
     extend Forwardable
     
     attr_reader :output_cache
@@ -27,14 +28,6 @@ module MicroMIDI
       @output = Instructions::Output.new(outs)
       
       self.instance_eval(&block)
-    end
-    
-    def play(n, duration)
-      msg = @message.note(n)
-      @output_cache << { :message => @output.output(msg), :timestamp => now }
-      sleep(duration)
-      @output_cache << { :message => @message.off, :timestamp => now }
-      msg
     end
     
     def method_missing(m, *a, &b)
