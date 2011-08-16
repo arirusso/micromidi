@@ -105,7 +105,7 @@ Note that when you open a micromidi block, you can pass in as many inputs and ou
       
   end
   
-This example sends all messages from <em>@input</em> to <em>@output</em> with the exception of notes.  When a note is received, it raises the note's value by an octave before sending it to <em>@output</em>.
+This example sends all messages from <em>@input</em> to <em>@output</em> with the exception of notes.  When a note is received, instead it raises the note's value by an octave and then sends it to <em>@output</em>.
   
 == To-do
 
