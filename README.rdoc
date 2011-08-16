@@ -50,7 +50,7 @@ As you might expect, the code in the block sends the following to <em>@output</e
 
 ==== Sticky Message Values
 
-If you use MIDI alot, you may have noticed that there was no mention of <em>MIDI channel</em> or <em>velocity</em> in the last example.  Most of the time, sending a note-on or note-off message requires the values.
+If you use MIDI alot, you may have noticed that there was no mention of <em>MIDI channel</em> or <em>velocity</em> in the last example.  Most of the time, sending a note-on or note-off message requires those values.
 
 That is because channel and velocity have sticky values (which default to 0 and 100, respectively).  These sticky values will be used by any commands where they are needed.  If one passes a channel or velocity value explicitly to a command, the sticky value will be overriden for that command.
 
