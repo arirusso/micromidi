@@ -1,29 +1,81 @@
-= looplang
+= micromidi
 
-MIDI sequencer in Ruby
-
-== Description
-
-Looplang is a DSL for sequencing MIDI realtime events in Ruby. 
+A DSL for MIDI in Ruby
 
 == Features
-   
+ 
+* Perform realtime MIDI IO  
+* Construct MIDI message objects
 * Cross-platform compatible using MRI or JRuby.
 
 == Installation
 
-  gem install midi-messenger
+  gem install micromidi
   
 == Requirements
 
 Ruby 1.9.2+ or JRuby in 1.9 mode
 
-Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://github.com/arirusso/midi-message], {topaz}[http://github.com/arirusso/topaz] and {unimidi}[http://github.com/arirusso/unimidi].  These should install automatically with the gem.
+Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://github.com/arirusso/midi-message] and {unimidi}[http://github.com/arirusso/unimidi].  These should install automatically with the gem.
 
 == Usage
 
-  require "looplang"
+  require "micromidi"
+  
+==== Output
+  
+Here is an example that outputs MIDI.
+
+First select a unimidi output ({more...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
+
+  output = UniMIDI::Output.first.open
+  
+Pass the output to micromidi and open a block to work in
+
+  MIDI.message(output) do
+  
+Specify some MIDI messages
+  
+    note "C4"
+    cc 5, 120
+
+The off command will send a note-off message for the last note-on that was sent (in this case, C4)
+  
+    off 
+
+You can also "play" notes, sending both an on and off message to follow.  For example, this will play C3 for a half a second. 
+  
+    play "C3", 0.5
+  
+  end 
+
+==== Input
+  
+To enable input, pass in an input.  You can pass in as many inputs and outputs as you like
+
+  input = UniMIDI::Input.first.open
+
+  MIDI.message(input, output) do
+  
+Use the <em>thru</em> command to send all inputted messages to the output(s).  
+
+Filter by message type with using <em>thru_if</em> and <em>thru_unless</em>.  Click {here}[blah] for a list of possible message types. 
+  
+    thru_unless :note
     
+Bind an input event using the <em>receive</em> method
+    
+    receive :note do |message|
+      message.note += 12
+      output message
+    end
+    
+Wait for a message
+  
+    wait_for_input
+      
+  end
+  
 == To-do
 
 * sysex Messages 
@@ -31,7 +83,7 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
  
 == Documentation
 
-* {rdoc}[http://rubydoc.info/github/arirusso/looplang] 
+* {rdoc}[http://rubydoc.info/github/arirusso/micromidi] 
 
 == Author
 

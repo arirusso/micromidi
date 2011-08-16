@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #
 
-module MIDIMessenger
+module MicroMIDI
   
   Default = {
     :channel => 0,
@@ -16,11 +16,9 @@ module MIDIMessenger
                    :channel,
                    :velocity
         
-    def initialize(ins, outs, &block)
-      
-      @input = InputDSL.new(ins)
-      @output = OutputDSL.new(outs)
-      
+    def initialize(ins, outs, &block)      
+      @input = Instructions::Input.new(ins),
+      @output = Instructions::Output.new(outs)
       self.instance_eval(&block)
     end
     
