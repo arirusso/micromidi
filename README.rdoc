@@ -8,7 +8,7 @@ A DSL for MIDI in Ruby
  
 * Simplified realtime MIDI IO
 * Construct message objects
-* Cross-platform compatible using MRI or JRuby.
+* Cross-platform compatibile using MRI or JRuby.
 
 == Installation
 
