@@ -48,6 +48,40 @@ As you might expect, the code in the block does the following:
 * sets controller number 5 to 120
 * outputs note C3, waits half of a second and then outputs note-off for C3
 
+==== Default Message Values
+
+When a block such as in that example is opened, <em>channel</em> and <em>velocity</em> have default values (0 and 100, respectively)
+
+These values are used by any commands where no velocity and/or channel is specified.  Here is an example where the default values are changed and also some messages are given values.
+
+  MIDI.message(@output) do
+
+    channel 1
+
+    note "C4"
+    off
+
+    velocity 60
+
+    note "E5", :channel => 2
+    off
+
+    channel 3
+
+    note "C3"
+    off
+  
+  end 
+
+In this case the following is outputted:
+
+* note C4 (channel 1, vel 100)
+* note-off C4 (channel 1, vel 100)
+* note E5 (channel 2, vel 60)
+* note-off E5 (channel 2, vel 60)
+* note C3 (channel 3, vel 60)
+* note-off C3 (channel 3, vel 60)
+
 ==== Input
   
 Input works via configuration and binding events. 
