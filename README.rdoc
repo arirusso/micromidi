@@ -59,7 +59,7 @@ outputs note-off for C3
   
 Input works via configuration and binding events. 
 
-Note that you can pass in as many inputs and outputs as you like, or {none at all}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  If you wish to operate on certain devices specifically, open them in seperate blocks.
+Note that you can pass in as many inputs and outputs as you like, or {none at all}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  
 
   input = UniMIDI::Input.first.open
 
