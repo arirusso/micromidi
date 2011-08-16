@@ -28,11 +28,16 @@ module MicroMIDI
         listener(match, :from => inputs) { |event| yield(event[:message], event[:timestamp]) }
       end
       alias_method :handle, :receive
+      alias_method :listen, :receive
+      alias_method :listen_for, :receive
 
       def receive_unless(*a, &block)
         match = { :class => msg_classes(a) }
         listener { |event| yield(event[:message], event[:timestamp]) unless match.include?(event[:message].class) }
       end
+      alias_method :handle_unless, :receive_unless
+      alias_method :listen_unless, :receive_unless
+      alias_method :listen_for_unless, :receive_unless
 
       # send input messages thru to the outputs
       def thru
