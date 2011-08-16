@@ -41,19 +41,12 @@ Here is an example that outputs some MIDI messages to a {unimidi}[http://github.
   
   end 
 
-That example does the following: 
+As you might expect, the code in the block does the following: 
 
-output note C4 
-
-output note-off for C4
-
-sets controller number 5 to 120
-
-outputs note C3
-
-waits half a second
-
-outputs note-off for C3
+* outputs note C4 
+* outputs note-off for C4, since that was the last note generated
+* sets controller number 5 to 120
+* outputs note C3, waits half of a second and then outputs note-off for C3
 
 ==== Input
   
