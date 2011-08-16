@@ -5,6 +5,10 @@ module MicroMIDI
   module Instructions
     
     class Sticky
+      
+      def initialize
+
+      end
 
       # sets the sticky channel for the current block
       def channel(val = nil)

@@ -3,26 +3,13 @@
 
 module MicroMIDI
   
-  Default = {
-    :channel => 0,
-    :velocity => 100
-  }
-  
   class Context
     
     include Instructions::Composite
-    
-    extend Forwardable
-    
-    attr_reader :output_cache
-    
-    def_delegators :@output, 
-                   :channel,
-                   :velocity
-        
-    def initialize(ins, outs, &block)      
-      @output_cache = []
-      @start_time = Time.now.to_f
+            
+    def initialize(ins, outs, &block)
+      
+      @state = State.new
       
       @input = Instructions::Input.new(ins)      
       @message = Instructions::Message.new
