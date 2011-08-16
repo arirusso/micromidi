@@ -44,7 +44,7 @@ Here's an example that sends some MIDI messages to a {unimidi}[http://github.com
 As you might expect, the code in the block sends the following to <em>@output</em>: 
 
 * note C4 
-* note-off for C4, since that was the last note generated
+* note-off for C4, since that was the last note sent
 * sets controller number 5 to 120
 * note C3, waits half of a second and then note-off for C3
 
