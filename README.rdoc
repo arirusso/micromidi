@@ -75,7 +75,7 @@ Here's an example where the sticky values are used, changed and overriden.
   
   end 
 
-In this case the following is sent to <em>@output</em>:
+What winds up being sent to <em>@output</em> is:
 
 * note C4 (channel 1, vel 100)
 * note-off C4 (channel 1, vel 100)
@@ -86,13 +86,13 @@ In this case the following is sent to <em>@output</em>:
 
 ==== Input
   
-Input works via configuration and binding events.
+Input works by configuration and binding events.
 
-Note that when you open a micromidi block, you can pass in as many inputs and outputs as you like, although input methods won't do anything if there is no input passed in.  If there are no inputs OR outputs passed in, output methods can be called but they will only {produce message objects without sending them anywhere}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  
+Note that when you open a micromidi block, you can pass in as many inputs and outputs as you like, although input methods won't do anything if there is no input passed in.  If there happen to be no inputs OR outputs passed in, output methods can be called but they will only {produce message objects without sending them anywhere}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  
 
-  input = UniMIDI::Input.first.open
+  @input = UniMIDI::Input.first.open
 
-  MIDI.message(input, output) do
+  MIDI.message(@input, @output) do
     
     thru_unless :note
     
@@ -101,9 +101,11 @@ Note that when you open a micromidi block, you can pass in as many inputs and ou
       output message
     end
   
-    wait_for_input
+    loop { wait_for_input }
       
   end
+  
+This example sends all messages from <em>@input</em> to <em>@output</em> with the exception of notes.  When a note is received, it raises the note's value by an octave before sending it to <em>@output</em>.
   
 == To-do
 
