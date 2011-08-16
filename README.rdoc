@@ -49,7 +49,7 @@ Input works similarly. You can pass in as many inputs and outputs as you like
     
     thru_unless :note
     
-    receive :note do |message|
+    listen_for :note do |message|
       message.note += 12
       output message
     end
