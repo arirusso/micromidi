@@ -30,7 +30,7 @@ module MicroMIDI
       alias_method :handle, :receive
       alias_method :listen, :receive
       alias_method :listen_for, :receive
-      alias_method :when_receive, :recieve
+      alias_method :when_receive, :receive
 
       def receive_unless(*a, &block)
         match = { :class => msg_classes(a) }
