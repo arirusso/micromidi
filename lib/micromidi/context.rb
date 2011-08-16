@@ -23,6 +23,7 @@ module MicroMIDI
       delegated = false
       outp = nil
       if @message.respond_to?(m)
+        a.unshift(@state)
         outp = @output.output(@message.send(m, *a, &b))
         delegated = true
       else
@@ -33,7 +34,7 @@ module MicroMIDI
           end
         end
       end
-      @output_cache << { :message => outp, :timestamp => now }
+      @state.output_cache << { :message => outp, :timestamp => now }
       delegated ? outp : super
     end
     
