@@ -24,26 +24,16 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
   
 ==== Output
   
-Here is an example that outputs MIDI.
+Here is an example that outputs some MIDI messages to a {unimidi output}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb].
 
-First select a unimidi output ({more...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
-
-  output = UniMIDI::Output.first.open
+  @output = UniMIDI::Output.first.open
   
-Pass the output to micromidi and open a block to work in
-
-  MIDI.message(output) do
-  
-Specify some MIDI messages
-  
+  MIDI.message(@output) do
+    
     note "C4"
-    cc 5, 120
-
-The off command will send a note-off message for the last note-on that was sent (in this case, C4)
-  
     off 
 
-You can also "play" notes, sending both an on and off message to follow.  For example, this will play C3 for a half a second. 
+    cc 5, 120
   
     play "C3", 0.5
   
@@ -51,26 +41,18 @@ You can also "play" notes, sending both an on and off message to follow.  For ex
 
 ==== Input
   
-To enable input, pass in an input.  You can pass in as many inputs and outputs as you like
+Input works similarly. You can pass in as many inputs and outputs as you like
 
   input = UniMIDI::Input.first.open
 
   MIDI.message(input, output) do
-  
-Use the <em>thru</em> command to send all inputted messages to the output(s).  
-
-Filter by message type with using <em>thru_if</em> and <em>thru_unless</em>.  Click {here}[blah] for a list of possible message types. 
-  
-    thru_unless :note
     
-Bind an input event using the <em>receive</em> method
+    thru_unless :note
     
     receive :note do |message|
       message.note += 12
       output message
     end
-    
-Wait for a message
   
     wait_for_input
       
@@ -79,7 +61,7 @@ Wait for a message
 == To-do
 
 * sysex Messages 
-* more rdoc
+* more doc
  
 == Documentation
 
