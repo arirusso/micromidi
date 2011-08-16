@@ -86,7 +86,7 @@ In this case the following is sent to <em>@output</em>:
   
 Input works via configuration and binding events.
 
-Note that when you open a micromidi block, you can pass in as many inputs and outputs as you like, although input methods will have no effect if there is no input passed in.  If there are no inputs OR outputs passed in, output methods can be called but they will only {produce message objects}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb] without sending them anywhere.  
+Note that when you open a micromidi block, you can pass in as many inputs and outputs as you like, although input methods won't do anything if there is no input passed in.  If there are no inputs OR outputs passed in, output methods can be called but they will only {produce message objects}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb] without sending them anywhere.  
 
   input = UniMIDI::Input.first.open
 
