@@ -48,11 +48,11 @@ As you might expect, the code in the block sends the following to <em>@output</e
 * sets controller number 5 to 120
 * note C3, waits half of a second and then note-off for C3
 
-==== Default Message Values
+==== Sticky Message Values
 
-When a micromidi block is opened, <em>channel</em> and <em>velocity</em> have default values (0 and 100, respectively).  These values are used by any commands where no velocity and/or channel are explicitly given.  
+<em>Channel</em> and <em>velocity</em> have sticky values (0 and 100 by default, respectively).  Sticky values are used by any commands where their value is needed, unless they're overriden by passing in an explicit value to the command.
 
-To demonstrate, here's an example where the default values are changed and also some messages are specified channel and velocity values.
+Here's an example where the sticky values are used, changed and overriden.
 
   MIDI.message(@output) do
 
