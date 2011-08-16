@@ -33,4 +33,5 @@ end
 # classes
 require 'micromidi/input'
 require 'micromidi/context'
+require 'micromidi/message'
 require 'micromidi/output'
