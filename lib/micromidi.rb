@@ -31,7 +31,7 @@ module MIDI
 end
 
 # modules
-require 'procedures'
+require 'micromidi/composite'
 
 # classes
 require 'micromidi/input'

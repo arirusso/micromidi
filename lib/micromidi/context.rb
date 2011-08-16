@@ -10,7 +10,8 @@ module MicroMIDI
   
   class Context
     
-    include Procedures
+    include Instructions::Composite
+    
     extend Forwardable
     
     attr_reader :output_cache
@@ -34,7 +35,7 @@ module MicroMIDI
       delegated = false
       outp = nil
       if @message.respond_to?(m)
-        @output.output(@message.send(m, *a, &b))
+        outp = @output.output(@message.send(m, *a, &b))
         delegated = true
       else
         [@input, @output].each do |dsl| 

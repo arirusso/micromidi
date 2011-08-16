@@ -4,7 +4,7 @@ module MicroMIDI
 
   module Instructions
     
-    class Procedures
+    module Composite
       
       def play(n, duration)
         msg = @message.note(n)
