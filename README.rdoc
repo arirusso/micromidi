@@ -50,9 +50,9 @@ As you might expect, the code in the block does the following:
 
 ==== Default Message Values
 
-When a block such as in that example is opened, <em>channel</em> and <em>velocity</em> have default values (0 and 100, respectively)
+When a micromidi block is opened, <em>channel</em> and <em>velocity</em> have default values (0 and 100, respectively).  These values are used by any commands where no velocity and/or channel are explicitly given.  
 
-These values are used by any commands where no velocity and/or channel is specified.  Here is an example where the default values are changed and also some messages are given values.
+To demonstrate, here is an example where the default values are changed and also some messages are specified channel and velocity values.
 
   MIDI.message(@output) do
 
