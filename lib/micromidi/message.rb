@@ -58,13 +58,18 @@ module MicroMIDI
       end
       alias_method :o, :off
 
+      # sets the default channel for the current block
       def channel(val = nil)
         val.nil? ? @channel : @channel = val
       end
+      alias_method :ch, :channel
 
+      # sets the default velocity for the current block
       def velocity(val = nil)
         val.nil? ? @velocity : @velocity = val
       end
+      alias_method :vel, :velocity
+      alias_method :v, :velocity
 
       private
 
