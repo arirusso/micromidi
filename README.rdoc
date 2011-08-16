@@ -2,9 +2,11 @@
 
 A DSL for MIDI in Ruby
 
+{pic}[http://images.treetrouble.net/images/midi.png]
+
 == Features
  
-* Realtime MIDI IO
+* Simplified realtime MIDI IO
 * Construct message objects
 * Cross-platform compatible using MRI or JRuby.
 
@@ -24,7 +26,7 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
   
 ==== Output
   
-Here is an example that outputs some MIDI messages to a {unimidi}[http://github.com/arirusso/unimidi] output.  (read more {here}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb] about selecting an output...)
+Here is an example that outputs some MIDI messages to a {unimidi}[http://github.com/arirusso/unimidi] output.  ({read more here about selecting an output...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
 
   @output = UniMIDI::Output.first.open
   
@@ -39,13 +41,18 @@ Here is an example that outputs some MIDI messages to a {unimidi}[http://github.
   
   end 
 
-As you might expect, that example does the following: 
+That example does the following: 
 
 output note C4 
+
 output note-off for C4
+
 sets controller number 5 to 120
+
 outputs note C3
+
 waits half a second
+
 outputs note-off for C3
 
 ==== Input
