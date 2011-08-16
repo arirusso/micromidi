@@ -31,10 +31,11 @@ module MIDI
 end
 
 # modules
-require 'micromidi/composite'
+require 'micromidi/instructions/composite'
 
 # classes
-require 'micromidi/input'
 require 'micromidi/context'
-require 'micromidi/message'
-require 'micromidi/output'
+require 'micromidi/instructions/input'
+require 'micromidi/instructions/message'
+require 'micromidi/instructions/output'
+require 'micromidi/instructions/sticky'

@@ -27,6 +27,7 @@ module MicroMIDI
       @input = Instructions::Input.new(ins)      
       @message = Instructions::Message.new
       @output = Instructions::Output.new(outs)
+      @sticky = Instructions::Sticky.new
       
       self.instance_eval(&block)
     end
@@ -38,7 +39,7 @@ module MicroMIDI
         outp = @output.output(@message.send(m, *a, &b))
         delegated = true
       else
-        [@input, @output].each do |dsl| 
+        [@input, @output, @sticky].each do |dsl| 
           if dsl.respond_to?(m)
             outp = dsl.send(m, *a, &b)
             delegated = true
