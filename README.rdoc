@@ -26,7 +26,7 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
   
 ==== Output
   
-Here is an example that outputs some MIDI messages to a {unimidi}[http://github.com/arirusso/unimidi] output.  ({read more here about selecting an output...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
+Here's an example that sends some MIDI messages to a {unimidi}[http://github.com/arirusso/unimidi] output.  ({read more here about selecting an output...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
 
   @output = UniMIDI::Output.first.open
   
@@ -52,7 +52,7 @@ As you might expect, the code in the block does the following:
 
 When a micromidi block is opened, <em>channel</em> and <em>velocity</em> have default values (0 and 100, respectively).  These values are used by any commands where no velocity and/or channel are explicitly given.  
 
-To demonstrate, here is an example where the default values are changed and also some messages are specified channel and velocity values.
+To demonstrate, here's an example where the default values are changed and also some messages are specified channel and velocity values.
 
   MIDI.message(@output) do
 
@@ -73,7 +73,7 @@ To demonstrate, here is an example where the default values are changed and also
   
   end 
 
-In this case the following is outputted:
+In this case the following is sent to <em>@output</em>:
 
 * note C4 (channel 1, vel 100)
 * note-off C4 (channel 1, vel 100)
@@ -84,9 +84,9 @@ In this case the following is outputted:
 
 ==== Input
   
-Input works via configuration and binding events. 
+Input works via configuration and binding events.
 
-Note that you can pass in as many inputs and outputs as you like, or {none at all}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  
+Note that when you open a micromidi block, you can pass in as many inputs and outputs as you like, although input methods will have no effect if there is no input passed in.  If there are no inputs OR outputs passed in, output methods can be called but they will only {produce message objects}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb] without sending them anywhere.  
 
   input = UniMIDI::Input.first.open
 
