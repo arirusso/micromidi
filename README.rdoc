@@ -41,12 +41,12 @@ Here's an example that sends some MIDI messages to a {unimidi}[http://github.com
   
   end 
 
-As you might expect, the code in the block does the following: 
+As you might expect, the code in the block sends the following to <em>@output</em>: 
 
-* outputs note C4 
-* outputs note-off for C4, since that was the last note generated
+* note C4 
+* note-off for C4, since that was the last note generated
 * sets controller number 5 to 120
-* outputs note C3, waits half of a second and then outputs note-off for C3
+* note C3, waits half of a second and then note-off for C3
 
 ==== Default Message Values
 
