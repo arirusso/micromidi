@@ -5,20 +5,16 @@ module MicroMIDI
   module Instructions
     
     class Sticky
-      
-      def initialize
-
-      end
 
       # sets the sticky channel for the current block
-      def channel(val = nil)
-        val.nil? ? @channel : @channel = val
+      def channel(state, val = nil)
+        val.nil? ? state.channel : state.channel = val
       end
       alias_method :ch, :channel
 
       # sets the sticky velocity for the current block
-      def velocity(val = nil)
-        val.nil? ? @velocity : @velocity = val
+      def velocity(state, val = nil)
+        val.nil? ? state.velocity : state.velocity = val
       end
       alias_method :vel, :velocity
       alias_method :v, :velocity

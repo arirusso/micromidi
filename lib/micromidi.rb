@@ -35,6 +35,7 @@ require 'micromidi/instructions/composite'
 
 # classes
 require 'micromidi/context'
+require 'micromidi/state'
 require 'micromidi/instructions/input'
 require 'micromidi/instructions/message'
 require 'micromidi/instructions/output'

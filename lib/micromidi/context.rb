@@ -26,23 +26,23 @@ module MicroMIDI
         a.unshift(@state)
         outp = @output.output(@message.send(m, *a, &b))
         delegated = true
+      elsif @sticky.respond_to?(m)
+        a.unshift(@state)
+        @sticky.send(m, *a, &b)
+        delegated = true
       else
-        [@input, @output, @sticky].each do |dsl| 
+        [@input, @output].each do |dsl| 
           if dsl.respond_to?(m)
             outp = dsl.send(m, *a, &b)
             delegated = true
           end
         end
       end
-      @state.output_cache << { :message => outp, :timestamp => now }
+      @state.output_cache << { :message => outp, :timestamp => @state.now }
       delegated ? outp : super
     end
     
     private
-    
-    def now
-      ((Time.now.to_f - @start_time) * 1000)
-    end
-    
+        
   end
 end
