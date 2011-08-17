@@ -13,6 +13,7 @@ module MicroMIDI
         start_input
       end
 
+      # starts the listeners (they will be started by default unless :start_input => false is passed in)
       def start_input
         @state.listeners.each { |l| l.start }
       end
