@@ -8,7 +8,7 @@ A Ruby DSL for MIDI
  
 * Simplified realtime MIDI IO
 * Construct message objects
-* Cross-platform compatibile using MRI or JRuby.
+* Cross-platform compatible using MRI or JRuby.
 
 == Installation
 
@@ -85,8 +85,8 @@ What winds up being sent to <em>@output</em> is:
 * note-off C3 (channel 3, vel 60)
 
 ==== Input
-  
-Input works by configuration and binding events.
+
+Input is event-driven but has a number of keywords to bind common events.  For instance, you can use the keyword <em>thru</em> to send all messages that arrive to your outputs.
 
 Note that when you open a Micromidi block, you can pass in as many inputs and outputs as you like, although input methods won't do anything if there is no input passed in.  If there happen to be no inputs OR outputs passed in, output methods can be called but they will only {produce message objects without sending them anywhere}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  
 
