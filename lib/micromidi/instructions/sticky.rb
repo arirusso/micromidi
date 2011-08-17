@@ -23,6 +23,21 @@ module MicroMIDI
       alias_method :vel, :velocity
       alias_method :v, :velocity
       
+      #
+      # toggles super_sticky mode, a mode where any explicit values used to create MIDI messages
+      # automatically become sticky -- whereas normally the explicit value would only be used for 
+      # the current message.
+      #
+      # e.g.
+      #
+      # note "C4", :channel => 5
+      #
+      # would have the exact same effect as
+      # 
+      # channel 5
+      # note "C4"
+      #
+      #
       def super_sticky
         @state.toggle_super_sticky
       end
