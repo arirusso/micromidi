@@ -6,9 +6,10 @@ A Ruby DSL for MIDI
 
 == Features
  
-* Simplified realtime MIDI IO
-* Construct message objects
 * Cross-platform compatible using MRI or JRuby.
+* Simplified realtime IO
+* Event-driven input with shortcuts for common events
+* Shorthand keywords for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
 
 == Installation
 
@@ -111,8 +112,10 @@ There are many permutations of each of these methods, giving input handling with
   
 == To-do
 
-* sysex messages 
+* guide for shorthand aliases
 * more doc
+* sysex messages 
+* MIDI files?
  
 == Documentation
 
