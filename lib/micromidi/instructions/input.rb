@@ -16,8 +16,8 @@ module MicroMIDI
       def receive(*a, &block)
         inputs = nil
         if a.last.kind_of?(Hash)
-        options = a.last
-        inputs = options[:from]
+          options = a.last
+          inputs = options[:from]
         end
         match = a.empty? ? nil : { :class => msg_classes(a) }
         listener(match, :from => inputs) { |event| yield(event[:message], event[:timestamp]) }
