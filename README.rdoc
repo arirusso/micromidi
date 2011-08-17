@@ -108,7 +108,7 @@ Note that when you open a Micromidi block, you can pass in as many inputs and ou
   
 This example sends all messages from <em>@input</em> to <em>@output</em> with the exception of notes.  When a note is received, instead it raises the note's value by an octave and then sends it to <em>@output</em>.
 
-In the interest of expressiveness, there are many permutations of each of these methods.  I recommend reading the rdoc for {MicroMIDI::Instructions::Input}[http://github.com/arirusso/micromidi/blob/master/lib/micromidi/instructions/input.rb] to get a handle on what's possible.
+For the sake of expressiveness, there are many permutations of each of these methods.  I recommend reading the rdoc for {MicroMIDI::Instructions::Input}[http://github.com/arirusso/micromidi/blob/master/lib/micromidi/instructions/input.rb] to get a handle on what's possible.
   
 == To-do
 
