@@ -1,6 +1,6 @@
 = micromidi
 
-A DSL for MIDI in Ruby
+A Ruby DSL for MIDI
 
 {pic}[http://images.treetrouble.net/images/midi.png]
 
