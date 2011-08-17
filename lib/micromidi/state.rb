@@ -30,8 +30,8 @@ module MicroMIDI
       @channel = options[:channel] || Default[:channel]
       @velocity = options[:velocity] || Default[:velocity]  
       
-      @outputs = outs
       @inputs = ins
+      @outputs = outs  
     end
     
     def record(outp)

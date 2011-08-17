@@ -10,7 +10,7 @@ module MicroMIDI
         msg = @message.note(n)
         @state.record(@output.output(msg))
         sleep(duration)
-        @state.record(@message.off)
+        @state.record(@output.output(@message.off))
         msg
       end
       

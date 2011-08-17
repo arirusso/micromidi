@@ -32,11 +32,12 @@ module MicroMIDI
       #
       # note "C4", :channel => 5
       #
-      # would have the exact same effect as
+      # will have the exact same effect as
       # 
       # channel 5
       # note "C4"
       #
+      # while in super sticky mode
       #
       def super_sticky
         @state.toggle_super_sticky

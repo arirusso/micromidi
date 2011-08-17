@@ -51,7 +51,7 @@ module MicroMIDI
 
       # create a note-off message from the last note-on message
       def off
-        o = @state.last_note.to_note_off
+        o = @state.last_note.to_note_off unless @state.last_note.nil?
         @state.last_note = nil
         o
       end
