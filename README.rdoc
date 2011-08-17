@@ -112,6 +112,7 @@ For the sake of expressiveness, there are many permutations of each of these met
   
 == To-do
 
+* "repeat" keyword
 * guide for shorthand aliases
 * more doc
 * sysex messages 
