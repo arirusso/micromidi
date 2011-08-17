@@ -52,7 +52,7 @@ As you might expect, the code in the block sends the following to <em>@output</e
 
 If you use MIDI alot, you may have noticed that there was no mention of <em>MIDI channel</em> or <em>velocity</em> in the last example.  Most of the time, sending a note-on or note-off message requires those values.
 
-In micromidi, Channel and velocity are sticky values.  When you open a micromidi block, those values default to 0 and 100, respectively.  These sticky values will be used by any commands that need them.  You can also pass a channel or velocity value to a command, overriding the sticky value.
+In Micromidi, Channel and velocity are sticky values.  When you open a Micromidi block, those values default to 0 and 100, respectively.  These sticky values will be used by any commands that need them.  You can also pass a channel or velocity value to a command, overriding the sticky value.
 
 Here's an example where the sticky values are used, changed and overriden.
 
@@ -88,7 +88,7 @@ What winds up being sent to <em>@output</em> is:
   
 Input works by configuration and binding events.
 
-Note that when you open a micromidi block, you can pass in as many inputs and outputs as you like, although input methods won't do anything if there is no input passed in.  If there happen to be no inputs OR outputs passed in, output methods can be called but they will only {produce message objects without sending them anywhere}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  
+Note that when you open a Micromidi block, you can pass in as many inputs and outputs as you like, although input methods won't do anything if there is no input passed in.  If there happen to be no inputs OR outputs passed in, output methods can be called but they will only {produce message objects without sending them anywhere}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  
 
   @input = UniMIDI::Input.first.open
 
@@ -107,7 +107,7 @@ Note that when you open a micromidi block, you can pass in as many inputs and ou
   
 This example sends all messages from <em>@input</em> to <em>@output</em> with the exception of notes.  When a note is received, instead it raises the note's value by an octave and then sends it to <em>@output</em>.
 
-There are many permutations of each of these methods, giving input handling a lot of flexibility.  I recommend reading the rdoc for {MicroMIDI::Instructions::Input}[http://github.com/arirusso/micromidi/blob/master/lib/micromidi/input.rb] to get a handle on what's possible.
+There are many permutations of each of these methods, giving input handling with Micromidi a lot of flexibility.  I recommend reading the rdoc for {MicroMIDI::Instructions::Input}[http://github.com/arirusso/micromidi/blob/master/lib/micromidi/input.rb] to get a handle on what's possible.
   
 == To-do
 
