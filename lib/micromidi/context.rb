@@ -9,12 +9,12 @@ module MicroMIDI
             
     def initialize(ins, outs, &block)
       
-      @state = State.new
+      @state = State.new(ins, outs)
       
-      @input = Instructions::Input.new(ins)      
-      @message = Instructions::Message.new
-      @output = Instructions::Output.new(outs)
-      @sticky = Instructions::Sticky.new
+      @input = Instructions::Input.new(@state)      
+      @message = Instructions::Message.new(@state)
+      @output = Instructions::Output.new(@state)
+      @sticky = Instructions::Sticky.new(@state)
       
       self.instance_eval(&block)
     end
@@ -23,26 +23,19 @@ module MicroMIDI
       delegated = false
       outp = nil
       if @message.respond_to?(m)
-        a.unshift(@state)
         outp = @output.output(@message.send(m, *a, &b))
         delegated = true
-      elsif @sticky.respond_to?(m)
-        a.unshift(@state)
-        @sticky.send(m, *a, &b)
-        delegated = true
       else
-        [@input, @output].each do |dsl| 
+        [@input, @output, @sticky].each do |dsl| 
           if dsl.respond_to?(m)
             outp = dsl.send(m, *a, &b)
             delegated = true
           end
         end
       end
-      @state.output_cache << { :message => outp, :timestamp => @state.now }
+      @state.record(outp)
       delegated ? outp : super
     end
-    
-    private
         
   end
 end

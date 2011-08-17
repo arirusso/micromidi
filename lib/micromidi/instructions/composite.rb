@@ -8,9 +8,9 @@ module MicroMIDI
       
       def play(n, duration)
         msg = @message.note(n)
-        @output_cache << { :message => @output.output(msg), :timestamp => now }
+        @state.record(@output.output(msg))
         sleep(duration)
-        @output_cache << { :message => @message.off, :timestamp => now }
+        @state.record(@message.off)
         msg
       end
       

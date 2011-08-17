@@ -6,12 +6,12 @@ module MicroMIDI
     
     class Output
       
-      def initialize(outs)
-        @outputs = outs
+      def initialize(state)
+        @state = state
       end
 
       def output(msg)
-        @outputs.each { |o| o.puts(msg) }
+        @state.outputs.each { |o| o.puts(msg) }
         msg
       end
 

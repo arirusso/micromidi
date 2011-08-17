@@ -8,16 +8,16 @@ module MicroMIDI
 
       include MIDIMessage
       
-      def initialize(ins)
-        @inputs = ins
-        @listeners = []
+      def initialize(state)
+        @state = state
         start_input
       end
 
       def start_input
-        @listeners.each { |l| l.start }
+        @state.listeners.each { |l| l.start }
       end
 
+      # bind an event that will be called every time a message is received
       def receive(*a, &block)
         inputs = nil
         if a.last.kind_of?(Hash)
@@ -57,18 +57,18 @@ module MicroMIDI
       end
 
       def wait_for_input(options = {})
-        listener = options[:from] || @listeners.last
+        listener = options[:from] || @state.listeners.last
         listener.join
       end
 
       protected
 
       def listener(match = {}, options = {}, &block)
-        inputs = options[:from] || @inputs
+        inputs = options[:from] || @state.inputs
         inputs.each do |input|
           listener = MIDIEye::Listener.new(input)
           listener.listen_for(match, &block)
-          @listeners << listener
+          @state.listeners << listener
         end
       end
 
