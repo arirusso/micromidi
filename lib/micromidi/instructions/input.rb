@@ -10,12 +10,6 @@ module MicroMIDI
       
       def initialize(state)
         @state = state
-        start_input
-      end
-
-      # starts the listeners (they will be started by default unless :start_input => false is passed in)
-      def start_input
-        @state.listeners.each { |l| l.start }
       end
 
       # bind an event that will be called every time a message is received
@@ -56,10 +50,12 @@ module MicroMIDI
       def thru_unless(*a)
         receive_unless(*a) { |message, timestamp| output(message) }
       end
-
+      
+      # wait for input on the last input passed in
+      # can pass the option :from => [an input] to specify which one to wait on
       def wait_for_input(options = {})
-        listener = options[:from] || @state.listeners.last
-        listener.join
+        l = options[:from] || @state.listeners.last
+        l.join
       end
 
       protected
@@ -70,6 +66,7 @@ module MicroMIDI
           listener = MIDIEye::Listener.new(input)
           listener.listen_for(match, &block)
           @state.listeners << listener
+          listener.start unless !options[:start].nil? && !options[:start]
         end
       end
 
