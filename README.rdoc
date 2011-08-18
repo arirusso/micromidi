@@ -7,7 +7,7 @@ A Ruby DSL for MIDI
 == Features
  
 * Cross-platform compatible using MRI or JRuby.
-* Simplified realtime IO
+* Simplified output
 * Event-driven input with shortcuts for common events
 * Shorthand keywords for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
 
@@ -109,14 +109,23 @@ Note that when you open a Micromidi block, you can pass in as many inputs and ou
 This example sends all messages from <em>@input</em> to <em>@output</em> with the exception of notes.  When a note is received, instead it raises the note's value by an octave and then sends it to <em>@output</em>.
 
 For the sake of expressiveness, there are many permutations of each of these methods.  I recommend reading the rdoc for {MicroMIDI::Instructions::Input}[http://github.com/arirusso/micromidi/blob/master/lib/micromidi/instructions/input.rb] to get a handle on what's possible.
-  
-== To-do
 
-* "repeat" keyword
-* guide for shorthand aliases
-* more doc
-* sysex messages 
-* MIDI files?
+==== Shorthand
+
+Every Micromidi method has a shorthand alias.  Here is the last example again, using the aliases.
+
+  MIDI.message(@input, @output) do
+    
+    thru_unless :note
+    
+    listen_for :note do |message|
+      message.note += 12
+      output message
+    end
+  
+    loop { wait_for_input }
+      
+  end
  
 == Documentation
 
