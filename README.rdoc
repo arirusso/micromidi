@@ -51,7 +51,7 @@ As you might expect, the code in the block sends the following to <em>@output</e
 
 ==== Sticky Values
 
-If you work with MIDI alot, you may have noticed that there was no mention of <em>MIDI channel</em> or <em>velocity</em> in the last example.  Most of the time, sending a note-on or note-off message requires those values.
+If you work with MIDI often, you may have noticed that there was no mention of <em>MIDI channel</em> or <em>velocity</em> in the last example.  Most of the time, sending a note-on or note-off message requires those values.
 
 In Micromidi, Channel and velocity are sticky values.  When you open a Micromidi block, those values default to 0 and 100, respectively.  These sticky values will be used by any commands that need them.  You can also pass a channel or velocity value to a command, overriding the sticky value.
 
