@@ -120,7 +120,7 @@ Micromidi methods and common symbol arguments have shorthand aliases intended fo
     
     rc :n do |m|
       m.note += 12
-      out m
+      s m
     end
   
     l { w }

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #
+
 module MicroMIDI
   
   alias l loop
@@ -37,6 +38,7 @@ module MicroMIDI
     
     class Output
       alias_method :out, :output
+      alias_method :s, :output
     end
         
     class Sticky
