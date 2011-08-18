@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 #
 module MicroMIDI
+  
+  alias l loop
  
   class << self
     alias_method :m, :message

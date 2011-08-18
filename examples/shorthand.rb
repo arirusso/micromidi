@@ -8,13 +8,13 @@ o = UniMIDI::Output.first.open
 
 MIDI.m(i, o) do
   
-  r :n do |m|
+  rc :n do |m|
     m.note += 12
     out(m)
   end
   
-  t :n
+  tu :n
   
-  w
+  l { w }
   
 end 
