@@ -14,14 +14,11 @@ module MicroMIDI
       def channel(val = nil)
         val.nil? ? @state.channel : @state.channel = val
       end
-      alias_method :ch, :channel
 
       # sets the sticky velocity for the current block
       def velocity(val = nil)
         val.nil? ? @state.velocity : @state.velocity = val
       end
-      alias_method :vel, :velocity
-      alias_method :v, :velocity
       
       #
       # toggles super_sticky mode, a mode where any explicit values used to create MIDI messages

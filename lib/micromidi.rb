@@ -19,22 +19,21 @@ module MicroMIDI
   module Instructions
   end
   
-end
-
-module MIDI
+  def self.message(*args, &block)
+    ins, outs = *process_devices(args)
+    MicroMIDI::Context.new(ins, outs, &block)
+  end
+  
+  private
   
   def self.process_devices(args)
     ins = args.find_all { |device| device.direction == :input }
     outs = args.find_all { |device| device.direction == :output }
     [ins, outs]    
-  end
-  
-  def self.message(*args, &block)
-    ins, outs = *process_devices(args)
-    MicroMIDI::Context.new(ins, outs, &block)
   end  
   
 end
+MIDI = MicroMIDI
 
 # modules
 require 'micromidi/instructions/composite'
@@ -46,3 +45,6 @@ require 'micromidi/instructions/input'
 require 'micromidi/instructions/message'
 require 'micromidi/instructions/output'
 require 'micromidi/instructions/sticky'
+
+# re-open
+require 'micromidi/instructions/shorthand'

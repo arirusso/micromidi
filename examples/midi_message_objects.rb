@@ -15,9 +15,9 @@ MIDI.message do
   patch_change_msg = pc 5
   
   # inspect the messages
-  p note_msg
-  p controller_msg
-  p patch_change_msg
+  puts note_msg
+  puts controller_msg
+  puts patch_change_msg
   
 end 
 

@@ -11,22 +11,24 @@ module MicroMIDI
       
       @state = State.new(ins, outs)
       
-      @input = Instructions::Input.new(@state)      
-      @message = Instructions::Message.new(@state)
-      @output = Instructions::Output.new(@state)
-      @sticky = Instructions::Sticky.new(@state)
-      
+      @instructions = {
+        :input => Instructions::Input.new(@state),      
+        :message => Instructions::Message.new(@state),
+        :output => Instructions::Output.new(@state),
+        :sticky => Instructions::Sticky.new(@state)
+      }
+       
       self.instance_eval(&block)
     end
     
     def method_missing(m, *a, &b)
       delegated = false
       outp = nil
-      if @message.respond_to?(m)
-        outp = @output.output(@message.send(m, *a, &b))
+      if @instructions[:message].respond_to?(m)
+        outp = @instructions[:output].output(@instructions[:message].send(m, *a, &b))
         delegated = true
       else
-        [@input, @output, @sticky].each do |dsl| 
+        [@instructions[:input], @instructions[:output], @instructions[:sticky]].each do |dsl| 
           if dsl.respond_to?(m)
             outp = dsl.send(m, *a, &b)
             delegated = true

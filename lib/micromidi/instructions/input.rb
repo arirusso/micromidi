@@ -22,6 +22,7 @@ module MicroMIDI
         match = a.empty? ? nil : { :class => msg_classes(a) }
         listener(match, :from => inputs) { |event| yield(event[:message], event[:timestamp]) }
       end
+      alias_method :gets, :receive
       alias_method :handle, :receive
       alias_method :listen, :receive
       alias_method :listen_for, :receive
@@ -75,15 +76,15 @@ module MicroMIDI
       def msg_classes(list)
         list.map do |type|
           case type
-          when :aftertouch, :pressure then [ChannelAftertouch, PolyphonicAftertouch]
+          when :aftertouch, :pressure, :aft then [ChannelAftertouch, PolyphonicAftertouch]
           when :channel_aftertouch, :channel_pressure, :ca, :cp then ChannelAftertouch
-          when :control_change, :cc then ControlChange
-          when :note then [NoteOn, NoteOff]
-          when :note_on, :n then NoteOn
-          when :note_off, :no then NoteOff
+          when :control_change, :cc, :c then ControlChange
+          when :note, :n then [NoteOn, NoteOff]
+          when :note_on, :nn then NoteOn
+          when :note_off, :no, :off then NoteOff
           when :pitch_bend, :pb then PitchBend
           when :polyphonic_aftertouch, :poly_aftertouch, :poly_pressure, :polyphonic_pressure, :pa, :pp then PolyphonicAftertouch
-          when :program_change, :pc then ProgramChange
+          when :program_change, :pc, :p then ProgramChange
           end
         end.flatten.compact
       end
