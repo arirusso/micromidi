@@ -116,14 +116,14 @@ Micromidi methods and common symbol arguments have shorthand aliases intended fo
 
   MIDI.m(@input, @output) do
     
-    t :n
+    tu :n
     
-    r :n do |m|
+    rc :n do |m|
       m.note += 12
       out m
     end
   
-    loop { w }
+    l { w }
       
   end
  
