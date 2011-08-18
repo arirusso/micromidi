@@ -112,7 +112,7 @@ For the sake of expressiveness, there are many permutations of each of these met
 
 ==== Shorthand
 
-Micromidi methods and common symbol arguments have shorthand aliases intended for live coding.  Here's the last example again, using those aliases.
+Micromidi methods and common symbol arguments have shorthand aliases intended for live coding.  Here's the last example again, using shorthand.
 
   MIDI.m(@input, @output) do
     
