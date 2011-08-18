@@ -15,12 +15,14 @@ module MicroMIDI
                   :velocity
     
     attr_reader :inputs,
+                :last_command,
                 :listeners,
                 :outputs,
                 :output_cache, 
                 :start_time
         
     def initialize(ins, outs, options = {})
+      @last_command = nil
       @last_note = nil    
       @listeners = []
       @output_cache = []
@@ -34,8 +36,10 @@ module MicroMIDI
       @outputs = outs  
     end
     
-    def record(outp)
-      @output_cache << { :message => outp, :timestamp => now }      
+    def record(m, a, b, outp)
+      ts = now
+      @output_cache << { :message => outp, :timestamp => ts }
+      @last_command = { :method => m, :args => a, :block => b, :timestamp => ts }
     end
     
     def toggle_super_sticky

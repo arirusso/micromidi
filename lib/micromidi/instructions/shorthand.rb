@@ -6,6 +6,10 @@ module MicroMIDI
     alias_method :m, :message
   end
   
+  class Context
+    alias_method :r, :repeat
+  end
+  
   module Instructions    
         
     module Composite
@@ -13,8 +17,8 @@ module MicroMIDI
     end
     
     class Input
-      alias_method :r, :receive
-      alias_method :ru, :receive_unless
+      alias_method :rc, :receive
+      alias_method :rcu, :receive_unless
       alias_method :t, :thru
       alias_method :tu, :thru_unless
       alias_method :w, :wait_for_input      

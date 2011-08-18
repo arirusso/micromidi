@@ -18,7 +18,11 @@ module MicroMIDI
         :sticky => Instructions::Sticky.new(@state)
       }
        
-      self.instance_eval(&block)
+      instance_eval(&block)
+    end
+    
+    def repeat
+      self.send(@state.last_command[:method], *@state.last_command[:args]) unless @state.last_command.nil?
     end
     
     def method_missing(m, *a, &b)
@@ -35,7 +39,7 @@ module MicroMIDI
           end
         end
       end
-      @state.record(outp)
+      @state.record(m, a, b, outp)
       delegated ? outp : super
     end
         
