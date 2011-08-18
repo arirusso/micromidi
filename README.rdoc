@@ -112,18 +112,18 @@ For the sake of expressiveness, there are many permutations of each of these met
 
 ==== Shorthand
 
-Every Micromidi method has a shorthand alias.  Here is the last example again, using the aliases.
+Micromidi methods and common symbol arguments have shorthand aliases intended for live coding.  Here's the last example again, using those aliases.
 
-  MIDI.message(@input, @output) do
+  MIDI.m(@input, @output) do
     
-    thru_unless :note
+    t :n
     
-    listen_for :note do |message|
-      message.note += 12
-      output message
+    r :n do |m|
+      m.note += 12
+      out m
     end
   
-    loop { wait_for_input }
+    loop { w }
       
   end
  
