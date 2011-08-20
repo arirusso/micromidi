@@ -7,10 +7,13 @@ module MicroMIDI
     module Composite
       
       def play(n, duration)
-        msg = @message.note(n)
-        @state.record(@output.output(msg))
+        msg = case n
+          when Numeric, String then note(n)
+          when MIDIMessage then n 
+        end
+        output(msg)
         sleep(duration)
-        @state.record(@output.output(@message.off))
+        output(off)
         msg
       end
       
