@@ -28,8 +28,8 @@ module MicroMIDI
   private
   
   def self.process_devices(args)
-    ins = args.find_all { |device| device.direction == :input }
-    outs = args.find_all { |device| device.direction == :output }
+    ins = args.find_all { |device| device.respond_to?(:gets) }
+    outs = args.find_all { |device| device.respond_to?(:puts) }
     [ins, outs]    
   end  
   

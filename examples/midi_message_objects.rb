@@ -3,7 +3,7 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-MIDI.message do
+MIDI.message($stdout) do
   
   # set sticky values
   channel 4
@@ -13,11 +13,6 @@ MIDI.message do
   note_msg = note "C4"
   controller_msg = cc 2, 120
   patch_change_msg = pc 5
-
-  # inspect the messages
-  puts note_msg
-  puts controller_msg
-  puts patch_change_msg
   
 end 
 
