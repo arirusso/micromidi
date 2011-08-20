@@ -33,8 +33,7 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
     thru
 
     receive :note do |message|
-      message.octave += 1 if %w{C E G}.include?(message.note_name)
-      output message
+      output transpose(message, :octave, 1)
     end
 
     loop { wait_for_input }
