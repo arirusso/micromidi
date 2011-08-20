@@ -11,7 +11,7 @@ module MicroMIDI
       end
 
       def output(msg)
-        @state.outputs.each { |o| o.puts(msg) }
+        @state.outputs.each { |o| o.puts(msg) } unless msg.nil?
         msg
       end
 
