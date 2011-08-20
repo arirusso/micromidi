@@ -12,6 +12,7 @@ module MicroMIDI
       @state = State.new(ins, outs)
       
       @instructions = {
+        :effect => Instructions::Effect.new(@state)
         :input => Instructions::Input.new(@state),      
         :message => Instructions::Message.new(@state),
         :output => Instructions::Output.new(@state),
@@ -32,7 +33,7 @@ module MicroMIDI
         outp = @instructions[:output].output(@instructions[:message].send(m, *a, &b))
         delegated = true
       else
-        [@instructions[:input], @instructions[:output], @instructions[:sticky]].each do |dsl| 
+        [@instructions[:effect], @instructions[:input], @instructions[:output], @instructions[:sticky]].each do |dsl| 
           if dsl.respond_to?(m)
             outp = dsl.send(m, *a, &b)
             delegated = true

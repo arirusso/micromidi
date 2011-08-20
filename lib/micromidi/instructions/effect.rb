@@ -4,7 +4,7 @@ module MicroMIDI
 
   module Instructions
     
-    class Effects
+    class Effect
 
       include FX
       include MIDIMessage
