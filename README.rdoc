@@ -25,7 +25,10 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
 
   require "micromidi"
   
-  MIDI.message(@input, @output) do
+  @i = UniMIDI::Input.first
+  @o = UniMIDI::Output.first
+  
+  MIDI.message(@i, @o) do
 
     thru
 
