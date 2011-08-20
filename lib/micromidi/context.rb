@@ -12,7 +12,7 @@ module MicroMIDI
       @state = State.new(ins, outs)
       
       @instructions = {
-        :effect => Instructions::Effect.new(@state)
+        :effect => Instructions::Effect.new(@state),
         :input => Instructions::Input.new(@state),      
         :message => Instructions::Message.new(@state),
         :output => Instructions::Output.new(@state),
