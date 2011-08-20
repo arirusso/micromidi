@@ -23,6 +23,8 @@ Requires {fx}[http://github.com/arirusso/fx], {midi-eye}[http://github.com/ariru
 
 == Usage
 
+This example sends all inputted messages to an output, except for note messages which are transposed up an octave first.  All output is printed to the console as well
+
   require "micromidi"
   
   @i = UniMIDI::Input.first
