@@ -42,7 +42,7 @@ This example sends all inputted messages to an output, except for note messages 
 
   end
 
-I've written up a few posts explaining each of micromidi's features
+I've written up a few posts explaining some of micromidi's features
 
 * {MIDI Messages and Realtime Output}[]
 * {MIDI Thru and Effects}[]
