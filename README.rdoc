@@ -7,9 +7,9 @@ A Ruby DSL for MIDI
 == Features
  
 * Cross-platform compatible using MRI or JRuby.
-* Simplified output
-* Event-driven input with shortcuts for common events
-* Shorthand keywords for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
+* Simple MIDI message output
+* MIDI Thru and customizable MIDI effects
+* Shorthand aliases for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
 
 == Installation
 
@@ -25,107 +25,25 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
 
   require "micromidi"
   
-==== Output
-  
-Here's an example that sends some MIDI messages to a {unimidi}[http://github.com/arirusso/unimidi] output.  ({read more here about selecting an output...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
-
-  @output = UniMIDI::Output.first.open
-  
-  MIDI.message(@output) do
-    
-    note "C4"
-    off 
-
-    cc 5, 120
-  
-    play "C3", 0.5
-  
-  end 
-
-As you might expect, the code in the block sends the following to <em>@output</em>: 
-
-* note C4 
-* note-off for C4, since that was the last note sent
-* sets controller number 5 to 120
-* note C3, waits half of a second and then note-off for C3
-
-==== Sticky Values
-
-If you work with MIDI often, you may have noticed that there was no mention of <em>MIDI channel</em> or <em>velocity</em> in the last example.  Most of the time, sending a note-on or note-off message requires those values.
-
-In Micromidi, Channel and velocity are sticky values.  When you open a Micromidi block, those values default to 0 and 100, respectively.  These sticky values will be used by any commands that need them.  You can also pass a channel or velocity value to a command, overriding the sticky value.
-
-Here's an example where the sticky values are used, changed and overriden.
-
-  MIDI.message(@output) do
-
-    channel 1
-
-    note "C4"
-    off
-
-    velocity 60
-
-    note "E5", :channel => 2
-    off
-
-    channel 3
-
-    note "C3"
-    off
-  
-  end 
-
-What winds up being sent to <em>@output</em> is:
-
-* note C4 (channel 1, vel 100)
-* note-off C4 (channel 1, vel 100)
-* note E5 (channel 2, vel 60)
-* note-off E5 (channel 2, vel 60)
-* note C3 (channel 3, vel 60)
-* note-off C3 (channel 3, vel 60)
-
-==== Input
-
-Input is event-driven but has a number of keywords to bind common events.  For instance, you can use the keyword <em>thru</em> to send all messages that arrive to your outputs.
-
-Note that when you open a Micromidi block, you can pass in as many inputs and outputs as you like, although input methods won't do anything if there is no input passed in.  If there happen to be no inputs OR outputs passed in, output methods can be called but they will only {produce message objects without sending them anywhere}[http://github.com/arirusso/micromidi/blob/master/examples/midi_message_objects.rb].  
-
-  @input = UniMIDI::Input.first.open
-
   MIDI.message(@input, @output) do
-    
-    thru_unless :note
-    
-    listen_for :note do |message|
-      message.note += 12
+
+    thru
+
+    receive :note do |message|
+      message.octave += 1 if %w{C E G}.include?(message.note_name)
       output message
     end
-  
+
     loop { wait_for_input }
-      
+
   end
-  
-This example sends all messages from <em>@input</em> to <em>@output</em> with the exception of notes.  When a note is received, instead it raises the note's value by an octave and then sends it to <em>@output</em>.
 
-For the sake of expressiveness, there are many permutations of each of these methods.  I recommend reading the rdoc for {MicroMIDI::Instructions::Input}[http://github.com/arirusso/micromidi/blob/master/lib/micromidi/instructions/input.rb] to get a handle on what's possible.
+I've written up a few posts explaining each of micromidi's features
 
-==== Shorthand
-
-Micromidi methods and common symbol arguments have shorthand aliases intended to reduce keystrokes while live coding.  Here's the last example again, using shorthand.
-
-  MIDI.m(@input, @output) do
-    
-    tu :n
-    
-    rc :n do |m|
-      m.note += 12
-      s m
-    end
-  
-    l { w }
-      
-  end
+* {MIDI Messages and Realtime Output}[]
+* {MIDI Thru and Effects}[]
+* {Creating Custom Input Events}[]
+* {Shorthand aliases for... everything}[]
  
 == Documentation
 

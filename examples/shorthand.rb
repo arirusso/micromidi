@@ -6,7 +6,7 @@ require "micromidi"
 i = UniMIDI::Input.first.open
 o = UniMIDI::Output.first.open
 
-MIDI.m(i, o) do
+M(i, o) do
   
   rc :n do |m|
     m.note += 12

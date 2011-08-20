@@ -49,3 +49,7 @@ module MicroMIDI
 
   end
 end
+
+def M(*a, &block)
+  MIDI.message(*a, &block)  
+end

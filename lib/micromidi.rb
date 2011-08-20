@@ -7,7 +7,8 @@
 # licensed under the Apache 2.0 License
 #
 
-# included libs
+# libs
+require 'fx'
 require 'midi-eye'
 require 'midi-message'
 require 'unimidi'
