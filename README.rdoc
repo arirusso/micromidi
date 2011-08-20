@@ -19,7 +19,7 @@ A Ruby DSL for MIDI
 
 Ruby 1.9.2+ or JRuby in 1.9 mode
 
-Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://github.com/arirusso/midi-message] and {unimidi}[http://github.com/arirusso/unimidi].  These should install automatically with the gem.
+Requires {fx}[http://github.com/arirusso/fx], {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://github.com/arirusso/midi-message] and {unimidi}[http://github.com/arirusso/unimidi].  These should install automatically with the gem.
 
 == Usage
 
