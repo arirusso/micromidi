@@ -11,7 +11,7 @@ class EffectTest < Test::Unit::TestCase
 
 require 'helper'
 
-class FilterTest < Test::Unit::TestCase
+class EffectTest < Test::Unit::TestCase
 
   include MicroMIDI
   include TestHelper
