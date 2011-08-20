@@ -28,7 +28,7 @@ Requires {fx}[http://github.com/arirusso/fx], {midi-eye}[http://github.com/ariru
   @i = UniMIDI::Input.first
   @o = UniMIDI::Output.first
   
-  MIDI.message(@i, @o) do
+  MIDI.message($stdout, @i, @o) do
 
     thru
 
