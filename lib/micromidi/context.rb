@@ -31,11 +31,17 @@ module MicroMIDI
     def method_missing(m, *a, &b)
       delegated = false
       outp = nil
-      if @instructions[:message].respond_to?(m)
-        outp = @instructions[:output].output(@instructions[:message].send(m, *a, &b))
-        delegated = true
-      else
-        [@instructions[:effect], @instructions[:input], @instructions[:output], @instructions[:sticky]].each do |dsl| 
+      options = a.last.kind_of?(Hash) ? a.last : {}
+      do_output = options[:output] || true
+      [@instructions[:message], @instructions[:effect]].each do |dsl|
+        if dsl.respond_to?(m)
+          msg = dsl.send(m, *a, &b)
+          outp = @state.auto_output && do_output ? @instructions[:output].output(msg) : msg
+          delegated = true
+        end
+      end
+      unless delegated
+        [@instructions[:input], @instructions[:output], @instructions[:sticky]].each do |dsl| 
           if dsl.respond_to?(m)
             outp = dsl.send(m, *a, &b)
             delegated = true

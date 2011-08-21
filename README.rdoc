@@ -35,7 +35,7 @@ This example sends all inputted messages to an output, except for note messages 
     thru_unless :note
 
     receive :note do |message|
-      output transpose(message, :octave, 1)
+      transpose(message, :octave, 1)
     end
 
     loop { wait_for_input }

@@ -11,7 +11,6 @@ class InputTest < Test::Unit::TestCase
 
   def test_thru_listeners
     m = MicroMIDI.message(TestInput.open)
-    
     m.thru
     assert_equal(0, m.state.listeners.size)
     assert_equal(1, m.state.thru_listeners.size)

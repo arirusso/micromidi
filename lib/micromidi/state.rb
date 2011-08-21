@@ -9,7 +9,8 @@ module MicroMIDI
       :velocity => 100
     }
     
-    attr_accessor :channel,
+    attr_accessor :auto_output,
+                  :channel,
                   :last_note,
                   :super_sticky, 
                   :velocity
@@ -23,6 +24,7 @@ module MicroMIDI
                 :thru_listeners
         
     def initialize(ins, outs, options = {})
+      @auto_output = true
       @last_command = nil
       @last_note = nil    
       @listeners = []
@@ -46,6 +48,10 @@ module MicroMIDI
     
     def toggle_super_sticky
       @super_sticky = !@super_sticky
+    end
+    
+    def toggle_auto_output
+      @auto_output = !@auto_output
     end
 
     def message_properties(opts, *props)
