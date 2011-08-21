@@ -19,12 +19,14 @@ module MicroMIDI
                 :listeners,
                 :outputs,
                 :output_cache, 
-                :start_time
+                :start_time,
+                :thru_listeners
         
     def initialize(ins, outs, options = {})
       @last_command = nil
       @last_note = nil    
       @listeners = []
+      @thru_listeners = []
       @output_cache = []
       @start_time = Time.now.to_f
       @super_sticky = false

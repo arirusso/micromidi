@@ -27,12 +27,12 @@ This example sends all inputted messages to an output, except for note messages 
 
   require "micromidi"
   
-  @i = UniMIDI::Input.first
-  @o = UniMIDI::Output.first
+  @i = UniMIDI::Input.first.open
+  @o = UniMIDI::Output.first.open
   
   MIDI.message($stdout, @i, @o) do
 
-    thru
+    thru_unless :note
 
     receive :note do |message|
       output transpose(message, :octave, 1)
