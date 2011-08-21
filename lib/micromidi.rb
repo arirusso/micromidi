@@ -21,7 +21,7 @@ module MicroMIDI
   end
   
   def self.new(*a, &block)
-    self.message(*a, &block)
+    message(*a, &block)
   end
   
   def self.message(*args, &block)
