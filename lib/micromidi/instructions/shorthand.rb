@@ -31,7 +31,7 @@ module MicroMIDI
       alias_method :lpf, :low_pass_filter
       alias_method :mbf, :filter
       alias_method :nf, :notch_filter
-      alias_method :t, :transpose      
+      alias_method :tp, :transpose      
     end
     
     class Input
@@ -53,7 +53,6 @@ module MicroMIDI
     
     class Output
       alias_method :out, :output
-      alias_method :s, :output
     end
         
     class Sticky
