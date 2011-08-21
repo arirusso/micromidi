@@ -20,6 +20,10 @@ module MicroMIDI
   module Instructions
   end
   
+  def self.new(*a, &block)
+    self.message(*a, &block)
+  end
+  
   def self.message(*args, &block)
     ins, outs = *process_devices(args)
     MicroMIDI::Context.new(ins, outs, &block)
