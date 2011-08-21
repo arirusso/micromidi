@@ -11,9 +11,8 @@ module MicroMIDI
           when Numeric, String then note(n)
           when MIDIMessage then n 
         end
-        output(msg)
         sleep(duration)
-        output(off)
+        off
         msg
       end
       

@@ -6,6 +6,8 @@ module MicroMIDI
   class Context
     
     include Instructions::Composite
+    
+    attr_reader :state
             
     def initialize(ins, outs, &block)
       
