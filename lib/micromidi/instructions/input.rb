@@ -51,6 +51,13 @@ module MicroMIDI
         receive_unless(*a) { |message, timestamp| output(message) }
       end
       
+      # like <em>thru_unless</em> except a block can be past that will be called when
+      # notes specified as the <em>unless</em> arrive
+      def thru_except(*a, &block)
+        thru_unless(*a)
+        receive(*a, &block)        
+      end
+      
       # wait for input on the last input passed in
       # can pass the option :from => [an input] to specify which one to wait on
       def wait_for_input(options = {})

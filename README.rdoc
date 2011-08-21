@@ -30,11 +30,9 @@ This example sends all input to an output with the exception of note messages wh
   @i = UniMIDI::Input.first.open
   @o = UniMIDI::Output.first.open
   
-  MIDI.message($stdout, @i, @o) do
+  MIDI.io($stdout, @i, @o) do
 
-    thru_unless :note
-
-    receive :note do |message|
+    thru_except :note do |message|
       transpose(message, :octave, 1)
     end
 

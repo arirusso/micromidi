@@ -28,6 +28,9 @@ module MicroMIDI
     ins, outs = *process_devices(args)
     MicroMIDI::Context.new(ins, outs, &block)
   end
+  class << self
+    alias_method :io, :message
+  end
   
   private
   
