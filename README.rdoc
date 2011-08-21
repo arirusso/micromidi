@@ -23,7 +23,7 @@ Requires {fx}[http://github.com/arirusso/fx], {midi-eye}[http://github.com/ariru
 
 == Usage
 
-This example sends all inputted messages to an output, except for note messages which are transposed up an octave first.  All output is printed to the console as well
+This example sends all input to an output.  If a note message is passing through, it will be transposed up an octave.  Output is also printed to the screen by passing in $stdout.
 
   require "micromidi"
   
