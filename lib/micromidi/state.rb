@@ -50,7 +50,7 @@ module MicroMIDI
       output = {}
       props.each do |prop|
         output[prop] = opts[prop]
-        self.send("#{prop.to_s}=", output[prop]) if self.send(prop).nil? && @super_sticky
+        self.send("#{prop.to_s}=", output[prop]) if !output[prop].nil? && (self.send(prop).nil? || @super_sticky)
         output[prop] ||= self.send(prop.to_s)
       end
       output
