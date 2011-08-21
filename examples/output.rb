@@ -5,7 +5,7 @@ require "micromidi"
 
 output = UniMIDI::Output.first.open
 
-MIDI.message(output) do
+MIDI.io(output) do
   note "C4"
   cc 5, 120
   play "C2", 3
