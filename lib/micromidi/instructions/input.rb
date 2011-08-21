@@ -57,6 +57,10 @@ module MicroMIDI
         l = options[:from] || @state.listeners.last || @state.thru_listener
         l.join
       end
+      
+      def join
+        loop { wait_for_input }
+      end
 
       protected
 

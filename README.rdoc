@@ -38,7 +38,7 @@ This example sends all inputted messages to an output, except for note messages 
       transpose(message, :octave, 1)
     end
 
-    loop { wait_for_input }
+    join
 
   end
 
