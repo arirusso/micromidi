@@ -56,6 +56,18 @@ class MessageTest < Test::Unit::TestCase
     assert_equal(ProgramChange, msg.class)
     assert_equal(15, msg.program)    
   end
+  
+  def test_off
+    m = MicroMIDI.message
+    msg = m.note "C0", :channel => 3
+    assert_equal(NoteOn, msg.class)
+    assert_equal(12, msg.note)
+    assert_equal(3, msg.channel)
+    off_msg = m.off    
+    assert_equal(NoteOff, off_msg.class)
+    assert_equal(12, off_msg.note)
+    assert_equal(3, off_msg.channel)
+  end
     
 end
 
