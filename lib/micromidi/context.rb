@@ -19,7 +19,7 @@ module MicroMIDI
         :sticky => Instructions::Sticky.new(@state)
       }
        
-      instance_eval(&block)
+      instance_eval(&block) unless block.nil?
     end
     
     def repeat
