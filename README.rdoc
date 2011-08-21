@@ -23,7 +23,9 @@ Requires {fx}[http://github.com/arirusso/fx], {midi-eye}[http://github.com/ariru
 
 == Usage
 
-This example sends all input to an output with the exception of note messages which will first be transposed up an octave.  Output is also printed to the console.
+While this following example is running, all input is sent to an output except for notes.  Those received notes are only sent to the output if their octave is between 1 and 3
+
+Output is also printed to the console.
 
   require "micromidi"
   
@@ -32,9 +34,7 @@ This example sends all input to an output with the exception of note messages wh
   
   MIDI.io($stdout, @i, @o) do
 
-    thru_except :note do |message|
-      transpose(message, :octave, 1)
-    end
+    thru_except :note { |msg| band_pass_filter(msg, :octave, (1..3)) }
 
     join
 
