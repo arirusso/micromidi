@@ -41,7 +41,7 @@ Here is an example that plays some arpeggios
 
   end
     
-While this following example is running, all input is sent to an output except for notes.  Those received notes are only sent to the output if their octave is between 1 and 3.  Output is also printed to the console by passing in <em>$stdout</em>.
+While this following example is running, all input is sent directly to the output except for notes.  Notes that are received are only sent to the output if their octave is between 1 and 3.  Output is also printed to the console by passing in <em>$stdout</em>.
 
   MIDI.using(@i, @o, $stdout) do
 
