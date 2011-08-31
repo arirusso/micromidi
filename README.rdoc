@@ -53,9 +53,9 @@ While this next example is running, all input is sent directly to the output exc
 
 I've written up a few posts explaining how these examples work in much greater detail
 
-* {MIDI Messages and Realtime Output}[]
-* {MIDI Thru and Processors}[]
-* {Creating Custom Input Events}[]
+* {Output}[]
+* {MIDI Thru and Processing}[]
+* {Binding Custom Input Events}[]
 * {Shorthand aliases for... everything}[]
  
 == Documentation
