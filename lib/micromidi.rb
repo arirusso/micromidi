@@ -8,7 +8,6 @@
 #
 
 # libs
-require 'fx'
 require 'midi-eye'
 require 'midi-message'
 require 'unimidi'
@@ -49,7 +48,7 @@ require 'micromidi/instructions/composite'
 # classes
 require 'micromidi/context'
 require 'micromidi/state'
-require 'micromidi/instructions/effect'
+require 'micromidi/instructions/process'
 require 'micromidi/instructions/input'
 require 'micromidi/instructions/message'
 require 'micromidi/instructions/output'

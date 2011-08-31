@@ -4,10 +4,10 @@ module MicroMIDI
 
   module Instructions
     
-    class Effect
+    class Process
 
-      include FX
       include MIDIMessage
+      include MIDIMessage::Process
       
       def initialize(state)
         @state = state
