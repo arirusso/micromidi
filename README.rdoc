@@ -43,7 +43,7 @@ Output is also printed to the console.
 I've written up a few posts explaining some of micromidi's features
 
 * {MIDI Messages and Realtime Output}[]
-* {MIDI Thru and Effects}[]
+* {MIDI Thru and Processors}[]
 * {Creating Custom Input Events}[]
 * {Shorthand aliases for... everything}[]
  
