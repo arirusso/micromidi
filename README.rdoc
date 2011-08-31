@@ -23,16 +23,27 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
 
 == Usage
 
-While this following example is running, all input is sent to an output except for notes.  Those received notes are only sent to the output if their octave is between 1 and 3
-
-Output is also printed to the console.
+Here are some basic examples that use Unimidi inputs and outputs.  ({read more here about selecting an output...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
 
   require "micromidi"
   
   @i = UniMIDI::Input.first.open
   @o = UniMIDI::Output.first.open
-  
-  MIDI.io($stdout, @i, @o) do
+
+Here is an example that plays some arpeggios
+
+  MIDI.using($o) do
+    
+    5.times do |oct|
+      octave oct
+      %w{C E G B}.each { |n| play n 0.5 }
+    end
+
+  end
+    
+While this following example is running, all input is sent to an output except for notes.  Those received notes are only sent to the output if their octave is between 1 and 3.  Output is also printed to the console by passing in $stdout.
+
+  MIDI.using(@i, @o, $stdout) do
 
     thru_except :note { |msg| only(msg, :octave, (1..3)) }
 
