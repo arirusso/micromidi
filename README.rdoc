@@ -8,7 +8,7 @@ A Ruby DSL for MIDI
  
 * Cross-platform compatible using MRI or JRuby.
 * Simple MIDI message output
-* MIDI Thru, MIDI effects and custom input events
+* MIDI Thru, MIDI processing and custom input events
 * Optional shorthand for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
 
 == Installation
