@@ -18,22 +18,7 @@ module MicroMIDI
     module Composite
       alias_method :p, :play
     end
-    
-    class Effect
-      alias_method :bp, :band_pass_filter
-      alias_method :bpf, :band_pass_filter
-      alias_method :br, :notch_filter
-      alias_method :f, :filter
-      alias_method :hp, :high_pass_filter
-      alias_method :hpf, :high_pass_filter
-      alias_method :l, :limit
-      alias_method :lp, :low_pass_filter
-      alias_method :lpf, :low_pass_filter
-      alias_method :mbf, :filter
-      alias_method :nf, :notch_filter
-      alias_method :tp, :transpose      
-    end
-    
+        
     class Input
       alias_method :rc, :receive
       alias_method :rcu, :receive_unless
@@ -53,6 +38,21 @@ module MicroMIDI
     
     class Output
       alias_method :out, :output
+    end
+    
+    class Process
+      alias_method :bp, :band_pass_filter
+      alias_method :bpf, :band_pass_filter
+      alias_method :br, :notch_filter
+      alias_method :f, :filter
+      alias_method :hp, :high_pass_filter
+      alias_method :hpf, :high_pass_filter
+      alias_method :l, :limit
+      alias_method :lp, :low_pass_filter
+      alias_method :lpf, :low_pass_filter
+      alias_method :mbf, :filter
+      alias_method :nf, :notch_filter
+      alias_method :tp, :transpose      
     end
         
     class Sticky
