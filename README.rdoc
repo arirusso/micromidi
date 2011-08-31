@@ -51,7 +51,7 @@ While this following example is running, all input is sent to an output except f
 
   end
 
-I've written up a few posts explaining some of micromidi's features
+I've written up a few posts explaining how these examples work in much greater detail
 
 * {MIDI Messages and Realtime Output}[]
 * {MIDI Thru and Processors}[]
