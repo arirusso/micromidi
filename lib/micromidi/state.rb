@@ -6,12 +6,14 @@ module MicroMIDI
     
     Default = {
       :channel => 0,
+      :octave => 2,
       :velocity => 100
     }
     
     attr_accessor :auto_output,
                   :channel,
                   :last_note,
+                  :octave,
                   :super_sticky, 
                   :velocity
     
@@ -34,7 +36,8 @@ module MicroMIDI
       @super_sticky = false
 
       @channel = options[:channel] || Default[:channel]
-      @velocity = options[:velocity] || Default[:velocity]  
+      @velocity = options[:velocity] || Default[:velocity]
+      @octave = options[:octave] || Default[:octave]  
       
       @inputs = ins
       @outputs = outs  

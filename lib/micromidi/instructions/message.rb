@@ -21,7 +21,15 @@ module MicroMIDI
       # create a note message
       def note(id, opts = {})
         props = @state.message_properties(opts, :channel, :velocity)
-        note = id.kind_of?(Numeric) ? NoteOn.new(props[:channel], id, props[:velocity]) : NoteOn[id].new(props[:channel], props[:velocity])
+        note = if id.kind_of?(Numeric) 
+          NoteOn.new(props[:channel], id, props[:velocity])
+        elsif id.kind_of?(String) 
+          string_opts = { :octave => id.scan(/-?\d\z/).first }
+          n = id.split(/-?\d\z/).first
+          string_props = @state.message_properties(string_opts, :octave)
+          note_string = "#{n}#{string_props[:octave].to_s}"
+          NoteOn[note_string].new(props[:channel], props[:velocity])
+        end
         @state.last_note = note
         note
       end

@@ -54,6 +54,46 @@ class StickyTest < Test::Unit::TestCase
     assert_equal(10, msg.velocity)
   end
 
+  def test_octave
+    m = MicroMIDI.message
+    msg = m.note "C"
+    assert_equal(NoteOn, msg.class)
+    assert_equal(36, msg.note)
+    assert_equal(0, msg.channel)
+    assert_equal(100, msg.velocity)
+    
+    m.octave 4    
+    msg = m.note "C"
+    assert_equal(NoteOn, msg.class)
+    assert_equal(60, msg.note)
+    assert_equal(0, msg.channel)
+    assert_equal(100, msg.velocity)
+  end
+  
+  def test_octave_super_sticky
+    m = MicroMIDI.message
+    m.super_sticky
+    
+    msg = m.note "C"
+    assert_equal(NoteOn, msg.class)
+    assert_equal(36, msg.note)
+    assert_equal(0, msg.channel)
+    assert_equal(100, msg.velocity)
+    
+    m.octave 4 
+    msg = m.note "C0"
+    assert_equal(NoteOn, msg.class)
+    assert_equal(12, msg.note)
+    assert_equal(0, msg.channel)
+    assert_equal(100, msg.velocity)
+    
+    msg = m.note "D"
+    assert_equal(NoteOn, msg.class)
+    assert_equal(14, msg.note)
+    assert_equal(0, msg.channel)
+    assert_equal(100, msg.velocity)
+  end
+
   def test_velocity_super_sticky
     m = MicroMIDI.message
     m.super_sticky

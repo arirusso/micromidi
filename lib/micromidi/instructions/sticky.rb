@@ -14,6 +14,11 @@ module MicroMIDI
       def channel(val = nil)
         val.nil? ? @state.channel : @state.channel = val
       end
+      
+      # sets the octave for the current block
+      def octave(val = nil)
+        val.nil? ? @state.octave : @state.octave = val
+      end
 
       # sets the sticky velocity for the current block
       def velocity(val = nil)
