@@ -20,6 +20,7 @@ module MicroMIDI
     end
         
     class Input
+      alias_method :j, :join
       alias_method :rc, :receive
       alias_method :rcu, :receive_unless
       alias_method :t, :thru
