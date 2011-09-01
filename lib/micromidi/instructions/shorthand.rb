@@ -24,6 +24,7 @@ module MicroMIDI
       alias_method :rc, :receive
       alias_method :rcu, :receive_unless
       alias_method :t, :thru
+      alias_method :te, :thru_except
       alias_method :tu, :thru_unless
       alias_method :w, :wait_for_input      
     end
