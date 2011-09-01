@@ -56,7 +56,7 @@ I've written up a few posts explaining how these examples work in greater detail
 * {Output}[http://tx81z.blogspot.com/2011/08/micromidi-midi-messages-and-output.html]
 * {MIDI Thru and Processing}[http://tx81z.blogspot.com/2011/08/micromidi-midi-thru-and-midi-processing.html]
 * {Binding Custom Input Events}[http://tx81z.blogspot.com/2011/08/micromidi-custom-events.html]
-* {Shorthand aliases for... everything}[http://tx81z.blogspot.com/2011/08/micromidi-shorthand.html]
+* {Shorthand aliases}[http://tx81z.blogspot.com/2011/08/micromidi-shorthand.html]
  
 == Documentation
 
