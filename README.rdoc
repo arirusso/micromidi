@@ -23,7 +23,7 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
 
 == Usage
 
-The following are basic examples that use Unimidi inputs and outputs.  ({see an example here that explains selecting an output...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
+The following are basic examples that use {unimidi}[http://github.com/arirusso/unimidi] inputs and outputs.  ({see an example here that explains selecting an output...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
 
   require "micromidi"
   
