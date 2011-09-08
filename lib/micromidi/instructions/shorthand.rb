@@ -62,6 +62,11 @@ module MicroMIDI
       alias_method :ss, :super_sticky
       alias_method :v, :velocity
     end
+    
+    class SysEx
+      alias_method :sx, :sysex_command
+      alias_method :sr, :sysex_request
+    end
 
   end
 end
