@@ -27,8 +27,8 @@ The following are basic examples that use {unimidi}[http://github.com/arirusso/u
 
   require "micromidi"
   
-  @i = UniMIDI::Input.first.open
-  @o = UniMIDI::Output.first.open
+  @i = UniMIDI::Input.use(:first)
+  @o = UniMIDI::Output.use(:first)
 
 This example plays some arpeggios
 
@@ -51,7 +51,7 @@ While running, this next example sends all input directly to the output except f
 
   end
 
-Finally, this is the same example redone using shorthand aliases
+This is the same example redone using shorthand aliases
 
   M(@i, @o) do
 
