@@ -14,6 +14,7 @@ module MicroMIDI
                   :channel,
                   :last_note,
                   :octave,
+                  :sysex_node,
                   :super_sticky, 
                   :velocity
     

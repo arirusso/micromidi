@@ -117,6 +117,18 @@ class StickyTest < Test::Unit::TestCase
     assert_equal(0, msg.channel)
     assert_equal(20, msg.velocity)
   end
+  
+  def test_sysex_node
+    m = MicroMIDI.message
+    assert_equal(nil, m.sysex_node)
+    
+    node = m.sysex_node 0x41, 0x42, :device_id => 0x10
+    assert_equal(SystemExclusive::Node, node.class)
+    assert_equal(65, node.manufacturer_id)
+    assert_equal(66, node.model_id)
+    assert_equal(16, node.device_id)
+      
+  end
         
 end
 

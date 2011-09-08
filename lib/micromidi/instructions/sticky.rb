@@ -19,6 +19,12 @@ module MicroMIDI
       def octave(val = nil)
         val.nil? ? @state.octave : @state.octave = val
       end
+      
+      # sets the sysex node for the current block
+      def sysex_node(*args)
+        args.empty? ? @state.sysex_node : @state.sysex_node = MIDIMessage::SystemExclusive::Node.new(*args)
+      end
+      alias_method :node, :sysex_node
 
       # sets the sticky velocity for the current block
       def velocity(val = nil)

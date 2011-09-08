@@ -53,6 +53,7 @@ require 'micromidi/instructions/input'
 require 'micromidi/instructions/message'
 require 'micromidi/instructions/output'
 require 'micromidi/instructions/sticky'
+require 'micromidi/instructions/sysex'
 
 # re-open
 require 'micromidi/instructions/shorthand'

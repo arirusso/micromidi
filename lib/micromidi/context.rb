@@ -18,7 +18,8 @@ module MicroMIDI
         :input => Instructions::Input.new(@state),      
         :message => Instructions::Message.new(@state),
         :output => Instructions::Output.new(@state),
-        :sticky => Instructions::Sticky.new(@state)
+        :sticky => Instructions::Sticky.new(@state),
+        :sysex => Instructions::SysEx.new(@state)
       }
        
       instance_eval(&block) unless block.nil?
@@ -33,7 +34,7 @@ module MicroMIDI
       outp = nil
       options = a.last.kind_of?(Hash) ? a.last : {}
       do_output = options[:output] || true
-      [@instructions[:message], @instructions[:process]].each do |dsl|
+      [@instructions[:sysex], @instructions[:message], @instructions[:process]].each do |dsl|
         if dsl.respond_to?(m)
           msg = dsl.send(m, *a, &b)
           outp = @state.auto_output && do_output ? @instructions[:output].output(msg) : msg
