@@ -3,9 +3,9 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-output = UniMIDI::Output.first.open
+output = UniMIDI::Output.use(0)
 
-MIDI.io(output) do
+MIDI.using(output) do
   note "C4"
   cc 5, 120
   play "C2", 3

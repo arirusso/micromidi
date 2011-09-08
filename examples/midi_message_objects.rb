@@ -3,7 +3,7 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-MIDI.message($stdout) do
+MIDI.using($stdout) do
   
   # set sticky values
   channel 4

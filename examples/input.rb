@@ -3,10 +3,10 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-input = UniMIDI::Input.first.open
-output = UniMIDI::Output.first.open
+input = UniMIDI::Input.use(0)
+output = UniMIDI::Output.use(0)
 
-MIDI.message(input, output) do
+MIDI.using(input, output) do
   
   receive :note do |message|
     message.note += 12

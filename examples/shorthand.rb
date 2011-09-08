@@ -3,8 +3,8 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-i = UniMIDI::Input.first.open
-o = UniMIDI::Output.first.open
+i = UniMIDI::Input.use(0)
+o = UniMIDI::Output.use(0)
 
 M(i, o) do
   
