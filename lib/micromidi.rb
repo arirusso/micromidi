@@ -29,6 +29,7 @@ module MicroMIDI
   end
   class << self
     alias_method :io, :message
+    alias_method :using, :message
   end
   
   private

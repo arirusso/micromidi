@@ -61,8 +61,8 @@ module MicroMIDI
       # wait for input on the last input passed in
       # can pass the option :from => [an input] to specify which one to wait on
       def wait_for_input(options = {})
-        l = options[:from] || @state.listeners.last || @state.thru_listener
-        l.join
+        listener = options[:from] || @state.listeners.last || @state.thru_listeners.last
+        listener.join
       end
       
       def join
@@ -74,7 +74,7 @@ module MicroMIDI
       def listener(match = {}, options = {}, &block)
         inputs = options[:from] || @state.inputs
         thru = options[:thru] || false
-        match ||= {}
+        #match ||= {}
         inputs.each do |input|
           listener = MIDIEye::Listener.new(input)
           listener.listen_for(match, &block)

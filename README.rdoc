@@ -60,8 +60,27 @@ This is the same example redone using shorthand aliases
     j
 
   end
+  
+Finally, here is an example that converts some control change messages to sysex
+  
+  *@map =
+    [0x40, 0x7F, 0x00],
+    [0x41, 0x7F, 0x00],
+    [0x42, 0x7F, 0x00]
+  
+  MIDI.using(@i, @o) do
+  
+    receive :cc do |message|
+    
+      node 0x41, 0x42, :device_id => 0x10
+      
+      sysex_command @map[message.index], message.value
+      
+    end
+  
+  end 
 
-I've written up a few posts explaining each of these concepts in greater detail:
+I've written up a few posts explaining each of the concepts used here in greater detail:
 
 * {Output}[http://tx81z.blogspot.com/2011/08/micromidi-midi-messages-and-output.html]
 * {MIDI Thru and Processing}[http://tx81z.blogspot.com/2011/08/micromidi-midi-thru-and-midi-processing.html]
