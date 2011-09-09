@@ -7,7 +7,7 @@ A Ruby DSL for MIDI
 == Features
  
 * Cross-platform compatible using MRI or JRuby.
-* Simplified MIDI message output
+* Simplified MIDI and sysex message output
 * MIDI Thru, processing and custom input events
 * Optional shorthand for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
 
