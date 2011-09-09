@@ -74,7 +74,7 @@ module MicroMIDI
       def listener(match = {}, options = {}, &block)
         inputs = options[:from] || @state.inputs
         thru = options[:thru] || false
-        #match ||= {}
+        match ||= {}
         inputs.each do |input|
           listener = MIDIEye::Listener.new(input)
           listener.listen_for(match, &block)
