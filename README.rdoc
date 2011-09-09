@@ -63,18 +63,18 @@ This is the same example redone using shorthand aliases
   
 Finally, here is an example that converts some control change messages to sysex
   
-  *@map =
-    [0x40, 0x7F, 0x00],
-    [0x41, 0x7F, 0x00],
-    [0x42, 0x7F, 0x00]
-  
   MIDI.using(@i, @o) do
+  
+    *@cc_to_sysex_map =
+      [0x40, 0x7F, 0x00],
+      [0x41, 0x7F, 0x00],
+      [0x42, 0x7F, 0x00]
+  
+    node 0x41, 0x42, :device_id => 0x10
   
     receive :cc do |message|
     
-      node 0x41, 0x42, :device_id => 0x10
-      
-      sysex_command @map[message.index], message.value
+      sysex_command @cc_to_sysex_map[message.index], message.value
       
     end
   
