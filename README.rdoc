@@ -61,7 +61,7 @@ This is the same example redone using shorthand aliases
 
   end
   
-Finally, here is an example that maps some control change messages to sysex
+Finally, here is an example that maps some MIDI Control Change messages to SysEx
   
   MIDI.using(@i, @o) do
   
@@ -74,7 +74,7 @@ Finally, here is an example that maps some control change messages to sysex
   
     receive :cc do |message|
     
-      sysex_command @the_map[message.index], message.value
+      sysex_command @the_map[message.index - 1], message.value
       
     end
   
@@ -85,7 +85,8 @@ I've written up a few posts explaining each of the concepts used here in greater
 * {Output}[http://tx81z.blogspot.com/2011/08/micromidi-midi-messages-and-output.html]
 * {MIDI Thru and Processing}[http://tx81z.blogspot.com/2011/08/micromidi-midi-thru-and-midi-processing.html]
 * {Binding Custom Input Events}[http://tx81z.blogspot.com/2011/08/micromidi-custom-events.html]
-* {Shorthand aliases}[http://tx81z.blogspot.com/2011/08/micromidi-shorthand.html]
+* {Shorthand}[http://tx81z.blogspot.com/2011/08/micromidi-shorthand.html]
+* SysEx
  
 == Documentation
 
