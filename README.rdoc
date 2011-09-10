@@ -7,7 +7,7 @@ A Ruby DSL for MIDI
 == Features
  
 * Cross-platform compatible using MRI or JRuby.
-* Simplified MIDI and sysex message output
+* Simplified MIDI and Sysex message output
 * MIDI Thru, processing and custom input events
 * Optional shorthand for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
 
@@ -74,7 +74,7 @@ Finally, here is an example that maps some MIDI Control Change messages to SysEx
   
     receive :cc do |message|
     
-      sysex_command @the_map[message.index - 1], message.value
+      command @the_map[message.index - 1], message.value
       
     end
   
@@ -86,7 +86,7 @@ I've written up a few posts explaining each of the concepts used here in greater
 * {MIDI Thru and Processing}[http://tx81z.blogspot.com/2011/08/micromidi-midi-thru-and-midi-processing.html]
 * {Binding Custom Input Events}[http://tx81z.blogspot.com/2011/08/micromidi-custom-events.html]
 * {Shorthand}[http://tx81z.blogspot.com/2011/08/micromidi-shorthand.html]
-* SysEx
+* {Sysex}[]
  
 == Documentation
 

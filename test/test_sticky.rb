@@ -122,7 +122,7 @@ class StickyTest < Test::Unit::TestCase
     m = MicroMIDI.message
     assert_equal(nil, m.sysex_node)
     
-    node = m.sysex_node 0x41, 0x42, :device_id => 0x10
+    node = m.node 0x41, :model_id => 0x42, :device_id => 0x10
     assert_equal(SystemExclusive::Node, node.class)
     assert_equal(65, node.manufacturer_id)
     assert_equal(66, node.model_id)

@@ -10,7 +10,7 @@ class SysexTest < Test::Unit::TestCase
   
   def test_command
     m = MicroMIDI.message
-    m.sysex_node 0x41, 0x42, :device_id => 0x10
+    m.sysex_node 0x41, :model_id => 0x42, :device_id => 0x10
     
     msg = m.sysex_command [0x40, 0x7F, 0x00], 0x00
     assert_equal(SystemExclusive::Command, msg.class)
@@ -21,7 +21,7 @@ class SysexTest < Test::Unit::TestCase
   
   def test_request
     m = MicroMIDI.message
-    m.sysex_node 0x41, 0x42, :device_id => 0x10
+    m.sysex_node 0x41, :model_id => 0x42, :device_id => 0x10
     
     msg = m.sysex_request [0x40, 0x7F, 0x00], 0x02
     assert_equal(SystemExclusive::Request, msg.class)

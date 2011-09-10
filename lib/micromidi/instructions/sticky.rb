@@ -22,7 +22,8 @@ module MicroMIDI
       
       # sets the sysex node for the current block
       def sysex_node(*args)
-        args.empty? ? @state.sysex_node : @state.sysex_node = MIDIMessage::SystemExclusive::Node.new(*args)
+        options = args.last.kind_of?(Hash) ? args.last : {}
+        args.empty? ? @state.sysex_node : @state.sysex_node = MIDIMessage::SystemExclusive::Node.new(args.first, options[:model_id], options)
       end
       alias_method :node, :sysex_node
 
