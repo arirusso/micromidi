@@ -70,7 +70,7 @@ Finally, here is an example that maps some MIDI Control Change messages to SysEx
       [0x41, 0x7F, 0x00],
       [0x42, 0x7F, 0x00]
   
-    node 0x41, 0x42, :device_id => 0x10
+    node :roland, :model_id => 0x42, :device_id => 0x10
   
     receive :cc do |message|
     
@@ -86,7 +86,7 @@ I've written up a few posts explaining each of the concepts used here in greater
 * {MIDI Thru and Processing}[http://tx81z.blogspot.com/2011/08/micromidi-midi-thru-and-midi-processing.html]
 * {Binding Custom Input Events}[http://tx81z.blogspot.com/2011/08/micromidi-custom-events.html]
 * {Shorthand}[http://tx81z.blogspot.com/2011/08/micromidi-shorthand.html]
-* {Sysex}[]
+* {Sysex}[http://tx81z.blogspot.com/2011/09/generating-sysex-messages-with.html]
  
 == Documentation
 
