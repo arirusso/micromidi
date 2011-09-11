@@ -33,12 +33,36 @@ class MessageTest < Test::Unit::TestCase
     assert_equal(94, msg.velocity)
   end
 
+  def test_note_on_string_no_octave
+    m = MicroMIDI.message
+    msg = m.note "C", :velocity => 94
+    assert_equal(NoteOn, msg.class)
+    assert_equal(36, msg.note)
+    assert_equal(94, msg.velocity)
+  end
+  
   def test_note_on_int
     m = MicroMIDI.message
     msg = m.note 12, :channel => 3
     assert_equal(NoteOn, msg.class)
     assert_equal(12, msg.note)
     assert_equal(3, msg.channel)
+  end
+
+  def test_note_on_symbol
+    m = MicroMIDI.message
+    msg = m.note :C0
+    assert_equal(NoteOn, msg.class)
+    assert_equal(12, msg.note)
+    assert_equal(100, msg.velocity)    
+  end
+    
+  def test_note_on_symbol_no_octave
+    m = MicroMIDI.message
+    msg = m.note :C
+    assert_equal(NoteOn, msg.class)
+    assert_equal(36, msg.note)
+    assert_equal(100, msg.velocity)    
   end
   
   def test_parse

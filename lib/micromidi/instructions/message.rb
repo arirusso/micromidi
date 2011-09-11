@@ -23,11 +23,8 @@ module MicroMIDI
         props = @state.message_properties(opts, :channel, :velocity)
         note = if id.kind_of?(Numeric) 
           NoteOn.new(props[:channel], id, props[:velocity])
-        elsif id.kind_of?(String) 
-          string_opts = { :octave => id.scan(/-?\d\z/).first }
-          n = id.split(/-?\d\z/).first
-          string_props = @state.message_properties(string_opts, :octave)
-          note_string = "#{n}#{string_props[:octave].to_s}"
+        elsif id.kind_of?(String) || id.kind_of?(Symbol)
+          note_string = parse_note_name(id)
           NoteOn[note_string].new(props[:channel], props[:velocity])
         end
         @state.last_note = note
@@ -37,7 +34,12 @@ module MicroMIDI
       # create a note off message
       def note_off(id, opts = {})
         props = @state.message_properties(opts, :channel, :velocity)
-        id.kind_of?(Numeric) ? NoteOff.new(props[:channel], id, props[:velocity]) : NoteOff[id].new(props[:channel], props[:velocity])
+        if id.kind_of?(Numeric) 
+          NoteOff.new(props[:channel], id, props[:velocity])
+        elsif id.kind_of?(String) || id.kind_of?(Symbol)
+          note_string = parse_note_name(id)
+          NoteOff[parse_note_name(id)].new(props[:channel], props[:velocity])
+        end
       end
 
       # create a MIDI message from a byte string, array of bytes, or list of bytes
@@ -56,6 +58,16 @@ module MicroMIDI
         o = @state.last_note.to_note_off unless @state.last_note.nil?
         @state.last_note = nil
         o
+      end
+      
+      protected
+      
+      def parse_note_name(name)
+        name = name.to_s #ensure that name is a string
+        string_opts = { :octave => name.scan(/-?\d\z/).first }
+        note = name.split(/-?\d\z/).first
+        string_props = @state.message_properties(string_opts, :octave)
+        "#{note}#{string_props[:octave].to_s}"
       end
 
     end
