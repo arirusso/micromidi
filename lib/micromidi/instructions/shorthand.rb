@@ -64,8 +64,9 @@ module MicroMIDI
     end
     
     class SysEx
-      alias_method :sx, :sysex_command
+      alias_method :sc, :sysex_command
       alias_method :sr, :sysex_request
+      alias_method :sx, :sysex_message
     end
 
   end
