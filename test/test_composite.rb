@@ -27,6 +27,10 @@ class CompositeTest < Test::Unit::TestCase
     assert_equal(12, off_msg.note)
     assert_equal(0, off_msg.channel)
   end
+  
+  def test_all_off
+    
+  end
           
 end
 

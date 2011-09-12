@@ -17,6 +17,8 @@ module MicroMIDI
         
     module Composite
       alias_method :p, :play
+      alias_method :q!, :all_off
+      alias_method :x, :all_off
     end
         
     class Input
