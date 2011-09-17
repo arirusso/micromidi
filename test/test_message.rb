@@ -32,6 +32,15 @@ class MessageTest < Test::Unit::TestCase
     assert_equal(64, msg.note)
     assert_equal(2, msg.value)
   end
+  
+  def test_pitch_bend
+    m = MicroMIDI::IO.new
+    msg = m.pitch_bend 64, 2, :channel => 1
+    assert_equal(PitchBend, msg.class)
+    assert_equal(1, msg.channel)
+    assert_equal(64, msg.low)
+    assert_equal(2, msg.high)    
+  end
       
   def test_note_off
     m = MicroMIDI.message

@@ -60,12 +60,14 @@ module MicroMIDI
         o
       end
       
+      # create a channel pressure message
       def channel_aftertouch(value, opts = {})
         props = @state.message_properties(opts, :channel)
         MIDIMessage::ChannelAftertouch.new(props[:channel], value)
       end
       alias_method :channel_pressure, :channel_aftertouch
       
+      # create a poly pressure message
       def polyphonic_aftertouch(note, value, opts = {})
         props = @state.message_properties(opts, :channel)
         MIDIMessage::PolyphonicAftertouch.new(props[:channel], note, value)
@@ -73,6 +75,13 @@ module MicroMIDI
       alias_method :poly_aftertouch, :polyphonic_aftertouch
       alias_method :polyphonic_pressure, :polyphonic_aftertouch
       alias_method :poly_pressure, :polyphonic_aftertouch
+      
+      def pitch_bend(low, high, opts = {})
+        props = @state.message_properties(opts, :channel)
+        MIDIMessage::PitchBend.new(props[:channel], low, high)
+      end
+      alias_method :bend, :pitch_bend
+      alias_method :pitchbend, :pitch_bend
       
       protected
       
