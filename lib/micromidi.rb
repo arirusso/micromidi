@@ -28,8 +28,15 @@ module MicroMIDI
     MicroMIDI::Context.new(ins, outs, &block)
   end
   class << self
-    alias_method :io, :message
     alias_method :using, :message
+  end
+  
+  module IO
+    
+    def self.new(*args)
+      MicroMIDI.message(*args)
+    end
+    
   end
   
   private
