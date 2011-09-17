@@ -60,6 +60,11 @@ module MicroMIDI
         o
       end
       
+      def channel_aftertouch(value, opts = {})
+        props = @state.message_properties(opts, :channel)
+        MIDIMessage::ChannelAftertouch.new(props[:channel], value)
+      end
+      
       protected
       
       def parse_note_name(name)

@@ -15,7 +15,15 @@ class MessageTest < Test::Unit::TestCase
     assert_equal(16, msg.index)
     assert_equal(12, msg.value)
   end
-  
+
+  def test_channel_Aftertouch
+    m = MicroMIDI::IO.new
+    msg = m.channel_aftertouch 2, :channel => 1
+    assert_equal(ChannelAftertouch, msg.class)
+    assert_equal(1, msg.channel)
+    assert_equal(2, msg.value)
+  end
+    
   def test_note_off
     m = MicroMIDI.message
     msg = m.note_off 13, :channel => 9, :velocity => 80
