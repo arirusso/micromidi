@@ -64,6 +64,15 @@ module MicroMIDI
         props = @state.message_properties(opts, :channel)
         MIDIMessage::ChannelAftertouch.new(props[:channel], value)
       end
+      alias_method :channel_pressure, :channel_aftertouch
+      
+      def polyphonic_aftertouch(note, value, opts = {})
+        props = @state.message_properties(opts, :channel)
+        MIDIMessage::PolyphonicAftertouch.new(props[:channel], note, value)
+      end
+      alias_method :poly_aftertouch, :polyphonic_aftertouch
+      alias_method :polyphonic_pressure, :polyphonic_aftertouch
+      alias_method :poly_pressure, :polyphonic_aftertouch
       
       protected
       
