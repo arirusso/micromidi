@@ -87,6 +87,7 @@ I've written up a few posts explaining each of the concepts used here in greater
 * {Binding Custom Input Events}[http://tx81z.blogspot.com/2011/08/micromidi-custom-events.html]
 * {Shorthand}[http://tx81z.blogspot.com/2011/08/micromidi-shorthand.html]
 * {Sysex}[http://tx81z.blogspot.com/2011/09/generating-sysex-messages-with.html]
+* {Etc}[http://tx81z.blogspot.com/2011/09/more-micromidi-tricks.html]
  
 == Documentation
 
