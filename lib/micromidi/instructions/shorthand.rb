@@ -33,10 +33,13 @@ module MicroMIDI
     
     class Message
       alias_method :c, :control_change
+      alias_method :ca, :channel_aftertouch
       alias_method :cc, :control_change
       alias_method :n, :note
       alias_method :no, :note_off
       alias_method :o, :off
+      alias_method :pa, :polyphonic_aftertouch
+      alias_method :pb, :pitch_bend
       alias_method :pc, :program_change
     end
     
