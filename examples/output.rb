@@ -3,6 +3,8 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
+# this example sends some messages to the first output
+
 output = UniMIDI::Output.use(0)
 
 MIDI.using(output) do
