@@ -8,6 +8,8 @@
 #
 
 # libs
+require 'forwardable'
+
 require 'midi-eye'
 require 'midi-message'
 require 'unimidi'

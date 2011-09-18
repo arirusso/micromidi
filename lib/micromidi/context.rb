@@ -6,8 +6,11 @@ module MicroMIDI
   class Context
     
     include Instructions::Composite
+    extend Forwardable
     
     attr_reader :state
+    
+    def_delegator :state, :output_cache, :cache
             
     def initialize(ins, outs, &block)
       
