@@ -8,15 +8,15 @@
 #
 
 # libs
-require 'forwardable'
+require "forwardable"
 
-require 'midi-eye'
-require 'midi-message'
-require 'unimidi'
+require "midi-eye"
+require "midi-message"
+require "unimidi"
 
 module MicroMIDI
   
-  VERSION = "0.0.7"
+  VERSION = "0.0.8"
   
   module Instructions
   end
@@ -53,17 +53,17 @@ end
 MIDI = MicroMIDI
 
 # modules
-require 'micromidi/instructions/composite'
+require "micromidi/instructions/composite"
 
 # classes
-require 'micromidi/context'
-require 'micromidi/state'
-require 'micromidi/instructions/process'
-require 'micromidi/instructions/input'
-require 'micromidi/instructions/message'
-require 'micromidi/instructions/output'
-require 'micromidi/instructions/sticky'
-require 'micromidi/instructions/sysex'
+require "micromidi/context"
+require "micromidi/state"
+require "micromidi/instructions/process"
+require "micromidi/instructions/input"
+require "micromidi/instructions/message"
+require "micromidi/instructions/output"
+require "micromidi/instructions/sticky"
+require "micromidi/instructions/sysex"
 
 # re-open
-require 'micromidi/instructions/shorthand'
+require "micromidi/instructions/shorthand"
