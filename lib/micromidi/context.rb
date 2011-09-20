@@ -25,7 +25,12 @@ module MicroMIDI
         :sysex => Instructions::SysEx.new(@state)
       }
        
-      instance_eval(&block) unless block.nil?
+      edit(&block) unless block.nil?
+    end
+    
+    # open a block for editing/live coding in this Context
+    def edit(&block)
+      instance_eval(&block)
     end
     
     def repeat
