@@ -30,7 +30,7 @@ module MicroMIDI
     
     # open a block for editing/live coding in this Context
     def edit(&block)
-      instance_eval(&block)
+      self.instance_eval(&block)
     end
     
     def repeat
