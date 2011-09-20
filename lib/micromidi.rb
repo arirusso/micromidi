@@ -35,8 +35,8 @@ module MicroMIDI
   
   module IO
     
-    def self.new(*args)
-      MicroMIDI.message(*args)
+    def self.new(*args, &block)
+      MicroMIDI.message(*args, &block)
     end
     
   end
