@@ -2,7 +2,7 @@
 
 A Ruby DSL for MIDI
 
-{pic}[http://images.treetrouble.net/images/midi.png]
+{pic}[http://img855.imageshack.us/img855/9804/midi.png]
 
 == Features
  
