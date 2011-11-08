@@ -16,7 +16,7 @@ require "unimidi"
 
 module MicroMIDI
   
-  VERSION = "0.0.8"
+  VERSION = "0.0.9"
   
   module Instructions
   end
