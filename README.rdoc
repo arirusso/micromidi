@@ -23,12 +23,14 @@ Requires {midi-eye}[http://github.com/arirusso/midi-eye], {midi-message}[http://
 
 == Usage
 
-The following are basic examples that use {unimidi}[http://github.com/arirusso/unimidi] inputs and outputs.  ({see an example here that explains selecting an output...}[http://github.com/arirusso/unimidi/blob/master/examples/select_a_device.rb])
+The following are basic examples that use {unimidi}[http://github.com/arirusso/unimidi] inputs and outputs.
 
   require "midi"
   
-  @i = UniMIDI::Input.use(:first)
-  @o = UniMIDI::Output.use(:first)
+  # prompt the user to select an input and output in the console...
+
+  @i = UniMIDI::Input.gets
+  @o = UniMIDI::Output.gets
 
 This example plays some arpeggios
 
@@ -41,7 +43,7 @@ This example plays some arpeggios
 
   end
     
-While running, this next example sends all input directly to the output except for notes; notes that are received are only sent to the output if their octave is between 1 and 3.  Output is also printed to the console by passing in <em>$stdout</em>.
+While running, this next example sends all input directly to the output except for notes; notes that are received are only sent to the output if their octave is between 1 and 3.  Output is also printed to the console by passing <em>$stdout</em> intead of a MIDI device.
 
   MIDI.using(@i, @o, $stdout) do
 
