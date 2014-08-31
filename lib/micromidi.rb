@@ -64,5 +64,5 @@ require "micromidi/instructions/output"
 require "micromidi/instructions/sticky"
 require "micromidi/instructions/sysex"
 
-# re-open
+# extension
 require "micromidi/instructions/shorthand"
