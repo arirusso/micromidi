@@ -9,7 +9,7 @@ A Ruby DSL for MIDI
 * Cross-platform compatible using MRI or JRuby.
 * Simplified MIDI and Sysex message output
 * MIDI Thru, processing and custom input events
-* Optional shorthand for {live coding}[http://en.wikipedia.org/wiki/Live_coding]
+* Optional shorthand for [live coding](http://en.wikipedia.org/wiki/Live_coding)
 
 ## Installation
 
@@ -19,7 +19,7 @@ or using Bundler, add this to your Gemfile
 
 `gem "micromidi"`
 
-== Usage
+## Usage
 
 Here's a quick example that plays some arpeggios
 
