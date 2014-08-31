@@ -46,7 +46,7 @@ This next example filters outs notes if their octave is between 1 and 3.  All ot
 Output is also printed to the console by passing `$stdout` as though it's a MIDI device
 
 ```ruby
-MIDI.using(@i, @o, $stdout) do
+MIDI.using(@input, @output, $stdout) do
 
   thru_except :note { |msg| only(msg, :octave, (1..3)) }
 
