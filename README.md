@@ -31,7 +31,7 @@ require "midi"
 @input = UniMIDI::Input.gets
 @output = UniMIDI::Output.gets
   
-MIDI.using($output) do
+MIDI.using(@output) do
     
   5.times do |oct|
     octave oct
@@ -70,7 +70,7 @@ end
 Finally, here is an example that maps some MIDI Control Change messages to SysEx
   
 ```ruby
-MIDI.using(@i, @o) do
+MIDI.using(@input, @output) do
   
   *@the_map =
     [0x40, 0x7F, 0x00],
