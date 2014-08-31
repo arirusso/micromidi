@@ -1,15 +1,14 @@
-#!/usr/bin/env ruby
 #
 # micromidi
+#
 # A Ruby DSL for MIDI
 #
-# (c)2011 Ari Russo 
+# (c)2011-2014 Ari Russo 
 # licensed under the Apache 2.0 License
 #
 
 # libs
 require "forwardable"
-
 require "midi-eye"
 require "midi-message"
 require "unimidi"
