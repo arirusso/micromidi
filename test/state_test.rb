@@ -1,6 +1,4 @@
-#!/usr/bin/env ruby
-
-require 'helper'
+require "helper"
 
 class StateTest < Test::Unit::TestCase
 
