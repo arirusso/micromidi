@@ -9,5 +9,6 @@ group :test do
 end
 
 gem "midi-eye"
+gem "midi-fx"
 gem "midi-message"
 gem "unimidi"
