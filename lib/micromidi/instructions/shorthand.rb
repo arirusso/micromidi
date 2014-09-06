@@ -2,8 +2,8 @@ module MicroMIDI
   
   alias l loop
  
-  class << self
-    alias_method :m, :message
+  def self.m(*args, &block)
+    send(:message, *args, &block)
   end
   
   class Context

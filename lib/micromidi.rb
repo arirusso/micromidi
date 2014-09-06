@@ -1,5 +1,5 @@
 #
-# micromidi
+# MicroMIDI
 #
 # A Ruby DSL for MIDI
 #
@@ -14,46 +14,9 @@ require "midi-fx"
 require "midi-message"
 require "unimidi"
 
-module MicroMIDI
-  
-  VERSION = "0.1.1"
-  
-  module Instructions
-  end
-  
-  def self.new(*a, &block)
-    message(*a, &block)
-  end
-  
-  def self.message(*args, &block)
-    ins, outs = *process_devices(args)
-    MicroMIDI::Context.new(ins, outs, &block)
-  end
-  class << self
-    alias_method :using, :message
-  end
-  
-  module IO
-    
-    def self.new(*args, &block)
-      MicroMIDI.message(*args, &block)
-    end
-    
-  end
-  
-  private
-  
-  def self.process_devices(args)
-    ins = args.find_all { |d| d.respond_to?(:type) && d.type == :input && d.respond_to?(:gets) }
-    outs = args.find_all { |d| d.respond_to?(:puts) }
-    [ins, outs]    
-  end  
-  
-end
-MIDI = MicroMIDI
-
 # modules
 require "micromidi/instructions/composite"
+require "micromidi/module_methods"
 
 # classes
 require "micromidi/context"
@@ -67,3 +30,11 @@ require "micromidi/instructions/sysex"
 
 # extension
 require "micromidi/instructions/shorthand"
+
+module MicroMIDI
+  
+  VERSION = "0.1.2"
+
+end
+MIDI = MicroMIDI
+
