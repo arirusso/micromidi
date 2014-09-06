@@ -2,10 +2,6 @@ require "helper"
 
 class InputTest < Test::Unit::TestCase
 
-  include MicroMIDI
-  include MIDIMessage
-  include TestHelper
-
   def test_thru_listeners
     m = MicroMIDI.message($test_device[:input].open)
     m.thru
