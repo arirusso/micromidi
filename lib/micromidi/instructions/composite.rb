@@ -5,31 +5,24 @@ module MicroMIDI
     module Composite
       
       #
-      # plays a note or notes, for a certain duration.
+      # Plays a note or notes, for a certain duration.
       #
-      # the first argument must be a note name (String), MIDIMessage::NoteOn object, or array of either
+      # The first argument must be a note name (String), MIDIMessage::NoteOn object, or array of either
       # the last argument must be a Numeric (representing the duration)
       #
-      # additional arguments should be note names or MIDIMessage::NoteOn objects and will 
-      # be played as a chord with the first argument
+      # Additional arguments should be note names or MIDIMessage::NoteOn objects and will 
+      # be played as a chord with the first argument.
       #
       def play(*args)
-        raise "last argument must be a Numeric duration" unless args.last.kind_of?(Numeric)
+        raise "Last argument must be a Numeric duration" unless args.last.kind_of?(Numeric)
         
         duration = args.pop
         note_or_notes = [args].flatten
-        
-        msgs = note_or_notes.map do |n|
-          case n
-            when Numeric, String then note(n)
-            when MIDIMessage then n 
-          end
-        end
-        
+        messages = as_note_messages(note_or_notes)
         sleep(duration)
-        msgs.each { |msg| note_off(msg.note, :channel => msg.channel, :velocity => msg.velocity) }
+        send_note_offs(messages)
         
-        msgs.size > 1 ? msgs : msgs.first
+        messages.count > 1 ? messages : messages.first
       end
       
       # sends a note off message for every note on every channel
@@ -42,6 +35,23 @@ module MicroMIDI
         true
       end
       alias_method :quiet!, :all_off
+
+      private
+
+      def send_note_offs(messages)
+        messages.each do |message| 
+          note_off(message.note, :channel => message.channel, :velocity => message.velocity)
+        end
+      end
+
+      def as_note_messages(note_or_notes)
+        note_or_notes.map do |note|
+          case note
+            when Numeric, String then note(note)
+            when MIDIMessage then note 
+          end
+        end
+      end
       
     end
 
