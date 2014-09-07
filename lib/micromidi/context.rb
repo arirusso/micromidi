@@ -27,35 +27,49 @@ module MicroMIDI
     
     # open a block for editing/live coding in this Context
     def edit(&block)
-      self.instance_eval(&block)
+      instance_eval(&block)
     end
     
     def repeat
-      self.send(@state.last_command[:method], *@state.last_command[:args]) unless @state.last_command.nil?
+      send(@state.last_command[:method], *@state.last_command[:args]) unless @state.last_command.nil?
     end
     
-    def method_missing(m, *a, &b)
-      delegated = false
-      outp = nil
-      options = a.last.kind_of?(Hash) ? a.last : {}
-      do_output = options[:output] || true
-      [@instructions[:sysex], @instructions[:message], @instructions[:process]].each do |dsl|
-        if dsl.respond_to?(m)
-          msg = dsl.send(m, *a, &b)
-          outp = @state.auto_output && do_output ? @instructions[:output].output(msg) : msg
-          delegated = true
-        end
+    def method_missing(method, *args, &block)
+      result = dsl(method, *args, &block)
+      if result.keys.empty?
+        super
+      else
+        return_value = result.values.compact[0]
+        @state.record(method, args, block, return_value)
+        return_value
       end
-      unless delegated
-        [@instructions[:input], @instructions[:output], @instructions[:sticky]].each do |dsl| 
-          if dsl.respond_to?(m)
-            outp = dsl.send(m, *a, &b)
-            delegated = true
+    end
+
+    private
+
+    def delegate(instruction_types, method, args, options = {}, &block)
+      result = {}
+      instruction_types.each do |key|
+        dsl = @instructions[key]
+        if dsl.respond_to?(method)
+          message = dsl.send(method, *args, &block)
+          result[key] = if @state.auto_output && !!options[:with_output]
+            @instructions[:output].output(message)
+          else
+            message
           end
         end
-      end
-      @state.record(m, a, b, outp)
-      delegated ? outp : super
+      end 
+      result
+    end
+
+    def dsl(method, *args, &block)
+      results = []
+      with_output = [:sysex, :message, :process]
+      results << delegate(with_output, method, args, :with_output => true, &block)
+      without_output = [:input, :output, :sticky]
+      results << delegate(without_output, method, args, :with_output => false, &block)
+      results.reduce(&:merge)
     end
         
   end
