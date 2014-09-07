@@ -12,8 +12,12 @@ module MicroMIDI
       def receive(*args, &block)
         message_options = args.dup
         options = message_options.last.kind_of?(Hash) ? message_options.pop : {}
-        match = { :class => message_classes(message_options) } unless message_options.empty?
-        listener(match, options) { |event| yield(event[:message], event[:timestamp]) }
+        unless message_options.empty?
+          match = { :class => message_classes(message_options) }
+        end
+        listener(match, options) do |event| 
+          yield(event[:message], event[:timestamp])
+        end
       end
       alias_method :gets, :receive
       alias_method :handle, :receive
@@ -24,7 +28,7 @@ module MicroMIDI
       def receive_unless(*args, &block)
         message_options = args.dup
         options = message_options.last.kind_of?(Hash) ? message_options.pop : {}
-        match = { :class => message_classes(message_options) }
+        match = message_classes(message_options)
         listener(nil, options) do |event| 
           yield(event[:message], event[:timestamp]) unless match.include?(event[:message].class)
         end
@@ -41,15 +45,13 @@ module MicroMIDI
 
       # send input messages thru to the outputs if it has a specific class
       def thru_if(*args)
-        receive_options = args.dup
-        receive_options.last.kind_of?(Hash) ? receive_options.last[:thru] = true : receive_options.push({ :thru => true })
+        receive_options = thru_options(args)
         receive(*receive_options) { |message, timestamp| output(message) }
       end
 
       # send input messages thru to the outputs unless of a specific class
       def thru_unless(*args)
-        receive_options = args.dup
-        receive_options.last.kind_of?(Hash) ? receive_options.last[:thru] = true : receive_options.push({ :thru => true })
+        receive_options = thru_options(args)
         receive_unless(*receive_options) { |message, timestamp| output(message) }
       end
       
@@ -73,25 +75,43 @@ module MicroMIDI
 
       protected
 
-      def listener(match = {}, options = {}, &block)
+      def listener(match, options = {}, &block)
         inputs = options[:from] || @state.inputs
-        thru = options[:thru] || false
+        do_thru = options.fetch(:thru, false)
+        should_start = options.fetch(:start, true)
         match ||= {}
-        inputs.each do |input|
-          listener = MIDIEye::Listener.new(input)
-          listener.listen_for(match, &block)
-          if thru
-            @state.thru_listeners.each { |l| l.stop }
-            @state.thru_listeners.clear
-            @state.thru_listeners << listener
-          else 
-            @state.listeners << listener
-          end 
-          listener.start(:background => true) unless !options[:start].nil? && !options[:start]
+
+        listeners = inputs.map { |input| initialize_listener(input, match, do_thru, &block) }
+        if should_start
+          listeners.each { |listener| listener.start(:background => true) }
         end
       end
 
       private
+
+      def initialize_listener(input, match, do_thru, &block)
+        listener = MIDIEye::Listener.new(input)
+        listener.listen_for(match, &block)
+        if do_thru
+          @state.thru_listeners.each(&:stop)
+          @state.thru_listeners.clear
+          @state.thru_listeners << listener
+        else 
+          @state.listeners << listener
+        end 
+        listener
+      end
+
+      # The options for using thru
+      def thru_options(args)
+        receive_options = args.dup
+        if receive_options.last.kind_of?(Hash)
+          receive_options.last[:thru] = true
+        else
+          receive_options << { :thru => true }
+        end
+        receive_options
+      end
 
       def message_classes(list)
         list.map do |type|
