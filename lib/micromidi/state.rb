@@ -44,7 +44,10 @@ module MicroMIDI
     
     def record(method, args, block, output)
       timestamp = now
-      message = { :message => output, :timestamp => timestamp }
+      message = { 
+        :message => output, 
+        :timestamp => timestamp 
+      }
       @output_cache << message
       @last_command = { 
         :method => method, 
