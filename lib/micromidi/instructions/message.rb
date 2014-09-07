@@ -17,27 +17,17 @@ module MicroMIDI
       end
 
       # create a note message
-      def note(id, opts = {})
-        props = @state.message_properties(opts, :channel, :velocity)
-        note = if id.kind_of?(Numeric) 
-          NoteOn.new(props[:channel], id, props[:velocity])
-        elsif id.kind_of?(String) || id.kind_of?(Symbol)
-          note_string = parse_note_name(id)
-          NoteOn[note_string].new(props[:channel], props[:velocity])
-        end
+      def note(id, options = {})
+        properties = @state.message_properties(options, :channel, :velocity)
+        note = note_message(NoteOn, id, properties)
         @state.last_note = note
         note
       end
 
       # create a note off message
-      def note_off(id, opts = {})
-        props = @state.message_properties(opts, :channel, :velocity)
-        if id.kind_of?(Numeric) 
-          NoteOff.new(props[:channel], id, props[:velocity])
-        elsif id.kind_of?(String) || id.kind_of?(Symbol)
-          note_string = parse_note_name(id)
-          NoteOff[parse_note_name(id)].new(props[:channel], props[:velocity])
-        end
+      def note_off(id, options = {})
+        properties = @state.message_properties(options, :channel, :velocity)
+        note_message(NoteOff, id, properties)
       end
 
       # create a MIDI message from a byte string, array of bytes, or list of bytes
@@ -84,11 +74,23 @@ module MicroMIDI
       protected
       
       def parse_note_name(name)
-        name = name.to_s #ensure that name is a string
-        string_opts = { :octave => name.scan(/-?\d\z/).first }
+        name = name.to_s
+        octave = name.scan(/-?\d\z/).first
+        string_options = { :octave => octave }
         note = name.split(/-?\d\z/).first
-        string_props = @state.message_properties(string_opts, :octave)
-        "#{note}#{string_props[:octave].to_s}"
+        string_properties = @state.message_properties(string_options, :octave)
+        "#{note}#{string_properties[:octave].to_s}"
+      end
+
+      private
+
+      def note_message(klass, id, properties)
+        if id.kind_of?(Numeric) 
+          klass.new(properties[:channel], id, properties[:velocity])
+        elsif id.kind_of?(String) || id.kind_of?(Symbol)
+          note_name = parse_note_name(id)
+          klass[note_name].new(properties[:channel], properties[:velocity])
+        end
       end
 
     end
