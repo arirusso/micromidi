@@ -4,19 +4,32 @@ module MicroMIDI
     
     class Output
       
+      extend Forwardable
+
+      def_delegators :@state, :toggle_auto_output
+      alias_method :auto_output, :toggle_auto_output
+
+      # @param [State] state
       def initialize(state)
         @state = state
       end
 
-      def output(msg)
-        auto_output(msg) if msg === false || msg === true
-        @state.outputs.each { |o| o.puts(msg) } unless msg.nil?
-        msg
+      # Output a message or toggle the auto output mode
+      # @param [MIDIMessage, Boolean] message A MIDI message to output, or a boolean to toggle auto-output mode
+      # @return [BIDIMessage]
+      def output(message)
+        set_auto_output(message) if !!message === message # check for boolean
+        unless message.nil?
+          @state.outputs.each { |output| output.puts(message) }
+        end
+        message
       end
       
-      # toggle mode where messages are automatically outputted
-      def auto_output(mode = nil)
-        mode.nil? ? @state.toggle_auto_output : @state.auto_output = mode
+      # Set mode where messages are automatically outputted
+      # @param [Boolean] is_on Whether to set the auto output mode to ON
+      # @return [Boolean]
+      def set_auto_output(is_on)
+        @state.auto_output = is_on
       end
 
     end
