@@ -25,51 +25,50 @@ module MicroMIDI
       edit(&block) unless block.nil?
     end
     
-    # open a block for editing/live coding in this Context
+    # Open a block for editing/live coding in this Context
     def edit(&block)
       instance_eval(&block)
     end
     
+    # Repeat the last instruction in the history
     def repeat
       send(@state.last_command[:method], *@state.last_command[:args]) unless @state.last_command.nil?
     end
     
+    # Delegates a command to one of the instruction classes
     def method_missing(method, *args, &block)
-      result = dsl(method, *args, &block)
-      if result.keys.empty?
+      results = delegate(method, args, &block)
+      if results.empty?
         super
       else
-        return_value = result.values.compact[0]
-        @state.record(method, args, block, return_value)
-        return_value
+        messages = results.map do |result|
+          @state.record(method, args, block, result[:message])
+          @instructions[:output].output(result[:message]) if output?(result[:instruction_type])
+          result[:message]
+        end
+        messages.compact.first
       end
     end
 
     private
 
-    def delegate(instruction_types, method, args, options = {}, &block)
-      result = {}
-      instruction_types.each do |key|
-        dsl = @instructions[key]
-        if dsl.respond_to?(method)
-          message = dsl.send(method, *args, &block)
-          result[key] = if @state.auto_output && !!options[:with_output]
-            @instructions[:output].output(message)
-          else
-            message
-          end
-        end
-      end 
-      result
+    # Should a message that resulted from the given instruction type be outputted?
+    def output?(instruction_type)
+      @state.auto_output && [:sysex, :message, :process].include?(instruction_type)
     end
 
-    def dsl(method, *args, &block)
-      results = []
-      with_output = [:sysex, :message, :process]
-      results << delegate(with_output, method, args, :with_output => true, &block)
-      without_output = [:input, :output, :sticky]
-      results << delegate(without_output, method, args, :with_output => false, &block)
-      results.reduce(&:merge)
+    # Delegate a command 
+    def delegate(method, args, &block)
+      results = @instructions.map do |key, instruction|
+        if instruction.respond_to?(method)
+          message = instruction.send(method, *args, &block)
+          {
+            :instruction_type => key,
+            :message => message
+          }
+        end
+      end
+      results.compact
     end
         
   end
