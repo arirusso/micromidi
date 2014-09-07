@@ -2,7 +2,7 @@ module MicroMIDI
 
   class State
     
-    Default = {
+    DEFAULT = {
       :channel => 0,
       :octave => 2,
       :velocity => 100
@@ -24,7 +24,14 @@ module MicroMIDI
                 :start_time,
                 :thru_listeners
         
-    def initialize(ins, outs, options = {})
+    def initialize(inputs, outputs, options = {})
+      @inputs = inputs
+      @outputs = outputs 
+
+      @channel = options[:channel] || DEFAULT[:channel]
+      @velocity = options[:velocity] || DEFAULT[:velocity]
+      @octave = options[:octave] || DEFAULT[:octave]  
+
       @auto_output = true
       @last_command = nil
       @last_note = nil    
@@ -33,19 +40,18 @@ module MicroMIDI
       @output_cache = []
       @start_time = Time.now.to_f
       @super_sticky = false
-
-      @channel = options[:channel] || Default[:channel]
-      @velocity = options[:velocity] || Default[:velocity]
-      @octave = options[:octave] || Default[:octave]  
-      
-      @inputs = ins
-      @outputs = outs  
     end
     
-    def record(m, a, b, outp)
-      ts = now
-      @output_cache << { :message => outp, :timestamp => ts }
-      @last_command = { :method => m, :args => a, :block => b, :timestamp => ts }
+    def record(method, args, block, output)
+      timestamp = now
+      message = { :message => output, :timestamp => timestamp }
+      @output_cache << message
+      @last_command = { 
+        :method => method, 
+        :args => args, 
+        :block => block, 
+        :timestamp => timestamp 
+      }
     end
     
     def toggle_super_sticky
@@ -56,12 +62,14 @@ module MicroMIDI
       @auto_output = !@auto_output
     end
 
-    def message_properties(opts, *props)
+    def message_properties(options, *properties)
       output = {}
-      props.each do |prop|
-        output[prop] = opts[prop]
-        self.send("#{prop.to_s}=", output[prop]) if !output[prop].nil? && (self.send(prop).nil? || @super_sticky)
-        output[prop] ||= self.send(prop.to_s)
+      properties.each do |property|
+        output[property] = options[property]
+        if !output[property].nil? && (send(property).nil? || @super_sticky)
+          send("#{property.to_s}=", output[property]) 
+        end
+        output[property] ||= send(property.to_s)
       end
       output
     end
@@ -69,7 +77,7 @@ module MicroMIDI
     private
     
     def now
-      ((Time.now.to_f - @start_time) * 1000)
+      (Time.now.to_f - @start_time) * 1000
     end
 
   end
