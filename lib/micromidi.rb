@@ -3,8 +3,8 @@
 #
 # A Ruby DSL for MIDI
 #
-# (c)2011-2014 Ari Russo 
-# licensed under the Apache 2.0 License
+# (c)2011-2014 Ari Russo
+# Apache 2.0 License
 #
 
 # libs
@@ -32,9 +32,8 @@ require "micromidi/instructions/sysex"
 require "micromidi/instructions/shorthand"
 
 module MicroMIDI
-  
+
   VERSION = "0.1.3"
 
 end
 MIDI = MicroMIDI
-

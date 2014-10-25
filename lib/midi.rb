@@ -2,14 +2,15 @@
 # MicroMIDI
 # A Ruby DSL for MIDI
 #
-# (c)2011-2014 Ari Russo 
-# licensed under the Apache 2.0 License
+# (c)2011-2014 Ari Russo
+# Apache 2.0 License
 #
 
-# The purpose of this file is just to allow both:
+# The purpose of this file is to allow:
 #
-# <em>require "micromidi"</em>
-# and 
 # <em>require "midi"</em>
+# in addition to
+# <em>require "micromidi"</em>
+#
 
 require "micromidi"
