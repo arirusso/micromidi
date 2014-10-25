@@ -1,21 +1,22 @@
 module MicroMIDI
 
   module Instructions
-    
+
     class Input
-   
+
+      # @param [State] state
       def initialize(state)
         @state = state
       end
 
-      # bind an event that will be called every time a message is received
+      # Bind an event that will be called every time a message is received
       def receive(*args, &block)
         message_options = args.dup
         options = message_options.last.kind_of?(Hash) ? message_options.pop : {}
         unless message_options.empty?
           match = { :class => message_classes(message_options) }
         end
-        listener(match, options) do |event| 
+        listener(match, options) do |event|
           yield(event[:message], event[:timestamp])
         end
       end
@@ -29,7 +30,7 @@ module MicroMIDI
         message_options = args.dup
         options = message_options.last.kind_of?(Hash) ? message_options.pop : {}
         match = message_classes(message_options)
-        listener(nil, options) do |event| 
+        listener(nil, options) do |event|
           yield(event[:message], event[:timestamp]) unless match.include?(event[:message].class)
         end
       end
@@ -38,39 +39,46 @@ module MicroMIDI
       alias_method :listen_for_unless, :receive_unless
       alias_method :unless_receive, :receive_unless
 
-      # send input messages thru to the outputs
+      # Send input messages thru to the outputs
       def thru
         thru_if
       end
 
-      # send input messages thru to the outputs if it has a specific class
+      # Send input messages thru to the outputs if it has a specific class
       def thru_if(*args)
         receive_options = thru_options(args)
         receive(*receive_options) { |message, timestamp| output(message) }
       end
 
-      # send input messages thru to the outputs unless of a specific class
+      # Send input messages thru to the outputs unless of a specific class
       def thru_unless(*args)
         receive_options = thru_options(args)
         receive_unless(*receive_options) { |message, timestamp| output(message) }
       end
-      
-      # like <em>thru_unless</em> except a block can be passed that will be called when
+
+      # Similar to <em>thru_unless</em> except a block can be passed that will be called when
       # notes specified as the <em>unless</em> arrive
       def thru_except(*args, &block)
         thru_unless(*args)
-        receive(*args, &block)        
+        receive(*args, &block)
       end
-            
-      # wait for input on the last input passed in
-      # can pass the option :from => [an input] to specify which one to wait on
+
+      # Wait for input on the last input passed in (blocking)
+      # Can pass the option :from => [an input] to specify which one to wait on
+      # @param [Hash] options
+      # @option options [UniMIDI::Input] :from
+      # @return [Boolean]
       def wait_for_input(options = {})
         listener = options[:from] || @state.listeners.last || @state.thru_listeners.last
         listener.join
+        true
       end
-      
+
+      # Join the listener thread
+      # @return [Boolean]
       def join
         loop { wait_for_input }
+        true
       end
 
       protected
@@ -96,9 +104,9 @@ module MicroMIDI
           @state.thru_listeners.each(&:stop)
           @state.thru_listeners.clear
           @state.thru_listeners << listener
-        else 
+        else
           @state.listeners << listener
-        end 
+        end
         listener
       end
 
