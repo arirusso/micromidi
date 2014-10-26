@@ -1,24 +1,36 @@
 module MicroMIDI
 
   module Instructions
-    
+
+    # Commands that deal with MIDI messages
     class Message
-      
+
+      # @param [State] state
       def initialize(state)
         @state = state
       end
-      
-      # create a control change message
+
+      # Create a MIDI control change message
+      # @param [Fixnum, String] id Control name or index
+      # @param [Fixnum] value
+      # @param [Hash] options
+      # @option options [Fixnum] :channel
+      # @return [MIDIMessage::ControlChange]
       def control_change(id, value, options = {})
         properties = @state.message_properties(options, :channel)
-        if id.kind_of?(Numeric)
+        if id.kind_of?(Fixnum)
           MIDIMessage::ControlChange.new(properties[:channel], id, value)
         else
           MIDIMessage::ControlChange[id].new(properties[:channel], value)
         end
       end
 
-      # create a note message
+      # Create a MIDI note on message
+      # @param [Fixnum, String] id Note name or index
+      # @param [Hash] options
+      # @option options [Fixnum] :channel
+      # @option options [Fixnum] :velocity
+      # @return [MIDIMessage::NoteOn]
       def note(id, options = {})
         properties = @state.message_properties(options, :channel, :velocity)
         note = note_message(MIDIMessage::NoteOn, id, properties)
@@ -26,38 +38,59 @@ module MicroMIDI
         note
       end
 
-      # create a note off message
+      # Create a MIDI note off message
+      # @param [Fixnum, String] id Note name or index
+      # @param [Hash] options
+      # @option options [Fixnum] :channel
+      # @option options [Fixnum] :velocity
+      # @return [MIDIMessage::NoteOff]
       def note_off(id, options = {})
         properties = @state.message_properties(options, :channel, :velocity)
         note_message(MIDIMessage::NoteOff, id, properties)
       end
 
-      # create a MIDI message from a byte string, array of bytes, or list of bytes
+      # Create a MIDI message from raw bytes
+      # @param [Array<Fixnum>, Array<String>, String] message Byte string or array of numeric/string bytes
+      # @return [MIDIMessage]
       def parse(message)
         MIDIMessage.parse(message)
       end
 
-      # create a program change message
+      # Create a MIDI program change message
+      # @param [Fixnum] program
+      # @param [Hash] options
+      # @option options [Fixnum] :channel
+      # @return [MIDIMessage::ProgramChange]
       def program_change(program, options = {})
         properties = @state.message_properties(options, :channel)
         MIDIMessage::ProgramChange.new(properties[:channel], program)
       end
 
-      # create a note-off message from the last note-on message
+      # Create a MIDI note-off message from the last note-on message
+      # @return [MIDIMessage::NoteOff]
       def off
         note_off = @state.last_note.to_note_off unless @state.last_note.nil?
         @state.last_note = nil
         note_off
       end
-      
-      # create a channel pressure message
+
+      # Create a MIDI channel pressure message
+      # @param [Fixnum] value
+      # @param [Hash] options
+      # @option options [Fixnum] :channel
+      # @return [MIDIMessage::ChannelAftertouch]
       def channel_aftertouch(value, options = {})
         properties = @state.message_properties(options, :channel)
         MIDIMessage::ChannelAftertouch.new(properties[:channel], value)
       end
       alias_method :channel_pressure, :channel_aftertouch
-      
-      # create a poly pressure message
+
+      # Create a MIDI poly pressure message
+      # @param [Fixnum, String] note
+      # @param [Fixnum] value
+      # @param [Hash] options
+      # @option options [Fixnum] :channel
+      # @return [MIDIMessage::PolyphonicAftertouch]
       def polyphonic_aftertouch(note, value, options = {})
         properties = @state.message_properties(options, :channel)
         MIDIMessage::PolyphonicAftertouch.new(properties[:channel], note, value)
@@ -65,16 +98,25 @@ module MicroMIDI
       alias_method :poly_aftertouch, :polyphonic_aftertouch
       alias_method :polyphonic_pressure, :polyphonic_aftertouch
       alias_method :poly_pressure, :polyphonic_aftertouch
-      
+
+      # Create a MIDI pitch bend message
+      # @param [Fixnum] low
+      # @param [Fixnum] high
+      # @param [Hash] options
+      # @option options [Fixnum] :channel
+      # @return [MIDIMessage::PitchBend]
       def pitch_bend(low, high, options = {})
         properties = @state.message_properties(options, :channel)
         MIDIMessage::PitchBend.new(properties[:channel], low, high)
       end
       alias_method :bend, :pitch_bend
       alias_method :pitchbend, :pitch_bend
-      
+
       protected
-      
+
+      # Parse a note name string eg "C4"
+      # @param [String] name
+      # @return [String]
       def parse_note_name(name)
         name = name.to_s
         octave = name.scan(/-?\d\z/).first
@@ -86,8 +128,13 @@ module MicroMIDI
 
       private
 
+      # Create a MIDI note on or note off message
+      # @param [Class] klass
+      # @param [Fixnum, String] id
+      # @param [Hash] properties
+      # @return [MIDIMessage::NoteOn, MIDIMessage::NoteOff]
       def note_message(klass, id, properties)
-        if id.kind_of?(Numeric) 
+        if id.kind_of?(Numeric)
           klass.new(properties[:channel], id, properties[:velocity])
         elsif id.kind_of?(String) || id.kind_of?(Symbol)
           note_name = parse_note_name(id)
