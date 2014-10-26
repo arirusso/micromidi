@@ -2,6 +2,7 @@ module MicroMIDI
 
   module Instructions
 
+    # Commands dealing with MIDI input
     class Input
 
       # @param [State] state
@@ -9,16 +10,20 @@ module MicroMIDI
         @state = state
       end
 
-      # Bind an event that will be called every time a message is received
-      def receive(*args, &block)
-        message_options = args.dup
-        options = message_options.last.kind_of?(Hash) ? message_options.pop : {}
-        unless message_options.empty?
-          match = { :class => message_classes(message_options) }
+      # Bind an event that will be fired when a message is received
+      # @param [*Object] args Types of messages to filter on eg :note_on, :control_change
+      # @param [Proc] callback The event callback
+      # @return [Boolean]
+      def receive(*args, &callback)
+        args = args.dup
+        options = args.last.kind_of?(Hash) ? args.pop : {}
+        unless args.empty?
+          match = { :class => message_classes(args) }
         end
         listener(match, options) do |event|
           yield(event[:message], event[:timestamp])
         end
+        true
       end
       alias_method :gets, :receive
       alias_method :handle, :receive
@@ -26,10 +31,14 @@ module MicroMIDI
       alias_method :listen_for, :receive
       alias_method :when_receive, :receive
 
-      def receive_unless(*args, &block)
-        message_options = args.dup
-        options = message_options.last.kind_of?(Hash) ? message_options.pop : {}
-        match = message_classes(message_options)
+      # Bind an event that will be fired when a message is received
+      # @param [*Object] args Types of messages to filter out eg :note_on, :control_change
+      # @param [Proc] callback The event callback
+      # @return [Boolean]
+      def receive_unless(*args, &callback)
+        args = args.dup
+        options = args.last.kind_of?(Hash) ? args.pop : {}
+        match = message_classes(args)
         listener(nil, options) do |event|
           yield(event[:message], event[:timestamp]) unless match.include?(event[:message].class)
         end
@@ -44,23 +53,30 @@ module MicroMIDI
         thru_if
       end
 
-      # Send input messages thru to the outputs if it has a specific class
+      # Send input messages thru to the outputs if they have a specified class
+      # @param [*Object] args
+      # @return [Boolean]
       def thru_if(*args)
-        receive_options = thru_options(args)
+        receive_options = thru_arguments(args)
         receive(*receive_options) { |message, timestamp| output(message) }
+        true
       end
 
-      # Send input messages thru to the outputs unless of a specific class
+      # Send input messages thru to the outputs unless they're of the specified class
+      # @param [*Object] args
+      # @return [Boolean]
       def thru_unless(*args)
-        receive_options = thru_options(args)
+        receive_options = thru_arguments(args)
         receive_unless(*receive_options) { |message, timestamp| output(message) }
       end
 
-      # Similar to <em>thru_unless</em> except a block can be passed that will be called when
-      # notes specified as the <em>unless</em> arrive
-      def thru_except(*args, &block)
+      # Similar to Input#thru_unless except a callback can be passed that will be fired when notes specified arrive
+      # @param [*Object] args
+      # @param [Proc] callback
+      # @return [Boolean]
+      def thru_except(*args, &callback)
         thru_unless(*args)
-        receive(*args, &block)
+        receive(*args, &callback)
       end
 
       # Wait for input on the last input passed in (blocking)
@@ -83,8 +99,15 @@ module MicroMIDI
 
       protected
 
+      # Initialize input event listeners for the given inputs and options
+      # @param [Hash] match
+      # @param [Hash] options
+      # option options [Array<UniMIDI::Input>, UniMIDI::Input] :from
+      # option options [Boolean] :start
+      # option options [Boolean] :thru
       def listener(match, options = {}, &block)
         inputs = options[:from] || @state.inputs
+        inputs = [inputs].flatten
         do_thru = options.fetch(:thru, false)
         should_start = options.fetch(:start, true)
         match ||= {}
@@ -97,9 +120,15 @@ module MicroMIDI
 
       private
 
-      def initialize_listener(input, match, do_thru, &block)
+      # Initialize an input event listener
+      # @param [UniMIDI::Input] input
+      # @param [Hash] match
+      # @param [Boolean] do_thru
+      # @param [Proc] callback
+      # @return [MIDIEye::Listener]
+      def initialize_listener(input, match, do_thru, &callback)
         listener = MIDIEye::Listener.new(input)
-        listener.listen_for(match, &block)
+        listener.listen_for(match, &callback)
         if do_thru
           @state.thru_listeners.each(&:stop)
           @state.thru_listeners.clear
@@ -110,8 +139,10 @@ module MicroMIDI
         listener
       end
 
-      # The options for using thru
-      def thru_options(args)
+      # The arguments for using thru
+      # @param [Array<Object>] args
+      # @return [Array<Object, Hash>]
+      def thru_arguments(args)
         receive_options = args.dup
         if receive_options.last.kind_of?(Hash)
           receive_options.last[:thru] = true
@@ -121,9 +152,12 @@ module MicroMIDI
         receive_options
       end
 
-      def message_classes(list)
-        list.map do |type|
-          case type
+      # Get the MIDIMessage class for the given note name
+      # @param [Array<String, Symbol>] type_list
+      # @return [Array<Class>]
+      def message_classes(type_list)
+        classes = type_list.map do |type|
+          case type.to_sym
           when :aftertouch, :pressure, :aft then [MIDIMessage::ChannelAftertouch, MIDIMessage::PolyphonicAftertouch]
           when :channel_aftertouch, :channel_pressure, :ca, :cp then MIDIMessage::ChannelAftertouch
           when :control_change, :cc, :c then MIDIMessage::ControlChange
@@ -134,7 +168,8 @@ module MicroMIDI
           when :polyphonic_aftertouch, :poly_aftertouch, :poly_pressure, :polyphonic_pressure, :pa, :pp then MIDIMessage::PolyphonicAftertouch
           when :program_change, :pc, :p then MIDIMessage::ProgramChange
           end
-        end.flatten.compact
+        end
+        classes.flatten.compact
       end
 
     end
