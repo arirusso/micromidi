@@ -1,41 +1,54 @@
 module MicroMIDI
-  
+
+  # The DSL context
   class Context
-    
+
     include Instructions::Composite
     extend Forwardable
-    
+
     attr_reader :state
-    
+
     def_delegator :state, :output_cache, :cache
-            
-    def initialize(ins, outs, &block)
-      
-      @state = State.new(ins, outs)
-      
+
+    # @param [Array<UniMIDI::Input>, UniMIDI::Input] inputs
+    # @param [Array<UniMIDI::Output, IO>, IO, UniMIDI::Output] outputs
+    # @param [Proc] block
+    def initialize(inputs, outputs, &block)
+
+      @state = State.new(inputs, outputs)
+
       @instructions = {
         :process => Instructions::Process.new(@state),
-        :input => Instructions::Input.new(@state),      
+        :input => Instructions::Input.new(@state),
         :message => Instructions::Message.new(@state),
         :output => Instructions::Output.new(@state),
         :sticky => Instructions::Sticky.new(@state),
         :sysex => Instructions::SysEx.new(@state)
       }
-       
-      edit(&block) unless block.nil?
+
+      edit(&block) if block_given?
     end
-    
-    # Open a block for editing/live coding in this Context
+
+    # Eval a block for editing/live coding in this context
+    # @param [Proc] block
+    # @return [Object]
     def edit(&block)
       instance_eval(&block)
     end
-    
+
     # Repeat the last instruction in the history
+    # @return [Object]
     def repeat
-      send(@state.last_command[:method], *@state.last_command[:args]) unless @state.last_command.nil?
+      unless @state.last_command.nil?
+        send(@state.last_command[:method], *@state.last_command[:args])
+      end
     end
-    
+
     # Delegates a command to one of the instruction classes
+    # @param [Symbol] method
+    # @param [*Object] args
+    # @param [Proc] block
+    # @return [Object]
     def method_missing(method, *args, &block)
       results = delegate(method, args, &block)
       if results.empty?
@@ -53,11 +66,17 @@ module MicroMIDI
     private
 
     # Should a message that resulted from the given instruction type be outputted?
+    # @param [Symbol] instruction_type
+    # @return [Boolean]
     def output?(instruction_type)
       @state.auto_output && [:sysex, :message, :process].include?(instruction_type)
     end
 
-    # Delegate a command 
+    # Delegate a command
+    # @param [Symbol] method
+    # @param [*Object] args
+    # @param [Proc] block
+    # @return [Object]
     def delegate(method, args, &block)
       results = @instructions.map do |key, instruction|
         if instruction.respond_to?(method)
@@ -70,6 +89,6 @@ module MicroMIDI
       end
       results.compact
     end
-        
+
   end
 end
