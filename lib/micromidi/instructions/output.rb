@@ -2,6 +2,7 @@ module MicroMIDI
 
   module Instructions
 
+    # Commands that deal with MIDI output
     class Output
 
       extend Forwardable
