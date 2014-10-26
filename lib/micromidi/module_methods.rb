@@ -7,8 +7,8 @@ module MicroMIDI
   # @param [Proc] block
   # @return [Context]
   def new(*args, &block)
-    inputs = get_inputs(args)
-    outputs = get_outputs(args)
+    inputs = Device.get_inputs(args)
+    outputs = Device.get_outputs(args)
     Context.new(inputs, outputs, &block)
   end
 

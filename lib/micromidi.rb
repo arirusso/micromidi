@@ -15,6 +15,7 @@ require "midi-message"
 require "unimidi"
 
 # modules
+require "micromidi/device"
 require "micromidi/instructions/composite"
 require "micromidi/module_methods"
 
