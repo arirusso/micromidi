@@ -25,15 +25,15 @@ module MicroMIDI
     :start_time,
     :thru_listeners
 
-    # @param [Array<UniMIDI::Input>] inputs
-    # @param [Array<UniMIDI::Output, IO>] outputs
+    # @param [Array<UniMIDI::Input>, UniMIDI::Input] inputs
+    # @param [Array<UniMIDI::Output, IO>, IO, UniMIDI::Output] outputs
     # @param [Hash] options
     # @option options [Fixnum] :channel
     # @option options [Fixnum] :octave
     # @option options [Fixnum] :velocity
     def initialize(inputs, outputs, options = {})
-      @inputs = inputs
-      @outputs = outputs
+      @inputs = [inputs].flatten
+      @outputs = [outputs].flatten
 
       @channel = options[:channel] || DEFAULT[:channel]
       @velocity = options[:velocity] || DEFAULT[:velocity]
