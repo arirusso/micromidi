@@ -1,7 +1,5 @@
 source "https://rubygems.org"
 
-gemspec :name => "micromidi"
-
 group :test do
   gem "mocha"
   gem "rake"
