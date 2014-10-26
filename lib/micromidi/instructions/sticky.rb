@@ -1,55 +1,84 @@
 module MicroMIDI
 
   module Instructions
-    
+
+    # Commands that deal with sticky default properties.
+    #
+    # For example, setting a default MIDI channel that persists for the messages to follow it:
+    #
+    # ```ruby
+    # channel 5
+    # note "C4"
+    # note "C3"
+    # ```
+    #
     class Sticky
-      
+
+      # @param [State] state
       def initialize(state)
         @state = state
       end
 
-      # sets the sticky channel for the current block
-      def channel(val = nil)
-        val.nil? ? @state.channel : @state.channel = val
+      # Gets/sets the sticky channel for the current block
+      # @param [*Fixnum] args args[0] is an optional parameter to set the channel: [Fixnum, nil]
+      # @return [Fixnum]
+      def channel(*args)
+        @state.channel = args.first unless args.empty?
+        @state.channel
       end
-      
-      # sets the octave for the current block
-      def octave(val = nil)
-        val.nil? ? @state.octave : @state.octave = val
+
+      # Gets/sets the octave for the current block
+      # @param [*Fixnum] args args[0] is an optional parameter to set the octave: [Fixnum, nil]
+      # @return [Fixnum]
+      def octave(*args)
+        @state.octave = args.first unless args.empty?
+        @state.octave
       end
-      
-      # sets the sysex node for the current block
+
+      # Gets/sets the sysex node for the current block
+      # @param [*Object] args
+      # @return [MIDIMessage::SystemExclusive::Node]
       def sysex_node(*args)
+        args = args.dup
         options = args.last.kind_of?(Hash) ? args.last : {}
-        args.empty? ? @state.sysex_node : @state.sysex_node = MIDIMessage::SystemExclusive::Node.new(args.first, options)
+        @state.sysex_node = MIDIMessage::SystemExclusive::Node.new(args.first, options) unless args.empty?
+        @state.sysex_node
       end
       alias_method :node, :sysex_node
 
-      # sets the sticky velocity for the current block
-      def velocity(val = nil)
-        val.nil? ? @state.velocity : @state.velocity = val
+      # Gets/sets the sticky velocity for the current block
+      # @param [*Fixnum] args args[0] is an optional parameter to set the velocity: [Fixnum, nil]
+      # @return [Fixnum]
+      def velocity(*args)
+        @state.velocity = args.first unless args.empty?
+        @state.velocity
       end
-      
+
       #
-      # toggles super_sticky mode, a mode where any explicit values used to create MIDI messages
-      # automatically become sticky -- whereas normally the explicit value would only be used for 
+      # Toggles super_sticky mode, a mode where any explicit values used to create MIDI messages
+      # automatically become sticky.  Normally the explicit value would only be used for
       # the current message.
       #
-      # e.g.
+      # For example, while in super sticky mode
       #
+      # ```ruby
       # note "C4", :channel => 5
+      # note "C3"
+      # ```
       #
-      # will have the exact same effect as
-      # 
+      # will have the same results as
+      #
+      # ```ruby
       # channel 5
       # note "C4"
+      # note "C3"
+      # ```
       #
-      # while in super sticky mode
-      #
+      # @return [Boolean]
       def super_sticky
         @state.toggle_super_sticky
       end
-      
+
     end
 
   end
