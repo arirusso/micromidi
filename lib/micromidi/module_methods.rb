@@ -1,16 +1,18 @@
 module MicroMIDI
 
+  # Shortcut to create a new context
+  # @param [*Object] args
+  # @param [Proc] block
+  # @return [Context]
   def self.new(*args, &block)
-    message(*args, &block)
-  end
-
-  def self.message(*args, &block)
     inputs = get_inputs(args)
     outputs = get_outputs(args)
-    MicroMIDI::Context.new(inputs, outputs, &block)
+    Context.new(inputs, outputs, &block)
   end
+  
   class << self
-    alias_method :using, :message
+    alias_method :message, :new
+    alias_method :using, :new
   end
 
   module IO
@@ -28,7 +30,7 @@ module MicroMIDI
   end
 
   def self.get_outputs(args)
-    args.find_all { |device| device.respond_to?(:puts) }  
+    args.find_all { |device| device.respond_to?(:puts) }
   end
 
 end
