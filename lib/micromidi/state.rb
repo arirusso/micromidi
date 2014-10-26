@@ -10,21 +10,27 @@ module MicroMIDI
     }
 
     attr_accessor :auto_output,
-                  :channel,
-                  :last_note,
-                  :octave,
-                  :sysex_node,
-                  :super_sticky,
-                  :velocity
+    :channel,
+    :last_note,
+    :octave,
+    :sysex_node,
+    :super_sticky,
+    :velocity
 
     attr_reader :inputs,
-                :last_command,
-                :listeners,
-                :outputs,
-                :output_cache,
-                :start_time,
-                :thru_listeners
+    :last_command,
+    :listeners,
+    :outputs,
+    :output_cache,
+    :start_time,
+    :thru_listeners
 
+    # @param [Array<UniMIDI::Input>] inputs
+    # @param [Array<UniMIDI::Output, IO>] outputs
+    # @param [Hash] options
+    # @option options [Fixnum] :channel
+    # @option options [Fixnum] :octave
+    # @option options [Fixnum] :velocity
     def initialize(inputs, outputs, options = {})
       @inputs = inputs
       @outputs = outputs
@@ -43,10 +49,15 @@ module MicroMIDI
       @super_sticky = false
     end
 
-    def record(method, args, block, output)
+    # Record that a command was used
+    # @param [Symbol, String] method
+    # @param [Array<Object>] args
+    # @param [Proc] block
+    # @param [Object] result
+    def record(method, args, block, result)
       timestamp = now
       message = {
-        :message => output,
+        :message => result,
         :timestamp => timestamp
       }
       @output_cache << message
@@ -58,14 +69,42 @@ module MicroMIDI
       }
     end
 
+    #
+    # Toggles super_sticky mode, a mode where any explicit values used to create MIDI messages
+    # automatically become sticky.  Normally the explicit value would only be used for
+    # the current message.
+    #
+    # For example, while in super sticky mode
+    #
+    # ```ruby
+    # note "C4", :channel => 5
+    # note "C3"
+    # ```
+    #
+    # will have the same results as
+    #
+    # ```ruby
+    # channel 5
+    # note "C4"
+    # note "C3"
+    # ```
+    #
+    # @return [Boolean]
     def toggle_super_sticky
       @super_sticky = !@super_sticky
     end
 
+    # Toggles auto-output mode.  In auto-output mode, any messages that are instantiated are sent to
+    # any available MIDI outputs.
+    # @return [Boolean]
     def toggle_auto_output
       @auto_output = !@auto_output
     end
 
+    # Return message properties with regard to the current state
+    # @param [Hash] options
+    # @param [*Symbol] properties
+    # @return [Hash]
     def message_properties(options, *properties)
       result = {}
       properties.each do |property|
@@ -80,6 +119,8 @@ module MicroMIDI
 
     private
 
+    # A timestamp
+    # @return [Float]
     def now
       time = Time.now.to_f - @start_time
       time * 1000
