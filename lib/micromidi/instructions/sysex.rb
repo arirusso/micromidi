@@ -4,33 +4,56 @@ module MicroMIDI
 
     class SysEx
 
+      # @param [State] state
       def initialize(state)
         @state = state
       end
 
-      # create a sysex command
+      # Create a sysex command message
+      # @param [Fixnum] address
+      # @param [Array<Fixnum>] data
+      # @param [Hash] options
+      # @option options [MIDIMessage::SystemExclusive::Node] :node (also :sysex_node)
+      # @return [MIDIMessage::SystemExclusive::Command]
       def sysex_command(address, data, options = {})
-        options[:sysex_node] ||= options[:node]
-        props = @state.message_properties(options, :sysex_node)
-        MIDIMessage::SystemExclusive::Command.new(address, data, :node => props[:sysex_node])
+        properties = sysex_properties(options)
+        MIDIMessage::SystemExclusive::Command.new(address, data, :node => properties[:sysex_node])
       end
       alias_method :command, :sysex_command
 
-      # create a sysex request
+      # Create a sysex request message
+      # @param [Fixnum] address
+      # @param [Fixnum] size
+      # @param [Hash] options
+      # @option options [MIDIMessage::SystemExclusive::Node] :node (also :sysex_node)
+      # @return [MIDIMessage::SystemExclusive::Request]
       def sysex_request(address, size, options = {})
-        options[:sysex_node] ||= options[:node]
-        props = @state.message_properties(options, :sysex_node)
-        MIDIMessage::SystemExclusive::Request.new(address, size, :node => props[:sysex_node])
+        properties = sysex_properties(options)
+        MIDIMessage::SystemExclusive::Request.new(address, size, :node => properties[:sysex_node])
       end
       alias_method :request, :sysex_request
 
-      # create an indeterminate sysex message
+      # Create a generic sysex message
+      # @param [Array<Fixnum>] data
+      # @param [Hash] options
+      # @option options [MIDIMessage::SystemExclusive::Node] :node (also :sysex_node)
+      # @return [MIDIMessage::SystemExclusive::Message]
       def sysex_message(data, options = {})
-        options[:sysex_node] ||= options[:node]
-        props = @state.message_properties(options, :sysex_node)
-        MIDIMessage::SystemExclusive::Message.new(data, :node => props[:sysex_node])
+        properties = sysex_properties(options)
+        MIDIMessage::SystemExclusive::Message.new(data, :node => properties[:sysex_node])
       end
       alias_method :sysex, :sysex_message
+
+      private
+
+      # Get the message properties given the options hash
+      # @param [Hash] options
+      # @return [Hash]
+      def sysex_properties(options)
+        sysex_options = options.dup
+        sysex_options[:sysex_node] ||= options.delete(:node)
+        @state.message_properties(sysex_options, :sysex_node)
+      end
 
     end
 
