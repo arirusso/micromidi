@@ -2,6 +2,7 @@ module MicroMIDI
 
   module Instructions
 
+    # Commands that are composites of other commands
     module Composite
 
       #
