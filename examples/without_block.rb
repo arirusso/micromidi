@@ -3,15 +3,14 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-# this example demonstrates using MicroMIDI without a block
-# this allows you to use it as a more conventional Ruby library
+# Demonstrates using MicroMIDI without the command block/ DSL
 
-@o = UniMIDI::Output.use(:first)
+@o = UniMIDI::Output.gets
 
 midi = MIDI::IO.new(@o)
 
 midi.note("C")
-midi.off 
+midi.off
 
 midi.cc(5, 120)
 

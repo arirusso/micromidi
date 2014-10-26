@@ -3,12 +3,12 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-# this example demonstrates super_sticky mode
+# Demonstrates super-sticky mode
 
 output = UniMIDI::Output.use(0)
 
 MIDI.using(@o) do
-  
+
   super_sticky
 
   channel 1

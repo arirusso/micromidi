@@ -3,18 +3,20 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-i = UniMIDI::Input.use(0)
-o = UniMIDI::Output.use(0)
+# Demonstrates MicroMIDI shorthand
+
+i = UniMIDI::Input.gets
+o = UniMIDI::Output.gets
 
 M(i, o) do
-  
+
   rc :n do |m|
     m.note += 12
     out(m)
   end
-  
+
   tu :n
-  
+
   l { w }
-  
-end 
+
+end

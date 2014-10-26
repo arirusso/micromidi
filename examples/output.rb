@@ -3,9 +3,9 @@ $:.unshift File.join( File.dirname( __FILE__ ), '../lib')
 
 require "micromidi"
 
-# this example sends some messages to the first output
+# This example sends some messages to an output selected by the user
 
-output = UniMIDI::Output.use(0)
+output = UniMIDI::Output.gets
 
 MIDI.using(output) do
   note "C4"
