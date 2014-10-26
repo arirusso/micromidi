@@ -1,10 +1,12 @@
 module MicroMIDI
 
+  extend self
+
   # Shortcut to create a new context
   # @param [*Object] args
   # @param [Proc] block
   # @return [Context]
-  def self.new(*args, &block)
+  def new(*args, &block)
     inputs = get_inputs(args)
     outputs = get_outputs(args)
     Context.new(inputs, outputs, &block)
@@ -29,11 +31,11 @@ module MicroMIDI
 
   private
 
-  def self.get_inputs(args)
+  def get_inputs(args)
     args.find_all { |device| device.respond_to?(:type) && device.type == :input && device.respond_to?(:gets) }
   end
 
-  def self.get_outputs(args)
+  def get_outputs(args)
     args.find_all { |device| device.respond_to?(:puts) }
   end
 
