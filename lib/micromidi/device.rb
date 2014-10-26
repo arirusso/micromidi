@@ -1,5 +1,6 @@
 module MicroMIDI
 
+  # Deal with MIDI devices
   module Device
 
     extend self
