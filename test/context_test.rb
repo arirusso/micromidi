@@ -2,7 +2,6 @@ require "helper"
 
 class ContextTest < Minitest::Test
 
-  include MicroMIDI
   include TestHelper
 
   def test_new_with_block

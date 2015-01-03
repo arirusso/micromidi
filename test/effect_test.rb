@@ -2,7 +2,6 @@ require "helper"
 
 class EffectTest < Minitest::Test
 
-  include MicroMIDI
   include TestHelper
 
   def test_high_pass_note_reject

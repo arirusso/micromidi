@@ -2,7 +2,6 @@ require "helper"
 
 class StateTest < Minitest::Test
 
-  include MicroMIDI
   include TestHelper
 
   def test_output_cache

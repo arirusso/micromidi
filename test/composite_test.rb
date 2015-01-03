@@ -2,7 +2,6 @@ require "helper"
 
 class CompositeTest < Minitest::Test
 
-  include MicroMIDI
   include TestHelper
 
   def test_play

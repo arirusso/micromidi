@@ -2,7 +2,6 @@ require "helper"
 
 class OutputTest < Minitest::Test
 
-  include MicroMIDI
   include TestHelper
 
   def test_auto_output

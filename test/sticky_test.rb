@@ -2,7 +2,6 @@ require "helper"
 
 class StickyTest < Minitest::Test
 
-  include MicroMIDI
   include TestHelper
 
   def test_channel
