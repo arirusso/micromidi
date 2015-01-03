@@ -2,8 +2,6 @@ require "helper"
 
 class CompositeTest < Minitest::Test
 
-  include TestHelper
-
   def test_play
     m = MicroMIDI.message
     start = Time.now

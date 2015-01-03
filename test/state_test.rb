@@ -2,8 +2,6 @@ require "helper"
 
 class StateTest < Minitest::Test
 
-  include TestHelper
-
   def test_output_cache
     m = MicroMIDI.message
     cache = m.state.output_cache

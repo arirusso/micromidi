@@ -2,8 +2,6 @@ require "helper"
 
 class StickyTest < Minitest::Test
 
-  include TestHelper
-
   def test_channel
     m = MicroMIDI.message
     msg = m.note "C0"

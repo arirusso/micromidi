@@ -2,8 +2,6 @@ require "helper"
 
 class MessageTest < Minitest::Test
 
-  include TestHelper
-
   def test_cc
     m = MicroMIDI.message
     msg = m.cc 16, 12
