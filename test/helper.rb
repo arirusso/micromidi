@@ -1,11 +1,11 @@
 dir = File.dirname(File.expand_path(__FILE__))
 $LOAD_PATH.unshift dir + "/../lib"
 
-require "test/unit"
+require "minitest/autorun"
 require "midi"
 
 module TestHelper
-  
+
   def self.select_devices
     $test_device ||= {}
     { :input => UniMIDI::Input.all, :output => UniMIDI::Output.all }.each do |type, devs|
@@ -23,8 +23,8 @@ module TestHelper
         end
       end
     end
-  end 
-     
+  end
+
 end
 
 TestHelper.select_devices

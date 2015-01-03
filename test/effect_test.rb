@@ -1,6 +1,6 @@
 require "helper"
 
-class EffectTest < Test::Unit::TestCase
+class EffectTest < Minitest::Test
 
   include MicroMIDI
   include TestHelper
@@ -8,7 +8,7 @@ class EffectTest < Test::Unit::TestCase
   def test_high_pass_note_reject
     m = MicroMIDI.message
     msg = m.note "C0"
-    outp = m.hpf msg, :note, 20   
+    outp = m.hpf msg, :note, 20
     assert_equal(12, msg.note)
     assert_equal(nil, outp)
   end
@@ -52,7 +52,7 @@ class EffectTest < Test::Unit::TestCase
     assert_equal(60, msg.note)
     assert_equal(msg, outp)
   end
-  
+
   def test_notch_note_reject
     m = MicroMIDI.message
     msg = m.note "C4"
@@ -68,7 +68,7 @@ class EffectTest < Test::Unit::TestCase
     assert_equal(60, msg.note)
     assert_equal(msg, outp)
   end
-  
+
   def test_multiband_note_reject
     m = MicroMIDI.message
     msg = m.note "C4"
@@ -84,7 +84,7 @@ class EffectTest < Test::Unit::TestCase
     assert_equal(60, msg.note)
     assert_equal(msg, outp)
   end
-  
+
   def test_multinotch_note_reject
     m = MicroMIDI.message
     msg = m.note "C4"
@@ -96,11 +96,11 @@ class EffectTest < Test::Unit::TestCase
   def test_multinotch_note_accept
     m = MicroMIDI.message
     msg = m.note "C4"
-    outp = m.mbf msg, :note, [(20..30), (40..50)], :reject => true   
+    outp = m.mbf msg, :note, [(20..30), (40..50)], :reject => true
     assert_equal(60, msg.note)
     assert_equal(msg, outp)
   end
-  
+
   def test_limit_low
     m = MicroMIDI.message
     msg = m.note "C0"
@@ -114,7 +114,7 @@ class EffectTest < Test::Unit::TestCase
     outp = m.limit msg, :note, (20..50)
     assert_equal(50, msg.note)
   end
-  
+
   def test_transpose_note_up
     m = MicroMIDI.message
     msg = m.note "C4"
@@ -128,6 +128,5 @@ class EffectTest < Test::Unit::TestCase
     outp = m.transpose msg, :velocity, -10
     assert_equal(72, msg.velocity)
   end
-  
-end
 
+end

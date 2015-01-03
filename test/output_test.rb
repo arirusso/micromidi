@@ -1,6 +1,6 @@
 require "helper"
 
-class OutputTest < Test::Unit::TestCase
+class OutputTest < Minitest::Test
 
   include MicroMIDI
   include MIDIMessage
@@ -14,6 +14,5 @@ class OutputTest < Test::Unit::TestCase
     m.output true
     assert_equal(true, m.state.auto_output)
   end
-            
-end
 
+end
