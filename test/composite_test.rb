@@ -3,7 +3,6 @@ require "helper"
 class CompositeTest < Minitest::Test
 
   include MicroMIDI
-  include MIDIMessage
   include TestHelper
 
   def test_play
@@ -15,13 +14,13 @@ class CompositeTest < Minitest::Test
     dif = finish - start
     assert_equal(true, dif >= 0.5)
 
-    assert_equal(NoteOn, msg.class)
+    assert_equal(MIDIMessage::NoteOn, msg.class)
     assert_equal(12, msg.note)
     assert_equal(0, msg.channel)
     assert_equal(2, m.state.output_cache.size)
 
     off_msg = m.state.output_cache.last[:message]
-    assert_equal(NoteOff, off_msg.class)
+    assert_equal(MIDIMessage::NoteOff, off_msg.class)
     assert_equal(12, off_msg.note)
     assert_equal(0, off_msg.channel)
   end
@@ -37,13 +36,13 @@ class CompositeTest < Minitest::Test
 
     msg = msgs.first
 
-    assert_equal(NoteOn, msg.class)
+    assert_equal(MIDIMessage::NoteOn, msg.class)
     assert_equal(12, msg.note)
     assert_equal(0, msg.channel)
     assert_equal(6, m.state.output_cache.size)
 
     off_msg = m.state.output_cache.last[:message]
-    assert_equal(NoteOff, off_msg.class)
+    assert_equal(MIDIMessage::NoteOff, off_msg.class)
     assert_equal(43, off_msg.note)
     assert_equal(0, off_msg.channel)
   end
@@ -59,13 +58,13 @@ class CompositeTest < Minitest::Test
 
     msg = msgs.first
 
-    assert_equal(NoteOn, msg.class)
+    assert_equal(MIDIMessage::NoteOn, msg.class)
     assert_equal(12, msg.note)
     assert_equal(0, msg.channel)
     assert_equal(6, m.state.output_cache.size)
 
     off_msg = m.state.output_cache.last[:message]
-    assert_equal(NoteOff, off_msg.class)
+    assert_equal(MIDIMessage::NoteOff, off_msg.class)
     assert_equal(43, off_msg.note)
     assert_equal(0, off_msg.channel)
   end
