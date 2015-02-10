@@ -20,6 +20,16 @@ class ContextTest < Minitest::Test
     assert_equal(0, msg.channel)
   end
 
+  def test_exception
+    msg = nil
+    m = MIDI::IO.new
+    assert_raises(ArgumentError) do
+      m.edit do
+        msg = m.note
+      end
+    end
+  end
+
   def test_edit
     msg = nil
     m = MIDI::IO.new
