@@ -4,7 +4,7 @@ class ContextTest < Minitest::Test
 
   def test_new_with_block
     msg = nil
-    MIDI::IO.new do
+    MIDI::Session.new do
       msg = note "C0"
     end
     assert_equal(MIDIMessage::NoteOn, msg.class)
@@ -13,7 +13,7 @@ class ContextTest < Minitest::Test
   end
 
   def test_new_with_no_block
-    m = MIDI::IO.new
+    m = MIDI::Session.new
     msg = m.note "C0"
     assert_equal(MIDIMessage::NoteOn, msg.class)
     assert_equal(12, msg.note)
@@ -22,7 +22,7 @@ class ContextTest < Minitest::Test
 
   def test_exception
     msg = nil
-    m = MIDI::IO.new
+    m = MIDI::Session.new
     assert_raises(ArgumentError) do
       m.edit do
         msg = m.note
@@ -32,7 +32,7 @@ class ContextTest < Minitest::Test
 
   def test_edit
     msg = nil
-    m = MIDI::IO.new
+    m = MIDI::Session.new
     m.edit do
       msg = m.note "C0"
     end

@@ -11,7 +11,7 @@ class MessageTest < Minitest::Test
   end
 
   def test_channel_aftertouch
-    m = MicroMIDI::IO.new
+    m = MicroMIDI::Session.new
     msg = m.channel_aftertouch 2, :channel => 1
     assert_equal(MIDIMessage::ChannelAftertouch, msg.class)
     assert_equal(1, msg.channel)
@@ -19,7 +19,7 @@ class MessageTest < Minitest::Test
   end
 
   def test_poly_aftertouch
-    m = MicroMIDI::IO.new
+    m = MicroMIDI::Session.new
     msg = m.poly_aftertouch 64, 2, :channel => 1
     assert_equal(MIDIMessage::PolyphonicAftertouch, msg.class)
     assert_equal(1, msg.channel)
@@ -28,7 +28,7 @@ class MessageTest < Minitest::Test
   end
 
   def test_pitch_bend
-    m = MicroMIDI::IO.new
+    m = MicroMIDI::Session.new
     msg = m.pitch_bend 64, 2, :channel => 1
     assert_equal(MIDIMessage::PitchBend, msg.class)
     assert_equal(1, msg.channel)
