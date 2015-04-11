@@ -37,4 +37,11 @@ module MicroMIDI
   VERSION = "0.1.4"
 
 end
+
 MIDI = MicroMIDI
+
+# Shortcuts to UniMIDI modules
+module MIDI
+  Input = UniMIDI::Input
+  Output = UniMIDI::Output
+end
