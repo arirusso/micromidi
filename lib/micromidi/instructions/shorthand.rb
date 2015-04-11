@@ -14,6 +14,7 @@ module MicroMIDI
   module Instructions
 
     module Composite
+      alias_method :console, :p # move Kernel#p
       alias_method :p, :play
       alias_method :q!, :all_off
       alias_method :x, :all_off
