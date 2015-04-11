@@ -5,7 +5,7 @@ A Ruby DSL for MIDI
 ![micromidi](http://img855.imageshack.us/img855/9804/midi.png)
 
 ## Features
- 
+
 * Cross-platform compatible using MRI or JRuby.
 * Simplified MIDI and Sysex message output
 * MIDI Thru, processing and custom input events
@@ -30,9 +30,9 @@ require "midi"
 
 @input = UniMIDI::Input.gets
 @output = UniMIDI::Output.gets
-  
+
 MIDI.using(@output) do
-    
+
   5.times do |oct|
     octave oct
     %w{C E G B}.each { |n| play n, 0.5 }
@@ -40,7 +40,7 @@ MIDI.using(@output) do
 
 end
 ```
-    
+
 This next example filters outs notes if their octave is between 1 and 3.  All other messages are sent thru.  
 
 Output is also printed to the console by passing `$stdout` as though it's a MIDI device
@@ -66,26 +66,26 @@ M(@input, @output) do
 
 end
 ```
-  
+
 Finally, here is an example that maps some MIDI Control Change messages to SysEx
-  
+
 ```ruby
 MIDI.using(@input, @output) do
-  
+
   *@the_map =
     [0x40, 0x7F, 0x00],
     [0x41, 0x7F, 0x00],
     [0x42, 0x7F, 0x00]
-  
+
   node :roland, :model_id => 0x42, :device_id => 0x10
-  
+
   receive :cc do |message|
-    
+
     command @the_map[message.index - 1], message.value
-      
+
   end
-  
-end 
+
+end
 ```
 
 Here are a few posts explaining each of the concepts used here in greater detail:
@@ -96,7 +96,7 @@ Here are a few posts explaining each of the concepts used here in greater detail
 * [Shorthand](http://tx81z.blogspot.com/2011/08/micromidi-shorthand.html)
 * [Sysex](http://tx81z.blogspot.com/2011/09/generating-sysex-messages-with.html)
 * [Etc](http://tx81z.blogspot.com/2011/09/more-micromidi-tricks.html)
- 
+
 ## Documentation
 
 * [rdoc](http://rubydoc.info/github/arirusso/micromidi)
@@ -109,4 +109,4 @@ Here are a few posts explaining each of the concepts used here in greater detail
 
 Apache 2.0, See the file LICENSE
 
-Copyright (c) 2011-2014 Ari Russo
+Copyright (c) 2011-2015 Ari Russo

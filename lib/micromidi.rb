@@ -1,9 +1,8 @@
 #
 # MicroMIDI
-#
 # A Ruby DSL for MIDI
 #
-# (c)2011-2014 Ari Russo
+# (c)2011-2015 Ari Russo
 # Apache 2.0 License
 #
 
