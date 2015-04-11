@@ -6,8 +6,10 @@ module MicroMIDI
     class Input
 
       # @param [State] state
-      def initialize(state)
+      # @param [Proc] thru_action Output module to send thru messages to
+      def initialize(state, &thru_action)
         @state = state
+        @thru_action = thru_action
       end
 
       # Bind an event that will be fired when a message is received
@@ -58,7 +60,7 @@ module MicroMIDI
       # @return [Boolean]
       def thru_if(*args)
         receive_options = thru_arguments(args)
-        receive(*receive_options) { |message, timestamp| output(message) }
+        receive(*receive_options) { |message, timestamp| @thru_action.call(message) }
         true
       end
 
@@ -67,7 +69,7 @@ module MicroMIDI
       # @return [Boolean]
       def thru_unless(*args)
         receive_options = thru_arguments(args)
-        receive_unless(*receive_options) { |message, timestamp| output(message) }
+        receive_unless(*receive_options) { |message, timestamp| @thru_action.call(message) }
       end
 
       # Similar to Input#thru_unless except a callback can be passed that will be fired when notes specified arrive

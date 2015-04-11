@@ -19,12 +19,12 @@ module MicroMIDI
 
       @instructions = {
         :process => Instructions::Process.new(@state),
-        :input => Instructions::Input.new(@state),
         :message => Instructions::Message.new(@state),
         :output => Instructions::Output.new(@state),
         :sticky => Instructions::Sticky.new(@state),
         :sysex => Instructions::SysEx.new(@state)
       }
+      @instructions[:input] = Instructions::Input.new(@state) { |message| @instructions[:output].output(message) }
 
       edit(&block) if block_given?
     end
