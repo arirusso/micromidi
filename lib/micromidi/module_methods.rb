@@ -17,7 +17,7 @@ module MicroMIDI
     alias_method :using, :new
   end
 
-  module IO
+  module Session
 
     # Shortcut to create a new context
     # @param [*Object] args

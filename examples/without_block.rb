@@ -7,7 +7,7 @@ require "micromidi"
 
 @o = UniMIDI::Output.gets
 
-midi = MIDI::IO.new(@o)
+midi = MIDI::Session.new(@o)
 
 midi.note("C")
 midi.off
