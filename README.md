@@ -19,6 +19,8 @@ or using Bundler, add this to your Gemfile
 
 `gem "micromidi"`
 
+If you're using Linux, the *libasound* and *libasound-dev* packages may be required
+
 ## Usage
 
 Here's a quick example that plays some arpeggios
