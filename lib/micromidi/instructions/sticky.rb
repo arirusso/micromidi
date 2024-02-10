@@ -20,16 +20,16 @@ module MicroMIDI
       end
 
       # Gets/sets the sticky channel for the current block
-      # @param [*Fixnum] args args[0] is an optional parameter to set the channel: [Fixnum, nil]
-      # @return [Fixnum]
+      # @param [*Integer] args args[0] is an optional parameter to set the channel: [Integer, nil]
+      # @return [Integer]
       def channel(*args)
         @state.channel = args.first unless args.empty?
         @state.channel
       end
 
       # Gets/sets the octave for the current block
-      # @param [*Fixnum] args args[0] is an optional parameter to set the octave: [Fixnum, nil]
-      # @return [Fixnum]
+      # @param [*Integer] args args[0] is an optional parameter to set the octave: [Integer, nil]
+      # @return [Integer]
       def octave(*args)
         @state.octave = args.first unless args.empty?
         @state.octave
@@ -47,8 +47,8 @@ module MicroMIDI
       alias_method :node, :sysex_node
 
       # Gets/sets the sticky velocity for the current block
-      # @param [*Fixnum] args args[0] is an optional parameter to set the velocity: [Fixnum, nil]
-      # @return [Fixnum]
+      # @param [*Integer] args args[0] is an optional parameter to set the velocity: [Integer, nil]
+      # @return [Integer]
       def velocity(*args)
         @state.velocity = args.first unless args.empty?
         @state.velocity

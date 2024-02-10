@@ -10,8 +10,8 @@ module MicroMIDI
       end
 
       # Create a sysex command message
-      # @param [Fixnum] address
-      # @param [Array<Fixnum>] data
+      # @param [Integer] address
+      # @param [Array<Integer>] data
       # @param [Hash] options
       # @option options [MIDIMessage::SystemExclusive::Node] :node (also :sysex_node)
       # @return [MIDIMessage::SystemExclusive::Command]
@@ -22,8 +22,8 @@ module MicroMIDI
       alias_method :command, :sysex_command
 
       # Create a sysex request message
-      # @param [Fixnum] address
-      # @param [Fixnum] size
+      # @param [Integer] address
+      # @param [Integer] size
       # @param [Hash] options
       # @option options [MIDIMessage::SystemExclusive::Node] :node (also :sysex_node)
       # @return [MIDIMessage::SystemExclusive::Request]
@@ -34,7 +34,7 @@ module MicroMIDI
       alias_method :request, :sysex_request
 
       # Create a generic sysex message
-      # @param [Array<Fixnum>] data
+      # @param [Array<Integer>] data
       # @param [Hash] options
       # @option options [MIDIMessage::SystemExclusive::Node] :node (also :sysex_node)
       # @return [MIDIMessage::SystemExclusive::Message]

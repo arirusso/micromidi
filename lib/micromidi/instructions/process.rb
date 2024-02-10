@@ -13,7 +13,7 @@ module MicroMIDI
       # Transpose a message value
       # @param [MIDIMessage] message
       # @param [Symbol, String] property
-      # @param [Fixnum] factor
+      # @param [Integer] factor
       # @param [Hash] options
       # @return [MIDIMessage]
       def transpose(message, property, factor, options = {})
@@ -43,7 +43,7 @@ module MicroMIDI
       # High pass filter a message value
       # @param [MIDIMessage] message
       # @param [Symbol, String] property
-      # @param [Fixnum] min
+      # @param [Integer] min
       # @param [Hash] options
       # @return [MIDIMessage]
       def high_pass_filter(message, property, min, options = {})
@@ -55,7 +55,7 @@ module MicroMIDI
       # Low pass filter a message value
       # @param [MIDIMessage] message
       # @param [Symbol, String] property
-      # @param [Fixnum] max
+      # @param [Integer] max
       # @param [Hash] options
       # @return [MIDIMessage]
       def low_pass_filter(message, property, max, options = {})

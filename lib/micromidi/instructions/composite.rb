@@ -53,12 +53,12 @@ module MicroMIDI
       end
 
       # MIDI note message objects for the given arguments
-      # @param [Array<MIDIMessage::NoteOn, MIDIMessage::NoteOff, Fixnum, String>] note_or_notes
+      # @param [Array<MIDIMessage::NoteOn, MIDIMessage::NoteOff, Integer, String>] note_or_notes
       # @return [Array<MIDIMessage::NoteOn>]
       def as_note_messages(note_or_notes)
         note_or_notes.map do |item|
           case item
-          when Fixnum, String then note(item)
+          when Integer, String then note(item)
           when MIDIMessage then item
           end
         end

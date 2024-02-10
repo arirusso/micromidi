@@ -28,9 +28,9 @@ module MicroMIDI
     # @param [Array<UniMIDI::Input>, UniMIDI::Input] inputs
     # @param [Array<UniMIDI::Output, IO>, IO, UniMIDI::Output] outputs
     # @param [Hash] options
-    # @option options [Fixnum] :channel
-    # @option options [Fixnum] :octave
-    # @option options [Fixnum] :velocity
+    # @option options [Integer] :channel
+    # @option options [Integer] :octave
+    # @option options [Integer] :velocity
     def initialize(inputs, outputs, options = {})
       @inputs = [inputs].flatten
       @outputs = [outputs].flatten
